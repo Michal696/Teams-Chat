@@ -7,9 +7,9 @@ namespace Teams.Models.Entities
     {
         // Zobrazený příspěvek obsahuje zvýrazněný titulek, formátovaný text, autora a datum zveřejnění. Můžete přidat i vlastní rozšíření, např. možnost odpovědět na příspěvek.
         // Odpověď nebude mít title!!! 
-        public String title { get; set; }
+        public String Title { get; set; }
         public DateTime dateTime;
-        public String text { get; set; }
+        public String Text { get; set; }
         public User user;
         public Message parent;
         public Group group;
@@ -48,15 +48,15 @@ namespace Teams.Models.Entities
                 {
                     return false;
                 }
-                return string.Equals(x.text, y.text) && string.Equals(x.title, y.title) && x.ID.Equals(y.ID);
+                return string.Equals(x.Text, y.Text) && string.Equals(x.Title, y.Title) && x.ID.Equals(y.ID);
             }
 
             public int GetHashCode(Message obj)
             {
                 unchecked
                 {
-                    var hashCode = (obj.text != null ? obj.text.GetHashCode() : 0);
-                    hashCode = (hashCode * 397) ^ (obj.title != null ? obj.title.GetHashCode() : 0);
+                    var hashCode = (obj.Text != null ? obj.Text.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ (obj.Title != null ? obj.Title.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ obj.ID.GetHashCode();
                     return hashCode;
                 }

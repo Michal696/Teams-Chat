@@ -22,8 +22,8 @@ namespace Tests
             //Arrange
             var messageEntity = new Message
             {
-                title = "testsMessage",
-                text = "testText"
+                Title = "testsMessage",
+                Text = "testText"
             };
 
             //Act
@@ -39,7 +39,7 @@ namespace Tests
                 // use this if possible
                 // Assert.Equal(messageEntity, retrievedMessage, messageEntity.DescriptionNameIdComparer);
 
-                Assert.Equal(messageEntity.ID, retrievedMessage.ID);
+               Assert.Equal(messageEntity.ID, retrievedMessage.ID);
             }
         }
 
