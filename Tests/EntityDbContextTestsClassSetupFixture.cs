@@ -23,6 +23,7 @@ namespace Tests
         {
             var contextOptionsBuilder = new DbContextOptionsBuilder<Context>();
             contextOptionsBuilder.UseInMemoryDatabase("EntityTeams");
+            
             return contextOptionsBuilder.Options;
         }
 

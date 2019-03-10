@@ -3,4 +3,7 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>C:\Program Files (x86)\Common Files\microsoft shared\VSTT\15.0\UITestExtensionPackages;C:\Program Files (x86)\Common Files\microsoft shared\VSTT\15.0\UITestExtensionPackages\;C:\Users\sajdi\Source\Repos\Teams\Teams\;C:\Users\sajdi\Source\Repos\Teams\</ReferencePath>
+  </PropertyGroup>
 </Project>
