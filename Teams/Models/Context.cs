@@ -12,14 +12,14 @@ namespace Teams.Models
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       {
+        {
             
-          optionsBuilder.UseSqlServer(
+            optionsBuilder.UseSqlServer(
             @"Data Source=(LocalDB)\MSSQLLocalDB;
               Initial Catalog = Teams;
              MultipleActiveResultSets = True;
                Integrated Security = True; ");
-       }
+        }
 
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
