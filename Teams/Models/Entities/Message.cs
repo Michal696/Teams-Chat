@@ -13,17 +13,7 @@ namespace Teams.Models.Entities
         public User user;
         public Message parent;
         public Group group;
-
-        /**
-         * @todo
-         **/
-        public void add()
-        {
-
-        }
-
-
-
+        
         // for tests 
         private sealed class DescriptionNameIdEqualityComparer : IEqualityComparer<Message>
         {

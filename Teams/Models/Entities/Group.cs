@@ -10,11 +10,5 @@ namespace Teams.Models.Entities
         public virtual ICollection<GroupUserPermission> GroupUserPermissions { get; set; }
         public Team team;
 
-        // @todo later
-        void addPermission(User user, Permission permission)
-        {
-
-        }
-
     }
 }

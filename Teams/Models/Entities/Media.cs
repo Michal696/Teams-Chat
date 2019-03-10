@@ -4,8 +4,7 @@ namespace Teams.Models.Entities
 {
     public class Media
     {
-       // public Image name;
-        
-
+        public String url;
+        public Message parent;
     }
 }
