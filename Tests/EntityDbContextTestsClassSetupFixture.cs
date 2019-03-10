@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory.dll;
 using System;
 using Teams.Models;
 
@@ -23,6 +24,7 @@ namespace Tests
         {
             var contextOptionsBuilder = new DbContextOptionsBuilder<Context>();
             contextOptionsBuilder.UseInMemoryDatabase("EntityTeams");
+            
             return contextOptionsBuilder.Options;
         }
 
