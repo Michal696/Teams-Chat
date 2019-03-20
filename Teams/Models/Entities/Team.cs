@@ -5,13 +5,13 @@ namespace Teams.Models.Entities
 {
     public class Team : BaseEntity
     {
-        public String name;
+        public String Name { get; set; }
         public virtual ICollection<User> Members { get; set; }
     }
 
     public class TeamMember : BaseEntity
     {
-        public User user;
-        public Team team;
+        public User Member { get; set; }
+        public Team Team_ { get; set; }
     }
 }

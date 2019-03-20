@@ -33,7 +33,7 @@ namespace Tests
             {
                 var retrievedMessage = dbx.Messages.First(entity => entity.ID == messageEntity.ID);
 
-                // use this if possible
+                // use this if possible // TODO to repair for greater precision
                 // Assert.Equal(messageEntity, retrievedMessage, messageEntity.DescriptionNameIdComparer);
 
                Assert.Equal(messageEntity.ID, retrievedMessage.ID);

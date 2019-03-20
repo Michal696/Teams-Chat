@@ -7,12 +7,12 @@ namespace Teams.Models.Entities
     {
 
         public String Title { get; set; }
-        public DateTime dateTime;
+        public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
-        public User user;
-        public Message parent;
-        public Group group;
-        
+        public User Member { get; set; }
+        public Message Parent { get; set; }
+        public Group Group_ { get; set; }
+
         // for tests 
         private sealed class DescriptionNameIdEqualityComparer : IEqualityComparer<Message>
         {

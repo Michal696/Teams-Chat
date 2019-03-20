@@ -5,10 +5,10 @@ namespace Teams.Models.Entities
 {
     public class Group
     {
-        public String name;
-        public String description;
+        public String Name { get; set; }
+        public String Description { get; set; }
         public virtual ICollection<GroupUserPermission> GroupUserPermissions { get; set; }
-        public Team team;
+        public Team Team_ { get; set; }
 
     }
 }

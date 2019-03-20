@@ -5,32 +5,32 @@ namespace Teams.Models.Entities
 {
     public class Task : BaseEntity
     {
-        public DateTime dateTime;
-        public String text;
-        public User user;
+        public DateTime TimeStamp { get; set; }
+        public String Text { get; set; }
+        public User Member { get; set; } 
         public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
         public virtual ICollection<TaskStateChange> TaskStateChanges { get; set; }
 
-        public TaskState state;
-        public Group group;
+        public TaskStats State { get; set; }
+        public Group Group_ { get; set; }
 
 
     }
     
     public class TaskAssignment : BaseEntity
     {
-        public User user;
-        public Task task;
+        public User Member { get; set; }
+        public Task Task_ { get; set; }
     }
 
     public class TaskStateChange : BaseEntity
     {
-        public DateTime dateTime;
-        public String text;
-        public User user;
+        public DateTime TimeStamp { get; set; }
+        public String Text { get; set; }
+        public User Member { get; set; }
         public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
-        public TaskState state;
-        public Group group;
+        public TaskState State;
+        public Group Group_;
     }
 
     public enum TaskState

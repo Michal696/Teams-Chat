@@ -4,15 +4,16 @@ namespace Teams.Models.Entities
 {
     public class GroupUserPermission
     {
-        public Group group;
-        public User user;
-        public Permission permission;
+        public Group Group_ { get; set; }
+
+        public User Member { get; set; }
+        public Permission Permit { get; set; }
     }
 
     public enum Permission
     {
-        read = 0,
-        write = 1,
-        manage = 2,
+        READ = 0,
+        WRITE = 1,
+        MANAGE = 2,
     }
 }
