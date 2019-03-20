@@ -5,8 +5,7 @@ namespace Teams.Models.Entities
 {
     public class Message : BaseEntity
     {
-        // Zobrazený příspěvek obsahuje zvýrazněný titulek, formátovaný text, autora a datum zveřejnění. Můžete přidat i vlastní rozšíření, např. možnost odpovědět na příspěvek.
-        // Odpověď nebude mít title!!! 
+
         public String Title { get; set; }
         public DateTime dateTime;
         public String Text { get; set; }

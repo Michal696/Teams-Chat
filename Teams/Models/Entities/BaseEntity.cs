@@ -2,7 +2,7 @@
 
 namespace Teams.Models.Entities
 {
-    public abstract class BaseEntity
+    public abstract class EntityBase
     {
         public Guid ID { get; set; }
 
