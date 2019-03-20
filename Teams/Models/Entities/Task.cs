@@ -29,8 +29,8 @@ namespace Teams.Models.Entities
         public String Text { get; set; }
         public User Member { get; set; }
         public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
-        public TaskState State;
-        public Group Group_;
+        public TaskState State { get; set; }
+        public Group Group_ { get; set; }
     }
 
     public enum TaskState
