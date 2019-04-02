@@ -4,7 +4,7 @@ namespace Teams.Models.Entities
 {
     public class GroupUserPermission
     {
-        public Group Group_ { get; set; }
+        public Group Group { get; set; }
 
         public User Member { get; set; }
         public Permission Permit { get; set; }

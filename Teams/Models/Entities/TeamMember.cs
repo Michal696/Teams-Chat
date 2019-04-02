@@ -6,6 +6,6 @@ namespace Teams.Models.Entities
     public class TeamMember : EntityBase
     {
         public User Member { get; set; }
-        public Team Team_ { get; set; }
+        public Team Team { get; set; }
     }
 }
