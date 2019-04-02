@@ -161,7 +161,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Entities\BaseEntity.cs" />
+    <Compile Include="Models\Entities\EntityBase.cs" />
     <Compile Include="Models\Entities\Group.cs" />
     <Compile Include="Models\Entities\GroupUserPermission.cs" />
     <Compile Include="Models\Entities\Media.cs" />
