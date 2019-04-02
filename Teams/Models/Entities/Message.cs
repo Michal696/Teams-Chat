@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Teams.Models.Entities
 {
-    public class Message : BaseEntity
+    public class Message : EntityBase
     {
 
         public String Title { get; set; }
@@ -37,7 +37,7 @@ namespace Teams.Models.Entities
                 {
                     return false;
                 }
-                return string.Equals(x.Text, y.Text) && string.Equals(x.Title, y.Title) && x.ID.Equals(y.ID);
+                return string.Equals(x.Text, y.Text) && string.Equals(x.Title, y.Title) && x.Id.Equals(y.Id);
             }
 
             public int GetHashCode(Message obj)
@@ -46,7 +46,7 @@ namespace Teams.Models.Entities
                 {
                     var hashCode = (obj.Text != null ? obj.Text.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ (obj.Title != null ? obj.Title.GetHashCode() : 0);
-                    hashCode = (hashCode * 397) ^ obj.ID.GetHashCode();
+                    hashCode = (hashCode * 397) ^ obj.Id.GetHashCode();
                     return hashCode;
                 }
             }

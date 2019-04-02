@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Teams.Models.Entities
 {
-    public class Task : BaseEntity
+    public class Task : EntityBase
     {
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
@@ -11,19 +11,19 @@ namespace Teams.Models.Entities
         public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
         public virtual ICollection<TaskStateChange> TaskStateChanges { get; set; }
 
-        public TaskStats State { get; set; }
+        public TaskState State { get; set; }
         public Group Group_ { get; set; }
 
 
     }
     
-    public class TaskAssignment : BaseEntity
+    public class TaskAssignment : EntityBase
     {
         public User Member { get; set; }
         public Task Task_ { get; set; }
     }
 
-    public class TaskStateChange : BaseEntity
+    public class TaskStateChange : EntityBase
     {
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Teams.Models.Entities
 {
-    public class User : BaseEntity
+    public class User : EntityBase
     {
         public String Name { get; set; }
         public String Password { get; set; }
