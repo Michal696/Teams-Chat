@@ -120,6 +120,8 @@
   <ItemGroup>
     <Compile Include="DbContextFactory.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Entities\Enums\Permission.cs" />
+    <Compile Include="Entities\Enums\TaskState.cs" />
     <Compile Include="Entities\TaskAssignment.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\Group.cs" />
@@ -137,5 +139,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

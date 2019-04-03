@@ -1,4 +1,5 @@
 ﻿using System;
+using Teams.DAL.Entities.Enums;
 
 namespace Teams.DAL.Entities
 {
@@ -8,12 +9,5 @@ namespace Teams.DAL.Entities
 
         public User Member { get; set; }
         public Permission Permit { get; set; }
-    }
-
-    public enum Permission
-    {
-        READ = 0,
-        WRITE = 1,
-        MANAGE = 2,
     }
 }
