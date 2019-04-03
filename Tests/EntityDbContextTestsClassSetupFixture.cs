@@ -1,21 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using Teams.Models;
+using Teams.DAL;
+using Teams.DAL.Entities;
 
 namespace Tests
 {
     public class EntityDbContextTestsClassSetupFixture : IDisposable
     {
-        public Context EntityDbContextSUT { get; set; }
+        public DbContextFactory dbContextFactory;
+        public Context context { get; set; }
 
         public EntityDbContextTestsClassSetupFixture()
         {
-            this.EntityDbContextSUT = CreateEntityDbContext();
+            this.context = CreateEntityDbContext();
         }
 
         public Context CreateEntityDbContext()
         {
-            return new Context(CreateDbContextOptions());
+            return dbContextFactory.CreateDbContext();
         }
     
 
@@ -29,7 +31,7 @@ namespace Tests
 
         public void Dispose()
         {
-            EntityDbContextSUT?.Dispose();
+            context?.Dispose();
         }
     }
 }

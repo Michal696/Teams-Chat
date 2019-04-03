@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Xunit;
-using Teams.Models.Entities;
+using Teams.DAL.Entities;
+
 
 namespace Tests
 {
@@ -24,8 +25,8 @@ namespace Tests
             };
 
             //Act
-            _testContext.EntityDbContextSUT.Messages.Add(messageEntity);
-            _testContext.EntityDbContextSUT.SaveChanges();
+            _testContext.context.Messages.Add(messageEntity);
+            _testContext.context.SaveChanges();
 
 
             //Assert

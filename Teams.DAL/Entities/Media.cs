@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
-    public class Media
+    public class Media : EntityBase
     {
         //public String Url { get; set; }
         //public Message Parent { get; set; }
