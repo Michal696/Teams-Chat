@@ -31,12 +31,12 @@ namespace Tests
             //Assert
             using (var dbx = _testContext.CreateEntityDbContext())
             {
-                var retrievedMessage = dbx.Messages.First(entity => entity.ID == messageEntity.ID);
+                var retrievedMessage = dbx.Messages.First(entity => entity.Id == messageEntity.Id);
 
                 // use this if possible // TODO to repair for greater precision
                 // Assert.Equal(messageEntity, retrievedMessage, messageEntity.DescriptionNameIdComparer);
 
-               Assert.Equal(messageEntity.ID, retrievedMessage.ID);
+               Assert.Equal(messageEntity.Id, retrievedMessage.Id);
             }
         }
 

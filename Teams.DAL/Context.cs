@@ -27,6 +27,8 @@ namespace Teams.Models
         public DbSet<GroupUserPermission> GroupsUserPermissions { get; set; }
         public DbSet<Media> Media { get; set; }
         public DbSet<Task>  Tasks { get; set; }
+        public DbSet<Team> Team { get; set; }
+        public DbSet<TeamMember> TeamMember { get; set; }
 
     }
 }
