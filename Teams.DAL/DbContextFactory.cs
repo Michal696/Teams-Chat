@@ -13,10 +13,6 @@ namespace Teams.DAL
         public Context CreateDbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<Context>();
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;
-              Initial Catalog = Teams;
-             MultipleActiveResultSets = True;
-               Integrated Security = True; ");
             return new Context(optionsBuilder.Options);
 
         }

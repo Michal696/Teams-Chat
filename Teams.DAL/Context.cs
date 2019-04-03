@@ -26,5 +26,18 @@ namespace Teams.DAL
         public DbSet<Team> Team { get; set; }
         public DbSet<TeamMember> TeamMember { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;
+              Initial Catalog = Teams;
+             MultipleActiveResultSets = True;
+               Integrated Security = True; ");
+        }
+
     }
 }
