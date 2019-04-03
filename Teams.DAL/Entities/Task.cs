@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Teams.DAL.Entities.Enums;
 
 namespace Teams.DAL.Entities
 {
@@ -15,15 +16,5 @@ namespace Teams.DAL.Entities
         public Group Group { get; set; }
 
 
-    }
-
-    public enum TaskState
-    {
-        NEW = 0,
-        WORKING_ON = 1,
-        TO_BE_TESTED = 2,
-        TESTED = 3,
-        DEPLOYED = 4,
-    
     }
 }
