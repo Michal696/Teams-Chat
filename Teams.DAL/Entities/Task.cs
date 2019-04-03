@@ -12,7 +12,7 @@ namespace Teams.Models.Entities
         public virtual ICollection<TaskStateChange> TaskStateChanges { get; set; }
 
         public TaskState State { get; set; }
-        public Group Group_ { get; set; }
+        public Group Group { get; set; }
 
 
     }
@@ -20,7 +20,7 @@ namespace Teams.Models.Entities
     public class TaskAssignment : EntityBase
     {
         public User Member { get; set; }
-        public Task Task_ { get; set; }
+        public Task Task { get; set; }
     }
 
     public class TaskStateChange : EntityBase
@@ -30,7 +30,7 @@ namespace Teams.Models.Entities
         public User Member { get; set; }
         public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
         public TaskState State { get; set; }
-        public Group Group_ { get; set; }
+        public Group Group { get; set; }
     }
 
     public enum TaskState
