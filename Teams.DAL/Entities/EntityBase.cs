@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
     public abstract class EntityBase
     {
         public Guid Id { get; set; }
-
-
     }
 }

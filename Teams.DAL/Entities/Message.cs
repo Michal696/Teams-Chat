@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
     public class Message : EntityBase
     {
@@ -11,7 +11,7 @@ namespace Teams.Models.Entities
         public String Text { get; set; }
         public User Member { get; set; }
         public Message Parent { get; set; }
-        public Group Group_ { get; set; }
+        public Group Group { get; set; }
 
         // for tests 
         private sealed class DescriptionNameIdEqualityComparer : IEqualityComparer<Message>

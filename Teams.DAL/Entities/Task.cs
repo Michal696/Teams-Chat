@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
     public class Task : EntityBase
     {
@@ -12,25 +12,9 @@ namespace Teams.Models.Entities
         public virtual ICollection<TaskStateChange> TaskStateChanges { get; set; }
 
         public TaskState State { get; set; }
-        public Group Group_ { get; set; }
+        public Group Group { get; set; }
 
 
-    }
-    
-    public class TaskAssignment : EntityBase
-    {
-        public User Member { get; set; }
-        public Task Task_ { get; set; }
-    }
-
-    public class TaskStateChange : EntityBase
-    {
-        public DateTime TimeStamp { get; set; }
-        public String Text { get; set; }
-        public User Member { get; set; }
-        public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
-        public TaskState State { get; set; }
-        public Group Group_ { get; set; }
     }
 
     public enum TaskState

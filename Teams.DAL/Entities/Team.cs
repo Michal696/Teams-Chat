@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
     public class Team : EntityBase
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
-    public class GroupUserPermission
+    public class GroupUserPermission : EntityBase
     {
-        public Group Group_ { get; set; }
+        public Group Group { get; set; }
 
         public User Member { get; set; }
         public Permission Permit { get; set; }
