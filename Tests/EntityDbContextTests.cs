@@ -15,6 +15,18 @@ namespace Tests
         }
 
         [Fact]
+        public void SuccessfulTest()
+        {
+            Assert.Equal(10, 5 + 5);
+        }
+
+        [Fact]
+        public void UnSuccessfulTest()
+        {
+            Assert.Equal(10, 4 + 5);
+        }
+
+        [Fact]
         public void AddMessageTest()
         {
             //Arrange
