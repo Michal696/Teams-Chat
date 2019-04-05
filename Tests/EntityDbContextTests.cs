@@ -2,22 +2,25 @@
 using System.Linq;
 using Xunit;
 using Teams.DAL.Entities;
-
+using Xunit.Abstractions;
 
 namespace Tests
 {
     public class EntityDbContextTests : IClassFixture<EntityDbContextTestsClassSetupFixture>
     {
+        private readonly ITestOutputHelper output;
         private readonly EntityDbContextTestsClassSetupFixture _testContext;
-        public EntityDbContextTests(EntityDbContextTestsClassSetupFixture testContext)
+        public EntityDbContextTests(EntityDbContextTestsClassSetupFixture testContext, ITestOutputHelper output)
         {
             _testContext = testContext;
+            this.output = output;
         }
 
         [Fact]
         public void SuccessfulTest()
         {
-            Assert.Equal(10, 5 + 5);
+            output.WriteLine("This should work");
+
         }
 
         [Fact]
