@@ -1,37 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using Teams.DAL;
-using Teams.DAL.Entities;
+    
 
 namespace Tests
 {
     public class EntityDbContextTestsClassSetupFixture : IDisposable
     {
-        public DbContextFactory dbContextFactory;
-        public Context context { get; set; }
+        public Context EntityDbContextSUT { get; set; }
 
         public EntityDbContextTestsClassSetupFixture()
         {
-            this.context = CreateEntityDbContext();
+            this.EntityDbContextSUT = CreateEntityDbContext();
         }
 
         public Context CreateEntityDbContext()
         {
-            return dbContextFactory.CreateDbContext();
+            return new Context(CreateDbContextOptions());
         }
-    
+
 
         private DbContextOptions<Context> CreateDbContextOptions()
         {
             var contextOptionsBuilder = new DbContextOptionsBuilder<Context>();
             contextOptionsBuilder.UseInMemoryDatabase("EntityTeams");
-            
+
             return contextOptionsBuilder.Options;
         }
 
         public void Dispose()
         {
-            context?.Dispose();
+            EntityDbContextSUT?.Dispose();
         }
     }
 }

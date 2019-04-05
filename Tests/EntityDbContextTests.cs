@@ -40,8 +40,8 @@ namespace Tests
             };
 
             //Act
-            _testContext.context.Messages.Add(messageEntity);
-            _testContext.context.SaveChanges();
+            _testContext.EntityDbContextSUT.Messages.Add(messageEntity);
+            _testContext.EntityDbContextSUT.SaveChanges();
 
 
             //Assert
