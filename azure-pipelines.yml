@@ -4,13 +4,13 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
 - develop
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'vs2017-win2016'
 
 steps:
+- script: dotnet restore
 - task: DotNetCoreInstaller@0
   inputs:
     version: '2.1.300' # replace this value with the version that you need for your project
@@ -18,12 +18,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    command: 'build'
+    command: build
     projects: '**/*.csproj'
-    arguments: '--configuration Release' # Update this to match your need
 
 - task: DotNetCoreCLI@2
+  displayName: CodeCoverage
   inputs:
-    command: 'test'
-    projects: '**/*Tests/*.csproj'
+    command: test
+    projects: 'Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
