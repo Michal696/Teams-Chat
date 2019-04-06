@@ -20,7 +20,7 @@ namespace Tests
         public void SuccessfulTest()
         {
             output.WriteLine("This should work");
-
+            Assert.Equal(10, 5 + 5);
         }
 
         [Fact]
