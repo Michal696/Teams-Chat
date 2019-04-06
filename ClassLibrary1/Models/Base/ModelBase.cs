@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Teams.DAL.Entities
+namespace Teams.BL.Models.Base
 {
-    public abstract class EntityBase
+    public abstract class ModelBase
     {
         public Guid Id { get; set; }
     }

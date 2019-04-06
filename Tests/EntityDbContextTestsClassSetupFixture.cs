@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using Teams.Models;
+using Teams.DAL;
+    
 
 namespace Tests
 {
@@ -17,13 +18,13 @@ namespace Tests
         {
             return new Context(CreateDbContextOptions());
         }
-    
+
 
         private DbContextOptions<Context> CreateDbContextOptions()
         {
             var contextOptionsBuilder = new DbContextOptionsBuilder<Context>();
             contextOptionsBuilder.UseInMemoryDatabase("EntityTeams");
-            
+
             return contextOptionsBuilder.Options;
         }
 

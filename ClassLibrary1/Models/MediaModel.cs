@@ -1,8 +1,9 @@
 ﻿using System;
+using Teams.BL.Models.Base;
 
-namespace Teams.DAL.Entities
+namespace Teams.BL.Models
 {
-    public class Media : EntityBase
+    public class MediaModel : ModelBase
     {
         //public String Url { get; set; }
         //public Message Parent { get; set; }

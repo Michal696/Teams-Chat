@@ -1,24 +1,18 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Teams.Models.Entities;
+using Teams;
+using Teams.DAL.Entities;
 
-namespace Teams.Models
+namespace Teams.DAL
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> contextOptions)
-               : base(contextOptions)
+        public Context()
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public Context(DbContextOptions<Context> options) : base(options)
         {
-            
-            optionsBuilder.UseSqlServer(
-            @"Data Source=(LocalDB)\MSSQLLocalDB;
-              Initial Catalog = Teams;
-             MultipleActiveResultSets = True;
-               Integrated Security = True; ");
         }
 
         public DbSet<Message> Messages { get; set; }
@@ -27,8 +21,24 @@ namespace Teams.Models
         public DbSet<GroupUserPermission> GroupsUserPermissions { get; set; }
         public DbSet<Media> Media { get; set; }
         public DbSet<Task>  Tasks { get; set; }
+        public DbSet<TaskStateChange> TaskStateChange { get; set; }
+        public DbSet<TaskAssignment> TaskAssignments { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<TeamMember> TeamMember { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        // inside code needs to be commented for entity tests to work
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;
+            //  Initial Catalog = Teams;
+            // MultipleActiveResultSets = True;
+            //   Integrated Security = True; ");
+        }
 
     }
 }

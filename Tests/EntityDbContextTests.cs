@@ -1,17 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Xunit;
-using Teams.Models.Entities;
+using Teams.DAL.Entities;
+using Xunit.Abstractions;
 
 namespace Tests
 {
     public class EntityDbContextTests : IClassFixture<EntityDbContextTestsClassSetupFixture>
     {
+        private readonly ITestOutputHelper output;
         private readonly EntityDbContextTestsClassSetupFixture _testContext;
-        public EntityDbContextTests(EntityDbContextTestsClassSetupFixture testContext)
+        public EntityDbContextTests(EntityDbContextTestsClassSetupFixture testContext, ITestOutputHelper output)
         {
             _testContext = testContext;
+            this.output = output;
         }
+
+        // TODO DELETE WHEN YOU SEE THIS and it is after 6.4.2019
+        //[Fact]
+        //public void SuccessfulTest()
+        //{
+        //    output.WriteLine("This should work");
+        //    Assert.Equal(10, 5 + 5);
+        //}
+
+        //[Fact]
+        //public void UnSuccessfulTest()
+        //{
+        //    Assert.Equal(10, 4 + 5);
+        //}
 
         [Fact]
         public void AddMessageTest()
@@ -33,10 +50,7 @@ namespace Tests
             {
                 var retrievedMessage = dbx.Messages.First(entity => entity.Id == messageEntity.Id);
 
-                // use this if possible // TODO to repair for greater precision
-                // Assert.Equal(messageEntity, retrievedMessage, messageEntity.DescriptionNameIdComparer);
-
-               Assert.Equal(messageEntity.Id, retrievedMessage.Id);
+                Assert.Equal(messageEntity, retrievedMessage, Message.DescriptionNameIdComparer);                
             }
         }
 

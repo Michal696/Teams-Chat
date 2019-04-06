@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using Teams.BL.Models.Base;
 
-namespace Teams.DAL.Entities
+namespace Teams.BL.Models
 {
-    public class Message : EntityBase
+    public class MessageModel : ModelBase
     {
 
         public String Title { get; set; }
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
-        public User Member { get; set; }
-        public Message Parent { get; set; }
-        public Group Group { get; set; }
+        public UserModel Member { get; set; }
+        public MessageModel Parent { get; set; }
+        public GroupModel Group { get; set; }
 
         // for tests 
-        private sealed class DescriptionNameIdEqualityComparer : IEqualityComparer<Message>
+        private sealed class DescriptionNameIdEqualityComparer : IEqualityComparer<MessageModel>
         {
-            public bool Equals(Message x, Message y)
+            public bool Equals(MessageModel x, MessageModel y)
             {
                 if (ReferenceEquals(x, y))
                 {
@@ -40,7 +41,7 @@ namespace Teams.DAL.Entities
                 return string.Equals(x.Text, y.Text) && string.Equals(x.Title, y.Title) && x.Id.Equals(y.Id);
             }
 
-            public int GetHashCode(Message obj)
+            public int GetHashCode(MessageModel obj)
             {
                 unchecked
                 {
@@ -52,7 +53,7 @@ namespace Teams.DAL.Entities
             }
         }
 
-        public static IEqualityComparer<Message> DescriptionNameIdComparer { get; } = new DescriptionNameIdEqualityComparer();
+        public static IEqualityComparer<MessageModel> DescriptionNameIdComparer { get; } = new DescriptionNameIdEqualityComparer();
 
 
     }

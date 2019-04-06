@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Teams.Models.Entities
+namespace Teams.DAL.Entities
 {
-    public class Group
+    public class Group : EntityBase
     {
         public String Name { get; set; }
         public String Description { get; set; }
