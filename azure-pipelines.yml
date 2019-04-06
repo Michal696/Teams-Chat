@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- develop
 
 pool:
   vmImage: 'Ubuntu-16.04'
@@ -17,12 +18,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    command: build
+    command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration Release' # Update this to match your need
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: test
+    command: 'test'
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
