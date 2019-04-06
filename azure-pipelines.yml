@@ -7,13 +7,15 @@ trigger:
 - develop
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'vs2017-win2016'
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: Intall
   inputs:
     version: '2.1.300' # replace this value with the version that you need for your project
+
+steps:
+- script: dotnet restore
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -25,5 +27,5 @@ steps:
   displayName: CodeCoverage
   inputs:
     command: test
-    projects: '**/*Tests/*.csproj'
+    projects: 'Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
