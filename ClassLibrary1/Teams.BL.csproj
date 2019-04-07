@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Factory\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
