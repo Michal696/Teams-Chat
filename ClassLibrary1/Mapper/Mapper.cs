@@ -4,7 +4,7 @@ using System.Text;
 using Teams.BL.Models;
 using Teams.DAL.Entities;
 
-namespace Teams.BL.Mapper
+namespace Teams.BL
 {
     internal static class Mapper
     {
@@ -83,7 +83,7 @@ namespace Teams.BL.Mapper
            };
         }
 
-        public static UserModel TeamEntityToTeamModel(User entity)
+        public static UserModel UserEntityToUserModel(User entity)
         {
             return new UserModel
             {
@@ -171,7 +171,7 @@ namespace Teams.BL.Mapper
             };
         }
 
-        public static User TeamModelToTeamEntity(UserModel entity)
+        public static User UserModelToUserEntity(UserModel entity)
         {
             return new User
             {
