@@ -8,14 +8,14 @@ using Teams.BL.Repositories;
 namespace Teams.BL.Tests
 
 {
-    //public class UserRepositoryTestsFixture
-    //{
-    //    private readonly IUserRepository repository;
-    //    public UserRepositoryTestsFixture()
-    //    {
-    //        repository = new UserRepository(new InMemoryDbContextFactory());
-    //    }
+    public class UserRepositoryTestsFixture
+    {
+        private readonly IUserRepository repository;
+        public UserRepositoryTestsFixture()
+        {
+            repository = new UserRepository(new InMemoryDbContextFactory());
+        }
 
-    //    public IUserRepository Repository => repository;
-    //}
+        public IUserRepository Repository => repository;
+    }
 }
