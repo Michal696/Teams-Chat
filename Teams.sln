@@ -13,6 +13,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.DAL", "Teams.DAL\Teams.DAL.csproj", "{BC5B5365-748A-4507-B5AC-4258BCD96019}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.BL", "ClassLibrary1\Teams.BL.csproj", "{AAFF7750-6C03-499D-B6A1-3F23143CF393}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BC5B5365-748A-4507-B5AC-4258BCD96019} = {BC5B5365-748A-4507-B5AC-4258BCD96019}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.BL.Tests", "Teams.BL.TestsFolder\Teams.BL.Tests.csproj", "{A150556A-B0F4-43A4-B823-A3FA81E83553}"
 EndProject

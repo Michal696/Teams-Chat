@@ -57,5 +57,11 @@
   <ItemGroup>
     <Folder Include="Repositories\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Teams.DAL\Teams.DAL.csproj">
+      <Project>{BC5B5365-748A-4507-B5AC-4258BCD96019}</Project>
+      <Name>Teams.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
