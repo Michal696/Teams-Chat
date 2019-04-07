@@ -50,17 +50,25 @@ namespace Teams.BL.Repositories
             }
         }
 
-        IEnumerable<TeamModel> ITeamsRepository.GetAll()
+        List<TeamModel> ITeamsRepository.GetAll()
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Team
+                    .Select(e => Mapper.TeamEntityToTeamModel(e)).ToList();
+            }
         }
 
         TeamModel ITeamsRepository.GetById(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Team.First(t => t.Id == Id);
+                return Mapper.TeamEntityToTeamModel(entity);
+            }
         }
 
-        IEnumerable<TeamModel> ITeamsRepository.GetByUser(Guid Id)
+        List<TeamModel> ITeamsRepository.GetByUser(Guid Id)
         {
             throw new NotImplementedException();
         }
