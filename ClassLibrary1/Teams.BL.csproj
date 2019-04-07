@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\Factory\Class1.cs" />
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\GroupUserPermissionModel.cs" />
     <Compile Include="Models\MediaModel.cs" />
@@ -55,7 +56,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Factory\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>

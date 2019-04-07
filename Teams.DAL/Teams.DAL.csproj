@@ -124,8 +124,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContextFactory.cs" />
-    <Compile Include="Context.cs" />
+    <Compile Include="DesignDbContextFactory.cs" />
+    <Compile Include="TeamsDbContext.cs" />
     <Compile Include="Entities\Enums\Permission.cs" />
     <Compile Include="Entities\Enums\TaskState.cs" />
     <Compile Include="Entities\TaskAssignment.cs" />
