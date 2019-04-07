@@ -17,6 +17,11 @@ namespace Teams.BL.Repositories
         {
             this.dbContextFactory = dbContextFactory;
         }
+
+        public GroupTaskRepository()
+        {
+
+        }
         public void AddUserToGroup(Guid UserId, Guid GroupId)
         {
             throw new NotImplementedException();

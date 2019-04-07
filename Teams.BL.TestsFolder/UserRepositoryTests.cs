@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Teams.BL.Models;
+using Teams.BL.Repositories;
 using Teams.BL.Tests;
 using Xunit;
 
@@ -12,6 +13,8 @@ namespace Teams.BL.Tests
     public class UserRepositoryTests : IClassFixture<UserRepositoryTestsFixture>
     {
         private readonly UserRepositoryTestsFixture fixture;
+        private UserRepository userRepositorySUT = new UserRepository();
+
 
         public UserRepositoryTests(UserRepositoryTestsFixture fixture)
         {

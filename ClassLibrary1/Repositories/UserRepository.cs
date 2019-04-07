@@ -17,6 +17,10 @@ namespace Teams.BL.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
+        public UserRepository()
+        {
+
+        }
 
         public UserModel Create(UserModel model)
         {

@@ -17,6 +17,10 @@ namespace Teams.BL.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
+        public TeamsRepository()
+        {
+
+        }
 
         void ITeamsRepository.AddUserToGroup(Guid GroupId, Guid UserId)
         {

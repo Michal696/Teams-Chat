@@ -18,6 +18,10 @@ namespace Teams.BL.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
+        public MessageRepository()
+        {
+
+        }
 
         public void AddMedia(Guid Id, MediaModel Media)
         {
