@@ -18,6 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.BL", "ClassLibrary1\T
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.BL.Tests", "Teams.BL.TestsFolder\Teams.BL.Tests.csproj", "{A150556A-B0F4-43A4-B823-A3FA81E83553}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70607F0D-EFD8-4E71-AAB6-1D9BEB205984} = {70607F0D-EFD8-4E71-AAB6-1D9BEB205984}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
