@@ -23,6 +23,7 @@ namespace Teams.BL.Repositories
 
         }
 
+
         public void AddMedia(Guid Id, MediaModel Media)
         {
             throw new NotImplementedException();
@@ -69,6 +70,11 @@ namespace Teams.BL.Repositories
         }
 
         public void Update(MessageModel Message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MessageModel GetMessageById(Guid Id)
         {
             throw new NotImplementedException();
         }

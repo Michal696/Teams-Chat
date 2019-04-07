@@ -140,6 +140,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageRepositoryTests.cs" />
+    <Compile Include="MessageRepositoryTestsFixture.cs" />
     <Compile Include="TeamsRepositoryTests.cs" />
     <Compile Include="TeamsRepositoryTestsFixture.cs" />
     <Compile Include="UserRepositoryTests.cs" />

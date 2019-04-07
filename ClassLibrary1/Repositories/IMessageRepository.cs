@@ -13,6 +13,7 @@ namespace Teams.BL.Repositories
         IEnumerable<MessageModel> GetGroupMessages(Guid Id);
         IEnumerable<MediaModel> GetGroupMedia(Guid Id);
         bool CheckMessageMedia(Guid Id);
+        MessageModel GetMessageById(Guid Id);
         IEnumerable<MediaModel> GetMessageMedias(Guid Id);
         MessageModel Create(MessageModel message);
         void Delete(Guid Id);
