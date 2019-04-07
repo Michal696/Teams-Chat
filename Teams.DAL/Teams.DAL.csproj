@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesignDbContextFactory.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="TeamsDbContext.cs" />
     <Compile Include="Entities\Enums\Permission.cs" />
     <Compile Include="Entities\Enums\TaskState.cs" />
