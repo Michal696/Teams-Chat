@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Teams.DAL;
 
-namespace CookBook.BL.Factories
+namespace Teams.BL.Factories
 {
     public interface IDbContextFactory
     {
