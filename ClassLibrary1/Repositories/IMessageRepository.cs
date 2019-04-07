@@ -14,6 +14,7 @@ namespace Teams.BL.Repositories
         List<MediaModel> GetGroupMedia(Guid Id);
         bool CheckMessageMedia(Guid Id);
         List<MediaModel> GetMessageMedias(Guid Id);
+        MessageModel GetMessageById(Guid Id);
         MessageModel Create(MessageModel message);
         void Delete(Guid Id);
         void Update(MessageModel Message);
