@@ -19,7 +19,7 @@ steps:
   inputs:
     restoreSolution: '*.sln'
     feedsToUse: config
-    nugetConfigPath: 'packages.config'
+    nugetConfigPath: '**/*.config'
 
 - task: DotNetCoreCLI@2
   displayName: Build
