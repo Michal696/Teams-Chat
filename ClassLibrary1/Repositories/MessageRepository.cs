@@ -33,7 +33,7 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Create(MessageModel message)
+        public MessageModel Create(MessageModel message)
         {
             throw new NotImplementedException();
         }

@@ -27,12 +27,12 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public void CreateGroup(GroupModel Group)
+        public GroupModel CreateGroup(GroupModel Group)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateTask(TaskModel Id)
+        public TaskModel CreateTask(TaskModel Id)
         {
             throw new NotImplementedException();
         }
