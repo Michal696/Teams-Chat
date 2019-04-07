@@ -140,6 +140,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TeamsRepositoryTestsFixture.cs" />
     <Compile Include="UserRepositoryTests.cs" />
     <Compile Include="InMemoryDbContextFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
