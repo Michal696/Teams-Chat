@@ -7,7 +7,7 @@ using Teams.BL.Models;
 
 namespace Teams.BL.Repositories
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         IEnumerable<UserModel> GetAll();
         UserModel Create(UserModel model);
