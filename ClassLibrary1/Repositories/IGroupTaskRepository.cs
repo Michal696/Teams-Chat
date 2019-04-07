@@ -13,12 +13,12 @@ namespace Teams.BL.Repositories
         List<GroupModel> GetAllGroups();
         List<GroupModel> GetTeamsGroups(Guid Id);
         List<TaskModel> GetGroupTasks(Guid Id);
-        void CreateGroup(GroupModel Group);
+        GroupModel CreateGroup(GroupModel Group);
         void DeleteGroup(Guid Id);
         void UpdateGroup(GroupModel Group);
-        void CreateTask(TaskModel Id);
+        TaskModel CreateTask(TaskModel Task);
         void DeleteTask(Guid Id);
-        void UpdateTask(TaskModel Id);
+        void UpdateTask(TaskModel Task);
         void AddUserToGroup(Guid UserId, Guid GroupId);
         List<TaskStateChangeModel> GetTaskChanges(Guid Id);
         List<Task> GetUserGroupTasks(Guid UserId, Guid GroupId);
