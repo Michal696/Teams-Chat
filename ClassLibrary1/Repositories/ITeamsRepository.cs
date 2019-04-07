@@ -12,7 +12,7 @@ namespace Teams.BL.Repositories
         IEnumerable<TeamModel> GetAll();
         TeamModel GetById(Guid Id);
         IEnumerable<TeamModel> GetByUser(Guid Id);
-        void Create(TeamModel Team);
+        TeamModel Create(TeamModel Team);
         void Delete(Guid Id);
         void Update(TeamModel Team);
         void AddUserToGroup(Guid GroupId, Guid UserId); /* TODO add permision */
