@@ -134,6 +134,7 @@
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\TaskAssignmentModel.cs" />
+    <Compile Include="Models\Enums\TaskState.cs" />
     <Compile Include="Models\TaskStateChangeModel.cs" />
     <Compile Include="Models\TeamModel.cs" />
     <Compile Include="Models\TeamMemberModel.cs" />
