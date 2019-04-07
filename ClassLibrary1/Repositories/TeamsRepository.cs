@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Teams.BL.Factories;
 using Teams.BL.Models;
+using Teams.BL;
 
 namespace Teams.BL.Repositories
 {
     public class TeamsRepository : ITeamsRepository
     {
         private readonly IDbContextFactory dbContextFactory;
+        Mapper Mapper = new Mapper();
 
         public TeamsRepository(IDbContextFactory dbContextFactory)
         {
@@ -27,39 +29,58 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        TeamModel ITeamsRepository.Create(TeamModel Team)
+        public  TeamModel Create(TeamModel Team)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = Mapper.TeamModelToTeamEntity(Team);
+                dbContext.Team.Add(entity);
+                dbContext.SaveChanges();
+                return Mapper.TeamEntityToTeamModel(entity);
+            }
         }
 
         void ITeamsRepository.Delete(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Team.First(t => t.Id == Id);
+                dbContext.Remove(entity);
+                dbContext.SaveChanges();
+            }
         }
 
-        IEnumerable<TeamModel> ITeamsRepository.GetAll()
+        List<TeamModel> ITeamsRepository.GetAll()
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Team
+                    .Select(e => Mapper.TeamEntityToTeamModel(e)).ToList();
+            }
         }
 
         TeamModel ITeamsRepository.GetById(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Team.First(t => t.Id == Id);
+                return Mapper.TeamEntityToTeamModel(entity);
+            }
         }
 
-        IEnumerable<TeamModel> ITeamsRepository.GetByUser(Guid Id)
+        List<TeamModel> ITeamsRepository.GetByUser(Guid Id)
         {
             throw new NotImplementedException();
         }
 
         void ITeamsRepository.Update(TeamModel Team)
         {
-            throw new NotImplementedException();
-        }
-
-        public TeamModel Create(TeamModel Team)
-        {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = Mapper.TeamModelToTeamEntity(Team);
+                dbContext.Team.Update(entity);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

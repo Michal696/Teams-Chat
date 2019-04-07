@@ -9,9 +9,9 @@ namespace Teams.BL.Repositories
 {
     public interface ITeamsRepository
     {
-        IEnumerable<TeamModel> GetAll();
+        List<TeamModel> GetAll();
         TeamModel GetById(Guid Id);
-        IEnumerable<TeamModel> GetByUser(Guid Id);
+        List<TeamModel> GetByUser(Guid Id);
         TeamModel Create(TeamModel Team);
         void Delete(Guid Id);
         void Update(TeamModel Team);
