@@ -22,7 +22,7 @@ namespace Teams.BL.Tests
         }
 
         [Fact]
-        public void Create_WithNonExistingItem_DoesNotThrow()
+        public void CreateUser()
         {
             var model = new UserModel
             {
@@ -32,8 +32,54 @@ namespace Teams.BL.Tests
             var returnedModel = fixture.Repository.Create(model);
             
             Assert.NotNull(returnedModel);
-
             fixture.Repository.Delete(returnedModel.Id);
         }
+        [Fact]
+        public void DeleteUser()
+        {
+            var model = new UserModel
+            {
+                Name = "TestUser - some random data"
+            };
+
+            var returnedModel = fixture.Repository.Create(model);
+
+            Assert.NotNull(returnedModel);
+            fixture.Repository.Delete(returnedModel.Id);
+            Assert.Null(returnedModel);
+        }
+
+        [Fact]
+        public void FindUserById()
+        {
+            var model = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestUser - some random data"
+            };
+
+            var returnedModel = fixture.Repository.Create(model);
+            Assert.NotNull(returnedModel);
+
+            var foundModel = fixture.Repository.GetById(model.Id);
+
+            fixture.Repository.Delete(returnedModel.Id);
+            Assert.Null(returnedModel);
+        }
+
+
+
+        [Fact]
+        public void CreateUserSUT()
+        {
+            var model = new UserModel
+            {
+                Name = "TestUser - some random data"
+            };
+            
+            Assert.NotNull(userRepositorySUT.Create(model));
+        }
+
+        
     }
 }
