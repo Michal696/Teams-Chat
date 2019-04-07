@@ -4,24 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Teams.BL.Models;
-using Teams.BL;
 
 namespace Teams.BL.Repositories
 {
     public interface IGroupTaskRepository
     {
-        List<GroupModel> GetAllGroups();
-        List<GroupModel> GetTeamsGroups(Guid Id);
-        List<TaskModel> GetGroupTasks(Guid Id);
+        IEnumerable<GroupModel> GetAllGroups();
+        IEnumerable<GroupModel> GetTeamsGroups(Guid Id);
+        IEnumerable<TaskModel> GetGroupTasks(Guid Id);
         GroupModel CreateGroup(GroupModel Group);
+        GroupModel GetByIdGroup(Guid Id);
+        TaskModel GetByIdTask(Guid Id);
         void DeleteGroup(Guid Id);
         void UpdateGroup(GroupModel Group);
-        TaskModel CreateTask(TaskModel Task);
+        TaskModel CreateTask(TaskModel Id);
         void DeleteTask(Guid Id);
-        void UpdateTask(TaskModel Task);
+        void UpdateTask(TaskModel Id);
         void AddUserToGroup(Guid UserId, Guid GroupId);
-        List<TaskStateChangeModel> GetTaskChanges(Guid Id);
-        List<Task> GetUserGroupTasks(Guid UserId, Guid GroupId);
+        IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id);
+        IEnumerable<Task> GetUserGroupTasks(Guid UserId, Guid GroupId);
 
     }
 }

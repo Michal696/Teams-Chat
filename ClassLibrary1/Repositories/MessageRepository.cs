@@ -12,6 +12,7 @@ namespace Teams.BL.Repositories
     public class MessageRepository : IMessageRepository
     {
         private readonly IDbContextFactory dbContextFactory;
+        Mapper Mapper = new Mapper();
 
         public MessageRepository(IDbContextFactory dbContextFactory)
         {
@@ -23,6 +24,7 @@ namespace Teams.BL.Repositories
 
         }
 
+
         public void AddMedia(Guid Id, MediaModel Media)
         {
             throw new NotImplementedException();
@@ -33,14 +35,25 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Create(MessageModel message)
+        public MessageModel Create(MessageModel message)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = Mapper.MessageModelToMessageEntity(message);
+                dbContext.Messages.Add(entity);
+                dbContext.SaveChanges();
+                return Mapper.MessageEntityToMessageModel(entity);
+            }
         }
 
         public void Delete(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Users.First(t => t.Id == Id);
+                dbContext.Remove(entity);
+                dbContext.SaveChanges();
+            }
         }
 
         public void DeleteMedia(Guid Id)
@@ -48,27 +61,41 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MessageModel> GetAll()
+        public List<MessageModel> GetAll()
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Messages
+                    .Select(e => Mapper.MessageEntityToMessageModel(e)).ToList();
+            }
+        }
+
+        public List<MediaModel> GetGroupMedia(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MediaModel> GetGroupMedia(Guid Id)
+        public List<MessageModel> GetGroupMessages(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MessageModel> GetGroupMessages(Guid Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<MediaModel> GetMessageMedias(Guid Id)
+        public List<MediaModel> GetMessageMedias(Guid Id)
         {
             throw new NotImplementedException();
         }
 
         public void Update(MessageModel Message)
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = Mapper.MessageModelToMessageEntity(Message);
+                dbContext.Messages.Update(entity);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public MessageModel GetMessageById(Guid Id)
         {
             throw new NotImplementedException();
         }

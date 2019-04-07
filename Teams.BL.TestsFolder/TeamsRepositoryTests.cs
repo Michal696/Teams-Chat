@@ -10,36 +10,33 @@ using Xunit;
 
 namespace Teams.BL.Tests
 {
-    public class UserRepositoryTests : IClassFixture<UserRepositoryTestsFixture>
+    public class TeamsRepositoryTests : IClassFixture<TeamsRepositoryTestsFixture>
     {
-        private readonly UserRepositoryTestsFixture fixture;
-        private UserRepository userRepositorySUT = new UserRepository();
+        private readonly TeamsRepositoryTestsFixture fixture;
 
-
-        public UserRepositoryTests(UserRepositoryTestsFixture fixture)
+        public TeamsRepositoryTests(TeamsRepositoryTestsFixture fixture)
         {
             this.fixture = fixture;
         }
 
         [Fact]
-        public void CreateUser()
+        public void CreateTeams()
         {
-            var model = new UserModel
+            var model = new TeamModel
             {
-                Name = "TestUser - some random data"
+                Name = "TestTeams - some random data"
             };
-
             var returnedModel = fixture.Repository.Create(model);
             // New Test
             Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
         }
         [Fact]
-        public void DeleteUser()
+        public void DeleteTeams()
         {
-            var model = new UserModel
+            var model = new TeamModel
             {
-                Name = "TestUser - some random data"
+                Name = "TestTeams - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -51,12 +48,12 @@ namespace Teams.BL.Tests
         }
 
         [Fact]
-        public void FindUserById_NotNull()
+        public void FindTeamsById_NotNull()
         {
-            var model = new UserModel
+            var model = new TeamModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
+                Name = "TestTeams - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -69,16 +66,16 @@ namespace Teams.BL.Tests
             fixture.Repository.Delete(returnedModel.Id);
             Assert.Null(returnedModel);
 
-            
+
         }
 
         [Fact]
-        public void FindUserById_Values()
+        public void FindTeamsById_Values()
         {
-            var model = new UserModel
+            var model = new TeamModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
+                Name = "TestTeams - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -96,12 +93,12 @@ namespace Teams.BL.Tests
         }
 
         [Fact]
-        public void UserGetAll_NotNull()
+        public void TeamsGetAll_NotNull()
         {
-            var model = new UserModel
+            var model = new TeamModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
+                Name = "TestTeams - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -118,7 +115,7 @@ namespace Teams.BL.Tests
         {
 
             Guid testId = Guid.NewGuid();
-            var model = new UserModel
+            var model = new TeamModel
             {
                 Id = testId,
                 Name = "FirstName"
@@ -143,5 +140,12 @@ namespace Teams.BL.Tests
 
 
         }
+
+
+
+
+
+
+
     }
 }
