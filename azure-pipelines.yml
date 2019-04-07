@@ -20,7 +20,7 @@ steps:
     command: restore
     projects: '**/*.csproj'
     feedsToUse: config
-    nugetConfigPath: '**/packages.config'    # Relative to root of the repository
+    nugetConfigPath: Teams/packages.config
     #externalFeedCredentials: <Name of the NuGet service connection>
 
 - task: DotNetCoreCLI@2
