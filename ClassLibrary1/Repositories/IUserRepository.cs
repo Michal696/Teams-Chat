@@ -7,9 +7,10 @@ using Teams.BL.Models;
 
 namespace Teams.BL.Repositories
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
-        IEnumerable<UserModel> GetAll();
+        List<UserModel> GetAll();
+        UserModel GetById(Guid Id);
         UserModel Create(UserModel model);
         void Update(UserModel model);
         void Delete(Guid id);

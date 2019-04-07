@@ -11,7 +11,6 @@ namespace Teams.BL.Models
     {
         public String Name { get; set; }
         public String Description { get; set; }
-        public virtual ICollection<GroupUserPermissionModel> GroupUserPermissions { get; set; }
-        public TeamModel Team { get; set; }
+     
     }
 }

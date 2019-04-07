@@ -140,9 +140,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GroupTaskRepositoryTests.cs" />
+    <Compile Include="GroupTaskRepositoryTestsFixture.cs" />
+    <Compile Include="MessageRepositoryTests.cs" />
+    <Compile Include="MessageRepositoryTestsFixture.cs" />
+    <Compile Include="TeamsRepositoryTests.cs" />
+    <Compile Include="TeamsRepositoryTestsFixture.cs" />
+    <Compile Include="UserRepositoryTests.cs" />
     <Compile Include="InMemoryDbContextFactory.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRepositoryTestsFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
