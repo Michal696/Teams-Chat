@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams", "Teams\Teams.csproj", "{BE77F1A3-89DC-42F0-B5B1-F9DEBA281D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{70607F0D-EFD8-4E71-AAB6-1D9BEB205984}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.DAL.Tests", "Tests\Teams.DAL.Tests.csproj", "{70607F0D-EFD8-4E71-AAB6-1D9BEB205984}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BE77F1A3-89DC-42F0-B5B1-F9DEBA281D04} = {BE77F1A3-89DC-42F0-B5B1-F9DEBA281D04}
 	EndProjectSection
