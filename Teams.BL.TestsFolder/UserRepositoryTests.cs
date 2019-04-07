@@ -30,7 +30,7 @@ namespace Teams.BL.Tests
             };
 
             var returnedModel = fixture.Repository.Create(model);
-            
+            // New Test
             Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
         }
@@ -46,11 +46,34 @@ namespace Teams.BL.Tests
 
             Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
+            // New Test
             Assert.Null(returnedModel);
         }
 
         [Fact]
-        public void FindUserById()
+        public void FindUserById_NotNull()
+        {
+            var model = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestUser - some random data"
+            };
+
+            var returnedModel = fixture.Repository.Create(model);
+            Assert.NotNull(returnedModel);
+
+            var foundModel = fixture.Repository.GetById(model.Id);
+            // New Test
+            Assert.NotNull(foundModel);
+
+            fixture.Repository.Delete(returnedModel.Id);
+            Assert.Null(returnedModel);
+
+            
+        }
+
+        [Fact]
+        public void FindUserById_Values()
         {
             var model = new UserModel
             {
@@ -63,11 +86,13 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetById(model.Id);
             Assert.NotNull(foundModel);
+            // New Test
+            Assert.Equal(model.Name, foundModel.Name);
 
             fixture.Repository.Delete(returnedModel.Id);
             Assert.Null(returnedModel);
 
-            
+
         }
 
         [Fact]
@@ -80,23 +105,48 @@ namespace Teams.BL.Tests
             };
 
             var returnedModel = fixture.Repository.Create(model);
-
+            // New Test
             Assert.NotNull(fixture.Repository.GetAll());
-        }
 
+            fixture.Repository.Delete(returnedModel.Id);
+            Assert.Null(returnedModel);
+        }
 
 
         [Fact]
-        public void CreateUserSUT()
+        public void UpdateWithModel()
         {
+
+            Guid testId = Guid.NewGuid();
             var model = new UserModel
             {
-                Name = "TestUser - some random data"
+                Id = testId,
+                Name = "FirstName"
             };
-            
-            Assert.NotNull(userRepositorySUT.Create(model));
+
+            var returnedModelCreated = fixture.Repository.Create(model);
+            Assert.NotNull(returnedModelCreated);
+
+            String secondName = "SecondName";
+            model.Name = secondName;
+            fixture.Repository.Update(model);
+
+            var foundModel = fixture.Repository.GetById(model.Id);
+            Assert.NotNull(foundModel);
+
+            // New Test
+            Assert.NotEqual(returnedModelCreated.Name, foundModel.Name);
+            Assert.Equal(foundModel.Name, secondName);
+
+            fixture.Repository.Delete(returnedModelCreated.Id);
+            Assert.Null(returnedModelCreated);
+
+
         }
 
-        
+
+
+
+
     }
 }
