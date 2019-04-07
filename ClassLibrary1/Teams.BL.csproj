@@ -125,6 +125,7 @@
     <Compile Include="Factory\IDbContextFactory.cs" />
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\GroupUserPermissionModel.cs" />
+    <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\TaskAssignmentModel.cs" />

@@ -6,7 +6,7 @@ namespace Teams.DAL.Entities
     {
 
         public Message Parent { get; set; }
-        public byte[] data;
+        public byte[] Data { get; set; }
 
     }
 }
