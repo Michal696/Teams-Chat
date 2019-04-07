@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Teams.BL.Factories;
 using Teams.BL.Models;
 using Teams.BL.Repositories;
+using Teams.BL;
 
 namespace Teams.BL.Repositories
 {
     public class GroupTaskRepository : IGroupTaskRepository
     {
         private readonly IDbContextFactory dbContextFactory;
+        public Mapper mapper = new Mapper();
 
         public GroupTaskRepository(IDbContextFactory dbContextFactory)
         {
@@ -47,27 +49,35 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<GroupModel> GetAllGroups()
+        public List<GroupModel> GetAllGroups()
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var groupEntities = dbContext.Groups.ToList();
+                return groupEntities.Select(mapper.GroupEntityToGroupModel).ToList();
+            }
+        }
+
+        public List<TaskModel> GetGroupTasks(Guid Id)
+        {
+            //throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+
+            }
+        }
+
+        public List<TaskStateChangeModel> GetTaskChanges(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TaskModel> GetGroupTasks(Guid Id)
+        public List<GroupModel> GetTeamsGroups(Guid Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<GroupModel> GetTeamsGroups(Guid Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Task> GetUserGroupTasks(Guid UserId, Guid GroupId)
+        public List<Task> GetUserGroupTasks(Guid UserId, Guid GroupId)
         {
             throw new NotImplementedException();
         }

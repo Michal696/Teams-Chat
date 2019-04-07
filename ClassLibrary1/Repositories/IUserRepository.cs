@@ -9,7 +9,7 @@ namespace Teams.BL.Repositories
 {
     public interface IUserRepository
     {
-        IEnumerable<UserModel> GetAll();
+        List<UserModel> GetAll();
         UserModel GetById(Guid Id);
         UserModel Create(UserModel model);
         void Update(UserModel model);

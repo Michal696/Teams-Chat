@@ -6,9 +6,9 @@ using Teams.DAL.Entities;
 
 namespace Teams.BL
 {
-    internal static class Mapper
+    public class Mapper
     {
-        public static GroupModel GroupEntityToGroupModel (Group entity)
+        public GroupModel GroupEntityToGroupModel (Group entity)
         {
             return new GroupModel
             {
@@ -18,7 +18,7 @@ namespace Teams.BL
             };
         }
 
-        public static GroupUserPermissionModel GroupUserPermissionsEntityToGroupUserPermissionsModel(GroupUserPermission entity)
+        public GroupUserPermissionModel GroupUserPermissionsEntityToGroupUserPermissionsModel(GroupUserPermission entity)
         {
             return new GroupUserPermissionModel
             {
@@ -27,7 +27,7 @@ namespace Teams.BL
             };
         }
 
-        public static MessageModel MessageEntityToMessageModel(Message entity)
+        public MessageModel MessageEntityToMessageModel(Message entity)
         {
             return new MessageModel
             {
@@ -38,7 +38,7 @@ namespace Teams.BL
             };
         }
 
-        public static TaskAssignmentModel TaskAssignmentEntityToTaskAssignmentModel(TaskAssignment entity)
+        public TaskAssignmentModel TaskAssignmentEntityToTaskAssignmentModel(TaskAssignment entity)
         {
             return new TaskAssignmentModel
             {
@@ -46,7 +46,7 @@ namespace Teams.BL
             };
         }
 
-        public static TaskModel TaskEntityToTaskModel(Task entity)
+        public TaskModel TaskEntityToTaskModel(Task entity)
         {
             return new TaskModel
             {
@@ -56,7 +56,7 @@ namespace Teams.BL
             };
         }
 
-        public static TaskStateChangeModel TaskStateChangeEntityToTaskStateChangeModel(TaskStateChange entity)
+        public TaskStateChangeModel TaskStateChangeEntityToTaskStateChangeModel(TaskStateChange entity)
         {
             return new TaskStateChangeModel
             {
@@ -66,7 +66,7 @@ namespace Teams.BL
             };
         }
 
-        public static TeamMemberModel TeamMemberEntityToTeamMemberModel(TeamMember entity)
+        public TeamMemberModel TeamMemberEntityToTeamMemberModel(TeamMember entity)
         {
             return new TeamMemberModel
             {
@@ -74,7 +74,7 @@ namespace Teams.BL
             };
         }
 
-        public static TeamModel TeamEntityToTeamModel(Team entity)
+        public TeamModel TeamEntityToTeamModel(Team entity)
         {
             return new TeamModel
             {
@@ -83,7 +83,7 @@ namespace Teams.BL
            };
         }
 
-        public static UserModel UserEntityToUserModel(User entity)
+        public UserModel UserEntityToUserModel(User entity)
         {
             return new UserModel
             {
@@ -96,7 +96,7 @@ namespace Teams.BL
             };
         }
 
-        public static Group GroupModelToGroupEntity(GroupModel model)
+        public Group GroupModelToGroupEntity(GroupModel model)
         {
             return new Group
             {
@@ -106,7 +106,7 @@ namespace Teams.BL
             };
         }
 
-        public static GroupUserPermission GroupUserPermissionsModelToGroupUserPermissionsEntity(GroupUserPermissionModel model)
+        public GroupUserPermission GroupUserPermissionsModelToGroupUserPermissionsEntity(GroupUserPermissionModel model)
         {
             return new GroupUserPermission
             {
@@ -115,7 +115,7 @@ namespace Teams.BL
             };
         }
 
-        public static Message MessageModelToMessageEntity(MessageModel model)
+        public Message MessageModelToMessageEntity(MessageModel model)
         {
             return new Message
             {
@@ -126,7 +126,7 @@ namespace Teams.BL
             };
         }
 
-        public static TaskAssignment TaskAssignmentModelToTaskAssignmentEntity(TaskAssignmentModel model)
+        public TaskAssignment TaskAssignmentModelToTaskAssignmentEntity(TaskAssignmentModel model)
         {
             return new TaskAssignment
             {
@@ -134,7 +134,7 @@ namespace Teams.BL
             };
         }
 
-        public static Task TaskModelToTaskEntity(TaskModel model)
+        public Task TaskModelToTaskEntity(TaskModel model)
         {
             return new Task
             {
@@ -144,7 +144,7 @@ namespace Teams.BL
             };
         }
 
-        public static TaskStateChange TaskStateChangeModelToTaskStateChangeEntity(TaskStateChangeModel model)
+        public TaskStateChange TaskStateChangeModelToTaskStateChangeEntity(TaskStateChangeModel model)
         {
             return new TaskStateChange
             {
@@ -162,7 +162,7 @@ namespace Teams.BL
             };
         }
 
-        public static Team TeamModelToTeamEntity(TeamModel entity)
+        public Team TeamModelToTeamEntity(TeamModel entity)
         {
             return new Team
             {
@@ -171,7 +171,7 @@ namespace Teams.BL
             };
         }
 
-        public static User UserModelToUserEntity(UserModel entity)
+        public User UserModelToUserEntity(UserModel entity)
         {
             return new User
             {
