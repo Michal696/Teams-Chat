@@ -7,22 +7,22 @@ namespace Tests
 {
     public class EntityDbContextTestsClassSetupFixture : IDisposable
     {
-        public Context EntityDbContextSUT { get; set; }
+        public TeamsDbContext EntityDbContextSUT { get; set; }
 
         public EntityDbContextTestsClassSetupFixture()
         {
             this.EntityDbContextSUT = CreateEntityDbContext();
         }
 
-        public Context CreateEntityDbContext()
+        public TeamsDbContext CreateEntityDbContext()
         {
-            return new Context(CreateDbContextOptions());
+            return new TeamsDbContext(CreateDbContextOptions());
         }
 
 
-        private DbContextOptions<Context> CreateDbContextOptions()
+        private DbContextOptions<TeamsDbContext> CreateDbContextOptions()
         {
-            var contextOptionsBuilder = new DbContextOptionsBuilder<Context>();
+            var contextOptionsBuilder = new DbContextOptionsBuilder<TeamsDbContext>();
             contextOptionsBuilder.UseInMemoryDatabase("EntityTeams");
 
             return contextOptionsBuilder.Options;

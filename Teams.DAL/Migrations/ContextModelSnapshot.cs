@@ -8,7 +8,7 @@ using Teams.DAL;
 
 namespace Teams.DAL.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(TeamsDbContext))]
     partial class ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

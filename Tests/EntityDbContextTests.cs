@@ -17,19 +17,6 @@ namespace Tests
         }
 
         [Fact]
-        public void SuccessfulTest()
-        {
-            output.WriteLine("This should work");
-
-        }
-
-        [Fact]
-        public void UnSuccessfulTest()
-        {
-            Assert.Equal(10, 4 + 5);
-        }
-
-        [Fact]
         public void AddMessageTest()
         {
             //Arrange
@@ -49,10 +36,40 @@ namespace Tests
             {
                 var retrievedMessage = dbx.Messages.First(entity => entity.Id == messageEntity.Id);
 
-                // use this if possible // TODO to repair for greater precision
-                Assert.Equal(messageEntity, retrievedMessage, Message.DescriptionNameIdComparer);
+                Assert.Equal(messageEntity, retrievedMessage, Message.DescriptionNameIdComparer);                  
+            }
+        }
 
-               //Assert.Equal(messageEntity.Id, retrievedMessage.Id);
+        [Fact]
+        public void AddMessageWithUser()
+        {
+            //Arrange
+            var messageEntity = new Message
+            {
+                Title = "testTitle",
+                Member = new User()
+                {
+                    Name = "testTitleForUser",
+                    Password = "NotEncryptedPassword"
+                }
+
+
+                
+            };
+
+            //Act
+            _testContext.EntityDbContextSUT.Messages.Add(messageEntity);
+            _testContext.EntityDbContextSUT.SaveChanges();
+
+
+            //Assert
+            using (var dbx = _testContext.CreateEntityDbContext())
+            {
+                var retrievedMessage = dbx.Messages
+                                    .First(entity => entity.Id == messageEntity.Id);
+                
+
+                Assert.Equal(messageEntity, retrievedMessage, Message.DescriptionNameIdComparer);
             }
         }
 

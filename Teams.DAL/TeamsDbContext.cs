@@ -5,13 +5,13 @@ using Teams.DAL.Entities;
 
 namespace Teams.DAL
 {
-    public class Context : DbContext
+    public class TeamsDbContext : DbContext
     {
-        public Context()
+        public TeamsDbContext()
         {
         }
 
-        public Context(DbContextOptions<Context> options) : base(options)
+        public TeamsDbContext(DbContextOptions<TeamsDbContext> options) : base(options)
         {
         }
 
@@ -31,12 +31,13 @@ namespace Teams.DAL
             base.OnModelCreating(modelBuilder);
         }
 
+        // inside code needs to be commented for entity tests to work
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;
-              Initial Catalog = Teams;
-             MultipleActiveResultSets = True;
-               Integrated Security = True; ");
+            //optionsBuilder.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;
+            //  Initial Catalog = Teams;
+            // MultipleActiveResultSets = True;
+            //   Integrated Security = True; ");
         }
 
     }
