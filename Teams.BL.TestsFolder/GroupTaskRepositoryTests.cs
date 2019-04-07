@@ -142,5 +142,124 @@ namespace Teams.BL.Tests
 
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [Fact]
+        public void CreateTaskTask()
+        {
+            var model = new TaskModel
+            {
+                Text = "TestTask - some random data"
+            };
+
+            var returnedModel = fixture.Repository.CreateTask(model);
+            // New Test
+            Assert.NotNull(returnedModel);
+            fixture.Repository.DeleteTask(returnedModel.Id);
+        }
+        [Fact]
+        public void DeleteTaskTask()
+        {
+            var model = new TaskModel
+            {
+                Text = "TestTask - some random data"
+            };
+
+            var returnedModel = fixture.Repository.CreateTask(model);
+
+            Assert.NotNull(returnedModel);
+            fixture.Repository.DeleteTask(returnedModel.Id);
+            // New Test
+            Assert.Null(returnedModel);
+        }
+
+        [Fact]
+        public void FindTaskById_NotNull()
+        {
+            var model = new TaskModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "TestTask - some random data"
+            };
+
+            var returnedModel = fixture.Repository.CreateTask(model);
+            Assert.NotNull(returnedModel);
+
+            var foundModel = fixture.Repository.GetByIdTask(model.Id);
+            // New Test
+            Assert.NotNull(foundModel);
+
+            fixture.Repository.DeleteTask(returnedModel.Id);
+            Assert.Null(returnedModel);
+
+
+        }
+
+        [Fact]
+        public void FindTaskById_Values()
+        {
+            var model = new TaskModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "TestTask - some random data"
+            };
+
+            var returnedModel = fixture.Repository.CreateTask(model);
+            Assert.NotNull(returnedModel);
+
+            var foundModel = fixture.Repository.GetByIdTask(model.Id);
+            Assert.NotNull(foundModel);
+            // New Test
+            Assert.Equal(model.Text, foundModel.Text);
+
+            fixture.Repository.DeleteTask(returnedModel.Id);
+            Assert.Null(returnedModel);
+
+
+        }
+
+        
+
+        [Fact]
+        public void UpdateWithTaskModel()
+        {
+
+            Guid testId = Guid.NewGuid();
+            var model = new TaskModel
+            {
+                Id = testId,
+                Text = "FirstText"
+            };
+
+            var returnedModelCreateTaskd = fixture.Repository.CreateTask(model);
+            Assert.NotNull(returnedModelCreateTaskd);
+
+            String secondText = "SecondText";
+            model.Text = secondText;
+            fixture.Repository.UpdateTask(model);
+
+            var foundModel = fixture.Repository.GetByIdTask(model.Id);
+            Assert.NotNull(foundModel);
+
+            // New Test
+            Assert.NotEqual(returnedModelCreateTaskd.Text, foundModel.Text);
+            Assert.Equal(foundModel.Text, secondText);
+
+            fixture.Repository.DeleteTask(returnedModelCreateTaskd.Id);
+            Assert.Null(returnedModelCreateTaskd);
+
+
+        }
     }
 }
