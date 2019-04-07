@@ -62,9 +62,26 @@ namespace Teams.BL.Tests
             Assert.NotNull(returnedModel);
 
             var foundModel = fixture.Repository.GetById(model.Id);
+            Assert.NotNull(foundModel);
 
             fixture.Repository.Delete(returnedModel.Id);
             Assert.Null(returnedModel);
+
+            
+        }
+
+        [Fact]
+        public void UserGetAll_NotNull()
+        {
+            var model = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestUser - some random data"
+            };
+
+            var returnedModel = fixture.Repository.Create(model);
+
+            Assert.NotNull(fixture.Repository.GetAll());
         }
 
 

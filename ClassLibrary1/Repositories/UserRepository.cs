@@ -37,7 +37,7 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public UserModel GetById(int Id)
+        public UserModel GetById(Guid Id)
         {
             throw new NotImplementedException();
         }
