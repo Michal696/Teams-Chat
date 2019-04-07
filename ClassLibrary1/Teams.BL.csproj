@@ -126,8 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Base\ModelBase.cs" />
-    <Compile Include="Models\Factory\DbContextFactory.cs" />
-    <Compile Include="Models\Factory\IDbContextFactory.cs" />
+    <Compile Include="Factory\DbContextFactory.cs" />
+    <Compile Include="Factory\IDbContextFactory.cs" />
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\GroupUserPermissionModel.cs" />
     <Compile Include="Models\MediaModel.cs" />
