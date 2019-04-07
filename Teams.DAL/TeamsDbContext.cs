@@ -5,13 +5,13 @@ using Teams.DAL.Entities;
 
 namespace Teams.DAL
 {
-    public class Context : DbContext
+    public class TeamsDbContext : DbContext
     {
-        public Context()
+        public TeamsDbContext()
         {
         }
 
-        public Context(DbContextOptions<Context> options) : base(options)
+        public TeamsDbContext(DbContextOptions<TeamsDbContext> options) : base(options)
         {
         }
 

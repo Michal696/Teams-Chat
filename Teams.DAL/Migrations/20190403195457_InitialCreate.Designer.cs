@@ -9,7 +9,7 @@ using Teams.DAL;
 
 namespace Teams.DAL.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(TeamsDbContext))]
     [Migration("20190403195457_InitialCreate")]
     partial class InitialCreate
     {
