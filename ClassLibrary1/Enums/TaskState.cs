@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Teams.DAL.Entities.Enums
+namespace Teams.BL.Enums
 {
     public enum TaskState
     {
@@ -13,5 +13,6 @@ namespace Teams.DAL.Entities.Enums
         TO_BE_TESTED = 2,
         TESTED = 3,
         DEPLOYED = 4,
+
     }
 }

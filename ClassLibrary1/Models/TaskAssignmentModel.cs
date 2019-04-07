@@ -9,7 +9,6 @@ namespace Teams.BL.Models
 {
     public class TaskAssignmentModel : ModelBase
     {
-        public UserModel Member { get; set; }
-        public TaskModel Task { get; set; }
+       
     }
 }
