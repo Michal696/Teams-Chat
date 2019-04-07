@@ -142,7 +142,6 @@
   <ItemGroup>
     <Compile Include="UserRepositoryTests.cs" />
     <Compile Include="InMemoryDbContextFactory.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserRepositoryTestsFixture.cs" />
   </ItemGroup>
