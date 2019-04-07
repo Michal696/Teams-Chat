@@ -7,7 +7,7 @@ using Teams.BL.Models;
 
 namespace Teams.BL.Repositories
 {
-    interface ITeamsRepository
+    public interface ITeamsRepository
     {
         IEnumerable<TeamModel> GetAll();
         TeamModel GetById(Guid Id);

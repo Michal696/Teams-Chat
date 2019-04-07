@@ -7,7 +7,7 @@ using Teams.BL.Models;
 
 namespace Teams.BL.Repositories
 {
-    interface IMessageRepository
+    public interface IMessageRepository
     {
         IEnumerable<MessageModel> GetAll();
         IEnumerable<MessageModel> GetGroupMessages(Guid Id);

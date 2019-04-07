@@ -7,7 +7,7 @@ using Teams.BL.Models;
 
 namespace Teams.BL.Repositories
 {
-    interface IGroupTaskRepository
+    public interface IGroupTaskRepository
     {
         IEnumerable<GroupModel> GetAllGroups();
         IEnumerable<GroupModel> GetTeamsGroups(Guid Id);
