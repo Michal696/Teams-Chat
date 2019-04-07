@@ -27,7 +27,7 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        void ITeamsRepository.Create(TeamModel Team)
+        TeamModel ITeamsRepository.Create(TeamModel Team)
         {
             throw new NotImplementedException();
         }
@@ -53,6 +53,11 @@ namespace Teams.BL.Repositories
         }
 
         void ITeamsRepository.Update(TeamModel Team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TeamModel Create(TeamModel Team)
         {
             throw new NotImplementedException();
         }

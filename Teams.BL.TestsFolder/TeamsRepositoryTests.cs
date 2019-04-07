@@ -141,6 +141,30 @@ namespace Teams.BL.Tests
 
         }
 
+        [Fact]
+        public void GetTeamByUserId()
+        {
+            Guid testIdForUser = Guid.NewGuid();
+            var userModel = new UserModel
+            {
+                Id = testIdForUser,
+                Name = "FirstName"
+            };
+
+            Guid testIdForTeam = Guid.NewGuid();
+            var teamModel = new TeamModel
+            {
+                Id = testIdForTeam,
+                Name = "NameOfFirstTeam"
+            };
+
+
+            
+            
+
+
+        }
+
 
 
 
