@@ -24,6 +24,7 @@ namespace Teams.BL.Repositories
 
         }
 
+
         public void AddMedia(Guid Id, MediaModel Media)
         {
             throw new NotImplementedException();
@@ -92,6 +93,11 @@ namespace Teams.BL.Repositories
                 dbContext.Messages.Update(entity);
                 dbContext.SaveChanges();
             }
+        }
+
+        public MessageModel GetMessageById(Guid Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

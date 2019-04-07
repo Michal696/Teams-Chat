@@ -29,12 +29,12 @@ namespace Teams.BL.Repositories
             throw new NotImplementedException();
         }
 
-        public void CreateGroup(GroupModel Group)
+        public GroupModel CreateGroup(GroupModel Group)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateTask(TaskModel Id)
+        public TaskModel CreateTask(TaskModel Id)
         {
             throw new NotImplementedException();
         }
@@ -88,6 +88,16 @@ namespace Teams.BL.Repositories
         }
 
         public void UpdateTask(TaskModel Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GroupModel GetByIdGroup(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TaskModel GetByIdTask(Guid Id)
         {
             throw new NotImplementedException();
         }

@@ -10,36 +10,34 @@ using Xunit;
 
 namespace Teams.BL.Tests
 {
-    public class UserRepositoryTests : IClassFixture<UserRepositoryTestsFixture>
+    public class MessageRepositoryTests : IClassFixture<MessageRepositoryTestsFixture>
     {
-        private readonly UserRepositoryTestsFixture fixture;
-        private UserRepository userRepositorySUT = new UserRepository();
+        private readonly MessageRepositoryTestsFixture fixture;
 
-
-        public UserRepositoryTests(UserRepositoryTestsFixture fixture)
+        public MessageRepositoryTests(MessageRepositoryTestsFixture fixture)
         {
             this.fixture = fixture;
         }
 
         [Fact]
-        public void CreateUser()
+        public void CreateMessage()
         {
-            var model = new UserModel
+            var model = new MessageModel
             {
-                Name = "TestUser - some random data"
+                
+                Text = "TestMessage - some random data"
             };
-
             var returnedModel = fixture.Repository.Create(model);
             // New Test
             Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
         }
         [Fact]
-        public void DeleteUser()
+        public void DeleteMessage()
         {
-            var model = new UserModel
+            var model = new MessageModel
             {
-                Name = "TestUser - some random data"
+                Text = "TestMessage - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -51,43 +49,43 @@ namespace Teams.BL.Tests
         }
 
         [Fact]
-        public void FindUserById_NotNull()
+        public void FindMessageById_NotNull()
         {
-            var model = new UserModel
+            var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
+                Text = "TestMessage - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
             Assert.NotNull(returnedModel);
 
-            var foundModel = fixture.Repository.GetById(model.Id);
+            var foundModel = fixture.Repository.GetMessageById(model.Id);
             // New Test
             Assert.NotNull(foundModel);
 
             fixture.Repository.Delete(returnedModel.Id);
             Assert.Null(returnedModel);
 
-            
+
         }
 
         [Fact]
-        public void FindUserById_Values()
+        public void FindMessageById_Values()
         {
-            var model = new UserModel
+            var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
+                Text = "TestMessage - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
             Assert.NotNull(returnedModel);
 
-            var foundModel = fixture.Repository.GetById(model.Id);
+            var foundModel = fixture.Repository.GetMessageById(model.Id);
             Assert.NotNull(foundModel);
             // New Test
-            Assert.Equal(model.Name, foundModel.Name);
+            Assert.Equal(model.Text, foundModel.Text);
 
             fixture.Repository.Delete(returnedModel.Id);
             Assert.Null(returnedModel);
@@ -96,12 +94,12 @@ namespace Teams.BL.Tests
         }
 
         [Fact]
-        public void UserGetAll_NotNull()
+        public void MessageGetAll_NotNull()
         {
-            var model = new UserModel
+            var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
+                Text = "TestMessage - some random data"
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -118,30 +116,37 @@ namespace Teams.BL.Tests
         {
 
             Guid testId = Guid.NewGuid();
-            var model = new UserModel
+            var model = new MessageModel
             {
                 Id = testId,
-                Name = "FirstName"
+                Text = "FirstName"
             };
 
             var returnedModelCreated = fixture.Repository.Create(model);
             Assert.NotNull(returnedModelCreated);
 
             String secondName = "SecondName";
-            model.Name = secondName;
+            model.Text = secondName;
             fixture.Repository.Update(model);
 
-            var foundModel = fixture.Repository.GetById(model.Id);
+            var foundModel = fixture.Repository.GetMessageById(model.Id);
             Assert.NotNull(foundModel);
 
             // New Test
-            Assert.NotEqual(returnedModelCreated.Name, foundModel.Name);
-            Assert.Equal(foundModel.Name, secondName);
+            Assert.NotEqual(returnedModelCreated.Text, foundModel.Text);
+            Assert.Equal(foundModel.Text, secondName);
 
             fixture.Repository.Delete(returnedModelCreated.Id);
             Assert.Null(returnedModelCreated);
 
 
         }
+
+
+
+
+
+
+
     }
 }
