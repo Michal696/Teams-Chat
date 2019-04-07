@@ -81,5 +81,15 @@ namespace Teams.BL.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public GroupModel GetByIdGroup(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TaskModel GetByIdTask(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

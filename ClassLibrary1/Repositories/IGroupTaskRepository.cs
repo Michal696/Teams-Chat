@@ -13,6 +13,8 @@ namespace Teams.BL.Repositories
         IEnumerable<GroupModel> GetTeamsGroups(Guid Id);
         IEnumerable<TaskModel> GetGroupTasks(Guid Id);
         GroupModel CreateGroup(GroupModel Group);
+        GroupModel GetByIdGroup(Guid Id);
+        TaskModel GetByIdTask(Guid Id);
         void DeleteGroup(Guid Id);
         void UpdateGroup(GroupModel Group);
         TaskModel CreateTask(TaskModel Id);
