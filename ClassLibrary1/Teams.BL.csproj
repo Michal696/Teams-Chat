@@ -140,10 +140,9 @@
     <Compile Include="Models\TeamMemberModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Teams.DAL\Teams.DAL.csproj">
       <Project>{BC5B5365-748A-4507-B5AC-4258BCD96019}</Project>
