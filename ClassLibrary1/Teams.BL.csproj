@@ -126,7 +126,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Base\ModelBase.cs" />
-    <Compile Include="Models\Factory\Class1.cs" />
     <Compile Include="Models\Factory\DbContextFactory.cs" />
     <Compile Include="Models\Factory\IDbContextFactory.cs" />
     <Compile Include="Models\GroupModel.cs" />
