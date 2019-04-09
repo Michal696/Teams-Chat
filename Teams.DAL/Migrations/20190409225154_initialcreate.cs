@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Teams.DAL.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -89,24 +89,6 @@ namespace Teams.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Media",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Media", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Media_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -114,7 +96,7 @@ namespace Teams.DAL.Migrations
                     Title = table.Column<string>(nullable: true),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     Text = table.Column<string>(nullable: true),
-                    MemberId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     ParentId = table.Column<Guid>(nullable: true),
                     GroupId = table.Column<Guid>(nullable: true)
                 },
@@ -128,15 +110,15 @@ namespace Teams.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Messages_Messages_ParentId",
                         column: x => x.ParentId,
                         principalTable: "Messages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -148,7 +130,7 @@ namespace Teams.DAL.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     Text = table.Column<string>(nullable: true),
-                    MemberId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     State = table.Column<int>(nullable: false),
                     GroupId = table.Column<Guid>(nullable: true)
                 },
@@ -162,8 +144,8 @@ namespace Teams.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tasks_Users_MemberId",
-                        column: x => x.MemberId,
+                        name: "FK_Tasks_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -174,22 +156,48 @@ namespace Teams.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    MemberId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     TeamId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TeamMember", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TeamMember_Users_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_TeamMember_Team_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TeamMember_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Media",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ParentId = table.Column<Guid>(nullable: true),
+                    Data = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Media", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Media_Messages_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Messages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Media_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -201,7 +209,7 @@ namespace Teams.DAL.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     Text = table.Column<string>(nullable: true),
-                    MemberId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     State = table.Column<int>(nullable: false),
                     GroupId = table.Column<Guid>(nullable: true),
                     TaskId = table.Column<Guid>(nullable: true)
@@ -216,15 +224,15 @@ namespace Teams.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TaskStateChange_Users_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_TaskStateChange_Tasks_TaskId",
                         column: x => x.TaskId,
                         principalTable: "Tasks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskStateChange_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -234,19 +242,13 @@ namespace Teams.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    MemberId = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     TaskId = table.Column<Guid>(nullable: true),
                     TaskStateChangeId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TaskAssignments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TaskAssignments_Users_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TaskAssignments_Tasks_TaskId",
                         column: x => x.TaskId,
@@ -257,6 +259,12 @@ namespace Teams.DAL.Migrations
                         name: "FK_TaskAssignments_TaskStateChange_TaskStateChangeId",
                         column: x => x.TaskStateChangeId,
                         principalTable: "TaskStateChange",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TaskAssignments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -277,6 +285,11 @@ namespace Teams.DAL.Migrations
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Media_ParentId",
+                table: "Media",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Media_UserId",
                 table: "Media",
                 column: "UserId");
@@ -287,19 +300,14 @@ namespace Teams.DAL.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_MemberId",
-                table: "Messages",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Messages_ParentId",
                 table: "Messages",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskAssignments_MemberId",
-                table: "TaskAssignments",
-                column: "MemberId");
+                name: "IX_Messages_UserId",
+                table: "Messages",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaskAssignments_TaskId",
@@ -312,14 +320,19 @@ namespace Teams.DAL.Migrations
                 column: "TaskStateChangeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TaskAssignments_UserId",
+                table: "TaskAssignments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tasks_GroupId",
                 table: "Tasks",
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_MemberId",
+                name: "IX_Tasks_UserId",
                 table: "Tasks",
-                column: "MemberId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaskStateChange_GroupId",
@@ -327,24 +340,24 @@ namespace Teams.DAL.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskStateChange_MemberId",
-                table: "TaskStateChange",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TaskStateChange_TaskId",
                 table: "TaskStateChange",
                 column: "TaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeamMember_MemberId",
-                table: "TeamMember",
-                column: "MemberId");
+                name: "IX_TaskStateChange_UserId",
+                table: "TaskStateChange",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamMember_TeamId",
                 table: "TeamMember",
                 column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamMember_UserId",
+                table: "TeamMember",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_TeamId",
@@ -361,13 +374,13 @@ namespace Teams.DAL.Migrations
                 name: "Media");
 
             migrationBuilder.DropTable(
-                name: "Messages");
-
-            migrationBuilder.DropTable(
                 name: "TaskAssignments");
 
             migrationBuilder.DropTable(
                 name: "TeamMember");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "TaskStateChange");
