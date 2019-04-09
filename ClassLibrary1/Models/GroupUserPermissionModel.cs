@@ -7,6 +7,8 @@ namespace Teams.BL.Models
 {
     public class GroupUserPermissionModel : ModelBase
     {
+        public GroupModel Group { get; set; }
+        public UserModel User { get; set; }
         public Permission Permit { get; set; }
     }
 }

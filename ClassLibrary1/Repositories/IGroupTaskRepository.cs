@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Teams.DAL.Entities;
+using Teams.DAL.Entities.Enums;
 using Teams.BL.Models;
 
 namespace Teams.BL.Repositories
 {
     public interface IGroupTaskRepository
     {
-        List<GroupModel> GetAllGroups();
-        List<GroupModel> GetTeamsGroups(Guid Id);
-        List<TaskModel> GetGroupTasks(Guid Id);
+        IEnumerable<GroupModel> GetAllGroups();
+        IEnumerable<GroupModel> GetTeamsGroups(Guid Id);
+        IEnumerable<TaskModel> GetGroupTasks(Guid Id);
         GroupModel CreateGroup(GroupModel Group);
         GroupModel GetByIdGroup(Guid Id);
         TaskModel GetByIdTask(Guid Id);
@@ -20,9 +21,8 @@ namespace Teams.BL.Repositories
         TaskModel CreateTask(TaskModel Task);
         void DeleteTask(Guid Id);
         void UpdateTask(TaskModel Task);
-        void AddUserToGroup(Guid UserId, Guid GroupId);
-        List<TaskStateChangeModel> GetTaskChanges(Guid Id);
-        List<Task> GetUserGroupTasks(Guid UserId, Guid GroupId);
+        GroupUserPermissionModel AddUserToGroup(GroupUserPermissionModel groupUserPermission);
+        IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id);
 
     }
 }

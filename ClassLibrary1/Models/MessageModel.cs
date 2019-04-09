@@ -10,5 +10,8 @@ namespace Teams.BL.Models
         public String Title { get; set; }
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
+        public UserModel User { get; set; }
+        public MessageModel Parent { get; set; }
+        public GroupModel Group { get; set; }
     }
 }
