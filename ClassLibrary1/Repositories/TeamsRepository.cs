@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Teams.BL.Factories;
 using Teams.BL.Models;
+using Teams.BL.Mapper;
 using Teams.BL;
 
 namespace Teams.BL.Repositories
@@ -12,16 +13,12 @@ namespace Teams.BL.Repositories
     public class TeamsRepository : ITeamsRepository
     {
         private readonly IDbContextFactory dbContextFactory;
-        Mapper Mapper = new Mapper();
+        private readonly IMapper mapper;
 
-        public TeamsRepository(IDbContextFactory dbContextFactory)
+        public TeamsRepository(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             this.dbContextFactory = dbContextFactory;
-        }
-
-        public TeamsRepository()
-        {
-
+            this.mapper = mapper;
         }
 
         void ITeamsRepository.AddUserToGroup(Guid GroupId, Guid UserId)
@@ -33,10 +30,10 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.TeamModelToTeamEntity(Team);
+                var entity = mapper.TeamModelToTeamEntity(Team);
                 dbContext.Team.Add(entity);
                 dbContext.SaveChanges();
-                return Mapper.TeamEntityToTeamModel(entity);
+                return mapper.TeamEntityToTeamModel(entity);
             }
         }
 
@@ -50,12 +47,12 @@ namespace Teams.BL.Repositories
             }
         }
 
-        List<TeamModel> ITeamsRepository.GetAll()
+        IEnumerable<TeamModel> ITeamsRepository.GetAll()
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Team
-                    .Select(e => Mapper.TeamEntityToTeamModel(e)).ToList();
+                    .Select(e => mapper.TeamEntityToTeamModel(e)).ToList();
             }
         }
 
@@ -64,11 +61,11 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Team.First(t => t.Id == Id);
-                return Mapper.TeamEntityToTeamModel(entity);
+                return mapper.TeamEntityToTeamModel(entity);
             }
         }
 
-        List<TeamModel> ITeamsRepository.GetByUser(Guid Id)
+        IEnumerable<TeamModel> ITeamsRepository.GetByUser(Guid Id)
         {
             throw new NotImplementedException();
         }

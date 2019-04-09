@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Teams.BL.Enums;
+using Teams.DAL.Entities.Enums;
 using Teams.BL.Models.Base;
 
 namespace Teams.BL.Models

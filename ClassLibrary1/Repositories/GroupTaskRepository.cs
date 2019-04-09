@@ -2,41 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Teams.DAL.Entities;
 using Teams.BL.Factories;
 using Teams.BL.Models;
 using Teams.BL.Repositories;
-using Teams.BL;
+using Teams.BL.Mapper;
+using Teams.DAL.Entities.Enums;
 
 namespace Teams.BL.Repositories
 {
     public class GroupTaskRepository : IGroupTaskRepository
     {
         private readonly IDbContextFactory dbContextFactory;
-        public Mapper Mapper = new Mapper();
+        private readonly IMapper mapper;
 
-        public GroupTaskRepository(IDbContextFactory dbContextFactory)
+        public GroupTaskRepository(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             this.dbContextFactory = dbContextFactory;
+            this.mapper = mapper;
         }
 
-        public GroupTaskRepository()
+        public GroupUserPermissionModel AddUserToGroup(GroupUserPermissionModel groupUserPermission)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = mapper.GroupUserPermissionsModelToGroupUserPermissionsEntity(groupUserPermission);
+                dbContext.GroupsUserPermissions.Add(entity);
+                dbContext.SaveChanges();
+                return mapper.GroupUserPermissionsEntityToGroupUserPermissionsModel(entity);
+            }
         }
-        public void AddUserToGroup(Guid UserId, Guid GroupId)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public GroupModel CreateGroup(GroupModel Group)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.GroupModelToGroupEntity(Group);
+                var entity = mapper.GroupModelToGroupEntity(Group);
                 dbContext.Groups.Add(entity);
                 dbContext.SaveChanges();
-                return Mapper.GroupEntityToGroupModel(entity);
+                return mapper.GroupEntityToGroupModel(entity);
             }
         }
 
@@ -44,10 +48,10 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.TaskModelToTaskEntity(Task);
+                var entity = mapper.TaskModelToTaskEntity(Task);
                 dbContext.Tasks.Add(entity);
                 dbContext.SaveChanges();
-                return Mapper.TaskEntityToTaskModel(entity);
+                return mapper.TaskEntityToTaskModel(entity);
             }
         }
 
@@ -55,8 +59,12 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = dbContext.Groups.First(t => t.Id == Id);
-                dbContext.Remove(entity);
+                var group = new Group
+                {
+                    Id = Id
+                };
+                dbContext.Groups.Attach(group);
+                dbContext.Groups.Remove(group);
                 dbContext.SaveChanges();
             }
         }
@@ -71,40 +79,50 @@ namespace Teams.BL.Repositories
             }
         }
 
-        public List<GroupModel> GetAllGroups()
+        public IEnumerable<GroupModel> GetAllGroups()
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Groups
-                    .Select(e => Mapper.GroupEntityToGroupModel(e)).ToList();
+                    .Select(mapper.GroupEntityToGroupModel);
             }
         }
 
-        public List<TaskModel> GetGroupTasks(Guid Id)
+        public IEnumerable<TaskModel> GetGroupTasks(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Tasks
+                    .Select(mapper.TaskEntityToTaskModel)
+                    .Where(t => t.Group.Id == Id);
+            }
         }
 
-        public List<TaskStateChangeModel> GetTaskChanges(Guid Id)
+        public IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.TaskStateChange
+                    .Select(mapper.TaskStateChangeEntityToTaskStateChangeModel)
+                    .Where(t => t.Task.Id == Id);
+            }
         }
 
-        public List<GroupModel> GetTeamsGroups(Guid Id)
+        public IEnumerable<GroupModel> GetTeamsGroups(Guid Id)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Task> GetUserGroupTasks(Guid UserId, Guid GroupId)
-        {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Groups
+                    .Select(mapper.GroupEntityToGroupModel)
+                    .Where(t => t.Team.Id == Id);
+            }
         }
 
         public void UpdateGroup(GroupModel Group)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.GroupModelToGroupEntity(Group);
+                var entity = mapper.GroupModelToGroupEntity(Group);
                 dbContext.Groups.Update(entity);
                 dbContext.SaveChanges();
             }
@@ -114,7 +132,7 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.TaskModelToTaskEntity(Task);
+                var entity = mapper.TaskModelToTaskEntity(Task);
                 dbContext.Tasks.Update(entity);
                 dbContext.SaveChanges();
             }
@@ -122,12 +140,22 @@ namespace Teams.BL.Repositories
 
         public GroupModel GetByIdGroup(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Groups
+                    .FirstOrDefault(t => t.Id == Id);
+                return entity == null ? null : mapper.GroupEntityToGroupModel(entity);
+            }
         }
 
         public TaskModel GetByIdTask(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Tasks
+                    .FirstOrDefault(t => t.Id == Id);
+                return entity == null ? null : mapper.TaskEntityToTaskModel(entity);
+            }
         }
     }
 }

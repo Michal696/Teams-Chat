@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Teams.BL.Enums;
+using Teams.DAL.Entities.Enums;
 using Teams.BL.Models.Base;
 
 namespace Teams.BL.Models
@@ -15,5 +15,6 @@ namespace Teams.BL.Models
         public UserModel User { get; set; }
         public TaskState State { get; set; }
         public GroupModel Group { get; set; }
+        public TaskModel Task { get; set; }
     }
 }

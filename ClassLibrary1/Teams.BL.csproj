@@ -118,8 +118,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\TaskState.cs" />
-    <Compile Include="Mapper.cs" />
+    <Compile Include="Mapper\IMapper.cs" />
+    <Compile Include="Mapper\Mapper.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Factory\DbContextFactory.cs" />
     <Compile Include="Factory\IDbContextFactory.cs" />
@@ -144,9 +144,7 @@
     <Compile Include="Repositories\TeamsRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mapper\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Teams.DAL\Teams.DAL.csproj">
       <Project>{BC5B5365-748A-4507-B5AC-4258BCD96019}</Project>

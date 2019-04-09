@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Teams.BL.Factories;
 using Teams.BL.Models;
+using Teams.BL.Mapper;
 using Teams.BL;
 
 namespace Teams.BL.Repositories
@@ -12,26 +13,22 @@ namespace Teams.BL.Repositories
     {
 
         private readonly IDbContextFactory dbContextFactory;
-        Mapper Mapper = new Mapper();
+        private readonly IMapper mapper;
 
-        public UserRepository(IDbContextFactory dbContextFactory)
+        public UserRepository(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             this.dbContextFactory = dbContextFactory;
-        }
-
-        public UserRepository()
-        {
-
+            this.mapper = mapper;
         }
 
         public UserModel Create(UserModel model)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.UserModelToUserEntity(model);
+                var entity = mapper.UserModelToUserEntity(model);
                 dbContext.Users.Add(entity);
                 dbContext.SaveChanges();
-                return Mapper.UserEntityToUserModel(entity);
+                return mapper.UserEntityToUserModel(entity);
             }
         }
 
@@ -45,12 +42,12 @@ namespace Teams.BL.Repositories
             }
         }
 
-        public List<UserModel> GetAll()
+        public IEnumerable<UserModel> GetAll()
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Users
-                    .Select(e => Mapper.UserEntityToUserModel(e)).ToList();
+                    .Select(e => mapper.UserEntityToUserModel(e)).ToList();
             }
 
         }
@@ -60,7 +57,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Users.First(t => t.Id == Id);
-                return Mapper.UserEntityToUserModel(entity);
+                return mapper.UserEntityToUserModel(entity);
             }
         }
 
@@ -68,7 +65,7 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.UserModelToUserEntity(model);
+                var entity = mapper.UserModelToUserEntity(model);
                 dbContext.Users.Update(entity);
                 dbContext.SaveChanges();
             }

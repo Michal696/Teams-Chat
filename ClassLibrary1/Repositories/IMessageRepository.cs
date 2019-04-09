@@ -9,11 +9,11 @@ namespace Teams.BL.Repositories
 {
     public interface IMessageRepository
     {
-        List<MessageModel> GetAll();
-        List<MessageModel> GetGroupMessages(Guid Id);
-        List<MediaModel> GetGroupMedia(Guid Id);
+        IEnumerable<MessageModel> GetAll();
+        IEnumerable<MessageModel> GetGroupMessages(Guid Id);
+        IEnumerable<MediaModel> GetGroupMedia(Guid Id);
         bool CheckMessageMedia(Guid Id);
-        List<MediaModel> GetMessageMedias(Guid Id);
+        IEnumerable<MediaModel> GetMessageMedias(Guid Id);
         MessageModel GetMessageById(Guid Id);
         MessageModel Create(MessageModel message);
         void Delete(Guid Id);
