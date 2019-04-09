@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teams.DAL.Entities;
 using Teams.BL.Factories;
 using Teams.BL.Models;
+using Teams.BL.Mapper;
 using Teams.BL.Repositories;
 
 namespace Teams.BL.Repositories
@@ -12,37 +14,45 @@ namespace Teams.BL.Repositories
     public class MessageRepository : IMessageRepository
     {
         private readonly IDbContextFactory dbContextFactory;
-        Mapper Mapper = new Mapper();
+        private readonly IMapper mapper;
 
-        public MessageRepository(IDbContextFactory dbContextFactory)
+        public MessageRepository(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             this.dbContextFactory = dbContextFactory;
+            this.mapper = mapper;
         }
-
-        public MessageRepository()
+        
+        public MediaModel AddMedia(Guid Id, MediaModel Media)
         {
-
-        }
-
-
-        public void AddMedia(Guid Id, MediaModel Media)
-        {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                Media.Id = Id;
+                var entity = mapper.MediaModelToMediaEntity(Media);
+                dbContext.Media.Add(entity);
+                dbContext.SaveChanges();
+                return mapper.MediaEntityToMediaModel(entity);
+            }
         }
 
         public bool CheckMessageMedia(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var media = dbContext.Media
+                    .Select(mapper.MediaEntityToMediaModel)
+                    .Where(t => t.Id == Id);
+                return media == null ? false : true;
+            }
         }
 
         public MessageModel Create(MessageModel message)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.MessageModelToMessageEntity(message);
+                var entity = mapper.MessageModelToMessageEntity(message);
                 dbContext.Messages.Add(entity);
                 dbContext.SaveChanges();
-                return Mapper.MessageEntityToMessageModel(entity);
+                return mapper.MessageEntityToMessageModel(entity);
             }
         }
 
@@ -58,38 +68,62 @@ namespace Teams.BL.Repositories
 
         public void DeleteMedia(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var media = new Media
+                {
+                    Id = Id
+                };
+                dbContext.Media.Attach(media);
+                dbContext.Media.Remove(media);
+                dbContext.SaveChanges();
+            }
         }
 
-        public List<MessageModel> GetAll()
+        public IEnumerable<MessageModel> GetAll()
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Messages
-                    .Select(e => Mapper.MessageEntityToMessageModel(e)).ToList();
+                    .Select(mapper.MessageEntityToMessageModel);
             }
         }
 
-        public List<MediaModel> GetGroupMedia(Guid Id)
+        public IEnumerable<MediaModel> GetGroupMedia(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Media
+                    .Select(mapper.MediaEntityToMediaModel)
+                    .Where(t => t.Parent.Group.Id == Id);
+            }
         }
 
-        public List<MessageModel> GetGroupMessages(Guid Id)
+        public IEnumerable<MessageModel> GetGroupMessages(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Messages
+                    .Select(mapper.MessageEntityToMessageModel)
+                    .Where(t => t.Group.Id == Id);
+            }
         }
 
-        public List<MediaModel> GetMessageMedias(Guid Id)
+        public IEnumerable<MediaModel> GetMessageMedias(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Media
+                    .Select(mapper.MediaEntityToMediaModel)
+                    .Where(t => t.Parent.Id == Id);
+            }
         }
 
         public void Update(MessageModel Message)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = Mapper.MessageModelToMessageEntity(Message);
+                var entity = mapper.MessageModelToMessageEntity(Message);
                 dbContext.Messages.Update(entity);
                 dbContext.SaveChanges();
             }
@@ -97,7 +131,12 @@ namespace Teams.BL.Repositories
 
         public MessageModel GetMessageById(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Messages
+                    .FirstOrDefault(t => t.Id == Id);
+                return entity == null ? null : mapper.MessageEntityToMessageModel(entity);
+            }
         }
     }
 }

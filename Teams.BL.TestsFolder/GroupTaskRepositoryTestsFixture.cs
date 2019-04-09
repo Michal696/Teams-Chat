@@ -13,7 +13,7 @@ namespace Teams.BL.Tests
         private readonly IGroupTaskRepository repository;
         public GroupTaskRepositoryTestsFixture()
         {
-            repository = new GroupTaskRepository(new InMemoryDbContextFactory());
+            repository = new GroupTaskRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
         }
 
         public IGroupTaskRepository Repository => repository;
