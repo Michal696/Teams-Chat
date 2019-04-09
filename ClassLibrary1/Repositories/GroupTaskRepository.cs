@@ -119,5 +119,15 @@ namespace Teams.BL.Repositories
                 dbContext.SaveChanges();
             }
         }
+
+        public GroupModel GetByIdGroup(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TaskModel GetByIdTask(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
