@@ -126,18 +126,11 @@
   <ItemGroup>
     <Compile Include="DesignDbContextFactory.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
-    <Compile Include="Migrations\20190409215721_DbFixes.cs" />
-    <Compile Include="Migrations\20190409215721_DbFixes.designer.cs">
-      <DependentUpon>20190409215721_DbFixes.cs</DependentUpon>
+    <Compile Include="Migrations\20190409225154_initialcreate.cs" />
+    <Compile Include="Migrations\20190409225154_initialcreate.designer.cs">
+      <DependentUpon>20190409225154_initialcreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190409220619_DbFixes1.cs" />
-    <Compile Include="Migrations\20190409220619_DbFixes1.designer.cs">
-      <DependentUpon>20190409220619_DbFixes1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190409221743_DbFixes2.cs" />
-    <Compile Include="Migrations\20190409221743_DbFixes2.designer.cs">
-      <DependentUpon>20190409221743_DbFixes2.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\TeamsDbContextModelSnapshot.cs" />
     <Compile Include="TeamsDbContext.cs" />
     <Compile Include="Entities\Enums\Permission.cs" />
     <Compile Include="Entities\Enums\TaskState.cs" />
@@ -152,11 +145,6 @@
     <Compile Include="Entities\Team.cs" />
     <Compile Include="Entities\TeamMember.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Migrations\20190403195457_InitialCreate.cs" />
-    <Compile Include="Migrations\20190403195457_InitialCreate.designer.cs">
-      <DependentUpon>20190403195457_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\ContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
