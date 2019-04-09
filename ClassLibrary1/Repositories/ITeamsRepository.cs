@@ -15,6 +15,6 @@ namespace Teams.BL.Repositories
         TeamModel Create(TeamModel Team);
         void Delete(Guid Id);
         void Update(TeamModel Team);
-        void AddUserToGroup(Guid GroupId, Guid UserId); /* TODO add permision */
+        TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember);
     }
 }

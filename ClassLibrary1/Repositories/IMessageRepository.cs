@@ -18,7 +18,7 @@ namespace Teams.BL.Repositories
         MessageModel Create(MessageModel message);
         void Delete(Guid Id);
         void Update(MessageModel Message);
-        void AddMedia(Guid Id, MediaModel Media);
+        MediaModel AddMedia(Guid Id, MediaModel Media);
         void DeleteMedia(Guid Id);
     }
 }

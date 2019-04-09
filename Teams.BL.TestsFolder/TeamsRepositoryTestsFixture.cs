@@ -13,7 +13,7 @@ namespace Teams.BL.Tests
         private readonly ITeamsRepository repository;
         public TeamsRepositoryTestsFixture()
         {
-            repository = new TeamsRepository(new InMemoryDbContextFactory());
+            repository = new TeamsRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
         }
 
         public ITeamsRepository Repository => repository;

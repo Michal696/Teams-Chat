@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teams.DAL.Entities;
 using Teams.BL.Factories;
 using Teams.BL.Models;
 using Teams.BL.Mapper;
@@ -21,14 +22,27 @@ namespace Teams.BL.Repositories
             this.mapper = mapper;
         }
         
-        public void AddMedia(Guid Id, MediaModel Media)
+        public MediaModel AddMedia(Guid Id, MediaModel Media)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                Media.Id = Id;
+                var entity = mapper.MediaModelToMediaEntity(Media);
+                dbContext.Media.Add(entity);
+                dbContext.SaveChanges();
+                return mapper.MediaEntityToMediaModel(entity);
+            }
         }
 
         public bool CheckMessageMedia(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var media = dbContext.Media
+                    .Select(mapper.MediaEntityToMediaModel)
+                    .Where(t => t.Id == Id);
+                return media == null ? false : true;
+            }
         }
 
         public MessageModel Create(MessageModel message)
@@ -54,7 +68,16 @@ namespace Teams.BL.Repositories
 
         public void DeleteMedia(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var media = new Media
+                {
+                    Id = Id
+                };
+                dbContext.Media.Attach(media);
+                dbContext.Media.Remove(media);
+                dbContext.SaveChanges();
+            }
         }
 
         public IEnumerable<MessageModel> GetAll()
@@ -62,23 +85,38 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Messages
-                    .Select(e => mapper.MessageEntityToMessageModel(e)).ToList();
+                    .Select(mapper.MessageEntityToMessageModel);
             }
         }
 
         public IEnumerable<MediaModel> GetGroupMedia(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Media
+                    .Select(mapper.MediaEntityToMediaModel)
+                    .Where(t => t.Parent.Group.Id == Id);
+            }
         }
 
         public IEnumerable<MessageModel> GetGroupMessages(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Messages
+                    .Select(mapper.MessageEntityToMessageModel)
+                    .Where(t => t.Group.Id == Id);
+            }
         }
 
         public IEnumerable<MediaModel> GetMessageMedias(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                return dbContext.Media
+                    .Select(mapper.MediaEntityToMediaModel)
+                    .Where(t => t.Parent.Id == Id);
+            }
         }
 
         public void Update(MessageModel Message)
@@ -93,7 +131,12 @@ namespace Teams.BL.Repositories
 
         public MessageModel GetMessageById(Guid Id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Messages
+                    .FirstOrDefault(t => t.Id == Id);
+                return entity == null ? null : mapper.MessageEntityToMessageModel(entity);
+            }
         }
     }
 }

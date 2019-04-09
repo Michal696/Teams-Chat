@@ -13,7 +13,7 @@ namespace Teams.BL.Tests
         private readonly IMessageRepository repository;
         public MessageRepositoryTestsFixture()
         {
-            repository = new MessageRepository(new InMemoryDbContextFactory());
+            repository = new MessageRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
         }
 
         public IMessageRepository Repository => repository;

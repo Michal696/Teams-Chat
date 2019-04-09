@@ -8,6 +8,11 @@ namespace Teams.BL.Mapper
 {
     public class Mapper : IMapper
     {
+        public Mapper()
+        {
+
+        }
+
         public GroupModel GroupEntityToGroupModel (Group entity)
         {
             return new GroupModel
@@ -113,6 +118,16 @@ namespace Teams.BL.Mapper
             };
         }
 
+        public MediaModel MediaEntityToMediaModel(Media entity)
+        {
+            return new MediaModel
+            {
+                Id = entity.Id,
+                Parent = MessageEntityToMessageModel(entity.Parent),
+                Data = entity.Data
+            };
+        }
+
         public Group GroupModelToGroupEntity(GroupModel model)
         {
             return new Group
@@ -212,6 +227,16 @@ namespace Teams.BL.Mapper
                 Image = model.Image,
                 Email = model.Email,
                 LastLogin = model.LastLogin,
+            };
+        }
+
+        public Media MediaModelToMediaEntity(MediaModel model)
+        {
+            return new Media
+            {
+                Id = model.Id,
+                Parent = MessageModelToMessageEntity(model.Parent),
+                Data = model.Data
             };
         }
     }

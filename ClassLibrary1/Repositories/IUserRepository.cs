@@ -13,6 +13,6 @@ namespace Teams.BL.Repositories
         UserModel GetById(Guid Id);
         UserModel Create(UserModel model);
         void Update(UserModel model);
-        void Delete(Guid id);
+        void Delete(Guid Id);
     }
 }
