@@ -7,7 +7,7 @@ namespace Teams.BL.Models
     public class MediaModel : ModelBase
     {
         public MessageModel Parent { get; set; }
-        public byte[] Data { get; set; }
+        public String Data { get; set; }
 
     }
 }

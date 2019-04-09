@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teams.DAL;
 
 namespace Teams.DAL.Migrations
 {
     [DbContext(typeof(TeamsDbContext))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20190409215721_DbFixes")]
+    partial class DbFixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,7 +218,7 @@ namespace Teams.DAL.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("Image");
+                    b.Property<byte[]>("Image");
 
                     b.Property<DateTime>("LastLogin");
 
