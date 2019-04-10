@@ -12,7 +12,5 @@ namespace Teams.BL.Models
         public String Image { get; set; } 
         public String Email { get; set; }
         public DateTime LastLogin { get; set; }
-  
-
     }
 }

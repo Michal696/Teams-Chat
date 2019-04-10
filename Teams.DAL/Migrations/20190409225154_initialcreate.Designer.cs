@@ -10,14 +10,14 @@ using Teams.DAL;
 namespace Teams.DAL.Migrations
 {
     [DbContext(typeof(TeamsDbContext))]
-    [Migration("20190403195457_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190409225154_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -64,9 +64,15 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Data");
+
+                    b.Property<Guid?>("ParentId");
+
                     b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("UserId");
 
@@ -80,8 +86,6 @@ namespace Teams.DAL.Migrations
 
                     b.Property<Guid?>("GroupId");
 
-                    b.Property<Guid?>("MemberId");
-
                     b.Property<Guid?>("ParentId");
 
                     b.Property<string>("Text");
@@ -90,13 +94,15 @@ namespace Teams.DAL.Migrations
 
                     b.Property<string>("Title");
 
+                    b.Property<Guid?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("MemberId");
-
                     b.HasIndex("ParentId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Messages");
                 });
@@ -108,19 +114,19 @@ namespace Teams.DAL.Migrations
 
                     b.Property<Guid?>("GroupId");
 
-                    b.Property<Guid?>("MemberId");
-
                     b.Property<int>("State");
 
                     b.Property<string>("Text");
 
                     b.Property<DateTime>("TimeStamp");
 
+                    b.Property<Guid?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
                 });
@@ -130,19 +136,19 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("MemberId");
-
                     b.Property<Guid?>("TaskId");
 
                     b.Property<Guid?>("TaskStateChangeId");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("UserId");
 
-                    b.HasIndex("MemberId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TaskId");
 
                     b.HasIndex("TaskStateChangeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TaskAssignments");
                 });
@@ -154,8 +160,6 @@ namespace Teams.DAL.Migrations
 
                     b.Property<Guid?>("GroupId");
 
-                    b.Property<Guid?>("MemberId");
-
                     b.Property<int>("State");
 
                     b.Property<Guid?>("TaskId");
@@ -164,13 +168,15 @@ namespace Teams.DAL.Migrations
 
                     b.Property<DateTime>("TimeStamp");
 
+                    b.Property<Guid?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
 
-                    b.HasIndex("MemberId");
-
                     b.HasIndex("TaskId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TaskStateChange");
                 });
@@ -192,15 +198,15 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("MemberId");
-
                     b.Property<Guid?>("TeamId");
+
+                    b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
-
                     b.HasIndex("TeamId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("TeamMember");
                 });
@@ -249,6 +255,10 @@ namespace Teams.DAL.Migrations
 
             modelBuilder.Entity("Teams.DAL.Entities.Media", b =>
                 {
+                    b.HasOne("Teams.DAL.Entities.Message", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
                     b.HasOne("Teams.DAL.Entities.User")
                         .WithMany("MediaEntities")
                         .HasForeignKey("UserId");
@@ -260,13 +270,13 @@ namespace Teams.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("Teams.DAL.Entities.User", "Member")
-                        .WithMany("Messages")
-                        .HasForeignKey("MemberId");
-
                     b.HasOne("Teams.DAL.Entities.Message", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
+
+                    b.HasOne("Teams.DAL.Entities.User", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.Task", b =>
@@ -275,17 +285,13 @@ namespace Teams.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("Teams.DAL.Entities.User", "Member")
+                    b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.TaskAssignment", b =>
                 {
-                    b.HasOne("Teams.DAL.Entities.User", "Member")
-                        .WithMany("Tasks")
-                        .HasForeignKey("MemberId");
-
                     b.HasOne("Teams.DAL.Entities.Task", "Task")
                         .WithMany("TaskAssignments")
                         .HasForeignKey("TaskId");
@@ -293,6 +299,10 @@ namespace Teams.DAL.Migrations
                     b.HasOne("Teams.DAL.Entities.TaskStateChange")
                         .WithMany("TaskAssignments")
                         .HasForeignKey("TaskStateChangeId");
+
+                    b.HasOne("Teams.DAL.Entities.User", "User")
+                        .WithMany("Tasks")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.TaskStateChange", b =>
@@ -301,24 +311,24 @@ namespace Teams.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("Teams.DAL.Entities.User", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId");
-
-                    b.HasOne("Teams.DAL.Entities.Task")
+                    b.HasOne("Teams.DAL.Entities.Task", "Task")
                         .WithMany("TaskStateChanges")
                         .HasForeignKey("TaskId");
+
+                    b.HasOne("Teams.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.TeamMember", b =>
                 {
-                    b.HasOne("Teams.DAL.Entities.User", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId");
-
                     b.HasOne("Teams.DAL.Entities.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId");
+
+                    b.HasOne("Teams.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.User", b =>

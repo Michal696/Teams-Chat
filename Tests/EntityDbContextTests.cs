@@ -47,7 +47,7 @@ namespace Tests
             var messageEntity = new Message
             {
                 Title = "testTitle",
-                Member = new User()
+                User = new User()
                 {
                     Name = "testTitleForUser",
                     Password = "NotEncryptedPassword"

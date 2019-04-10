@@ -4,10 +4,15 @@ using System.Text;
 using Teams.BL.Models;
 using Teams.DAL.Entities;
 
-namespace Teams.BL
+namespace Teams.BL.Mapper
 {
-    public class Mapper
+    public class Mapper : IMapper
     {
+        public Mapper()
+        {
+
+        }
+
         public GroupModel GroupEntityToGroupModel (Group entity)
         {
             return new GroupModel
@@ -15,6 +20,7 @@ namespace Teams.BL
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
+                Team = TeamEntityToTeamModel(entity.Team)
             };
         }
 
@@ -23,6 +29,8 @@ namespace Teams.BL
             return new GroupUserPermissionModel
             {
                 Id = entity.Id,
+                Group = GroupEntityToGroupModel(entity.Group),
+                User = UserEntityToUserModel(entity.Member),
                 Permit = entity.Permit
             };
         }
@@ -35,6 +43,9 @@ namespace Teams.BL
                 Title = entity.Title,
                 TimeStamp = entity.TimeStamp,
                 Text = entity.Text,
+                User = UserEntityToUserModel(entity.User),
+                Parent = entity.Parent == null ? null : MessageEntityToMessageModel(entity.Parent),
+                Group = GroupEntityToGroupModel(entity.Group)
             };
         }
 
@@ -43,6 +54,8 @@ namespace Teams.BL
             return new TaskAssignmentModel
             {
                 Id = entity.Id,
+                User = UserEntityToUserModel(entity.User),
+                Task = TaskEntityToTaskModel(entity.Task)
             };
         }
 
@@ -53,6 +66,9 @@ namespace Teams.BL
                 Id = entity.Id,
                 TimeStamp = entity.TimeStamp,
                 Text = entity.Text,
+                User = UserEntityToUserModel(entity.User),
+                State = entity.State,
+                Group = GroupEntityToGroupModel(entity.Group)
             };
         }
 
@@ -63,6 +79,10 @@ namespace Teams.BL
                 Id = entity.Id,
                 TimeStamp = entity.TimeStamp,
                 Text = entity.Text,
+                User = UserEntityToUserModel(entity.User),
+                State = entity.State,
+                Group = GroupEntityToGroupModel(entity.Group),
+                Task = TaskEntityToTaskModel(entity.Task)
             };
         }
 
@@ -71,6 +91,8 @@ namespace Teams.BL
             return new TeamMemberModel
             {
                 Id = entity.Id,
+                User = UserEntityToUserModel(entity.User),
+                Team = TeamEntityToTeamModel(entity.Team)
             };
         }
 
@@ -93,6 +115,16 @@ namespace Teams.BL
                 Image = entity.Image,
                 Email = entity.Email,
                 LastLogin = entity.LastLogin,
+            };
+        }
+
+        public MediaModel MediaEntityToMediaModel(Media entity)
+        {
+            return new MediaModel
+            {
+                Id = entity.Id,
+                Parent = MessageEntityToMessageModel(entity.Parent),
+                Data = entity.Data
             };
         }
 
@@ -123,6 +155,9 @@ namespace Teams.BL
                 Title = model.Title,
                 TimeStamp = model.TimeStamp,
                 Text = model.Text,
+                User = UserModelToUserEntity(model.User),
+                Parent = MessageModelToMessageEntity(model.Parent),
+                Group = GroupModelToGroupEntity(model.Group)
             };
         }
 
@@ -131,6 +166,8 @@ namespace Teams.BL
             return new TaskAssignment
             {
                 Id = model.Id,
+                User = UserModelToUserEntity(model.User),
+                Task = TaskModelToTaskEntity(model.Task)
             };
         }
 
@@ -141,6 +178,9 @@ namespace Teams.BL
                 Id = model.Id,
                 TimeStamp = model.TimeStamp,
                 Text = model.Text,
+                User = UserModelToUserEntity(model.User),
+                State = model.State,
+                Group = GroupModelToGroupEntity(model.Group)
             };
         }
 
@@ -151,36 +191,52 @@ namespace Teams.BL
                 Id = model.Id,
                 TimeStamp = model.TimeStamp,
                 Text = model.Text,
+                User = UserModelToUserEntity(model.User),
+                State = model.State,
+                Group = GroupModelToGroupEntity(model.Group),
+                Task = TaskModelToTaskEntity(model.Task)
             };
         }
 
-        public static TeamMember TeamMemberModelToTeamMemberEntity(TeamMemberModel entity)
+        public TeamMember TeamMemberModelToTeamMemberEntity(TeamMemberModel model)
         {
             return new TeamMember
             {
-                Id = entity.Id,
+                Id = model.Id,
+                User = UserModelToUserEntity(model.User),
+                Team = TeamModelToTeamEntity(model.Team)
             };
         }
 
-        public Team TeamModelToTeamEntity(TeamModel entity)
+        public Team TeamModelToTeamEntity(TeamModel model)
         {
             return new Team
             {
-                Id = entity.Id,
-                Name = entity.Name,
+                Id = model.Id,
+                Name = model.Name,
             };
         }
 
-        public User UserModelToUserEntity(UserModel entity)
+        public User UserModelToUserEntity(UserModel model)
         {
             return new User
             {
-                Id = entity.Id,
-                Name = entity.Name,
-                Password = entity.Password,
-                Image = entity.Image,
-                Email = entity.Email,
-                LastLogin = entity.LastLogin,
+                Id = model.Id,
+                Name = model.Name,
+                Password = model.Password,
+                Image = model.Image,
+                Email = model.Email,
+                LastLogin = model.LastLogin,
+            };
+        }
+
+        public Media MediaModelToMediaEntity(MediaModel model)
+        {
+            return new Media
+            {
+                Id = model.Id,
+                Parent = MessageModelToMessageEntity(model.Parent),
+                Data = model.Data
             };
         }
     }

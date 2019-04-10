@@ -1,4 +1,4 @@
-﻿namespace Teams.BL.Models
+﻿namespace Teams.BL.Models.Enums
 {
     public enum TaskState
     {
