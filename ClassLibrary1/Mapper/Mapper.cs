@@ -30,7 +30,7 @@ namespace Teams.BL.Mapper
             {
                 Id = entity.Id,
                 Group = GroupEntityToGroupModel(entity.Group),
-                User = UserEntityToUserModel(entity.Member),
+                User = UserEntityToUserModel(entity.User),
                 Permit = entity.Permit
             };
         }
@@ -98,11 +98,12 @@ namespace Teams.BL.Mapper
 
         public TeamModel TeamEntityToTeamModel(Team entity)
         {
-            return new TeamModel
+            var teamModel = new TeamModel
             {
                 Id = entity.Id,
                 Name = entity.Name,
-           };
+            };
+            return teamModel;
         }
 
         public UserModel UserEntityToUserModel(User entity)
@@ -135,6 +136,7 @@ namespace Teams.BL.Mapper
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
+                Team = TeamModelToTeamEntity(model.Team)
             };
         }
 
@@ -143,6 +145,8 @@ namespace Teams.BL.Mapper
             return new GroupUserPermission
             {
                 Id = model.Id,
+                Group = GroupModelToGroupEntity(model.Group),
+                User = UserModelToUserEntity(model.User),
                 Permit = model.Permit
             };
         }

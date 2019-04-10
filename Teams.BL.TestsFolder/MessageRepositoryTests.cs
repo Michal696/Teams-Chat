@@ -22,15 +22,47 @@ namespace Teams.BL.Tests
         [Fact]
         public void CreateMessage()
         {
+            var teamModel = new TeamModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Test Team"
+            };
+            var teamRepository = new TeamsRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
+            teamModel = teamRepository.Create(teamModel);
+
+            Assert.NotNull(teamModel);
+            Console.WriteLine(teamModel.Id);
+            Console.WriteLine(teamModel.Name);
+
+            var groupModel = new GroupModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Test Group",
+                Description = "Test Group description",
+                Team = teamModel
+            };
+            var groupRepository = new GroupTaskRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
+            groupModel = groupRepository.CreateGroup(groupModel);
+
+            var userModel = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Test User"
+            };
+            var userRepository = new UserRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
+            userModel = userRepository.Create(userModel);
+
             var model = new MessageModel
             {
-                
-                Text = "TestMessage - some random data"
+                Id = Guid.NewGuid(),
+                Text = "TestMessage - some random data",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
             var returnedModel = fixture.Repository.Create(model);
-            // New Test
+
             Assert.NotNull(returnedModel);
-            fixture.Repository.Delete(returnedModel.Id);
         }
         [Fact]
         public void DeleteMessage()

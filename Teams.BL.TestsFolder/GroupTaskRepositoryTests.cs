@@ -23,9 +23,22 @@ namespace Teams.BL.Tests
         [Fact]
         public void CreateGroupGroup()
         {
+            var teamModel = new TeamModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "TestTeamModel"
+            };
+            var teamRepository = new TeamsRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
+            teamModel = teamRepository.Create(teamModel);
+
+            Assert.NotNull(teamModel);
+
             var model = new GroupModel
             {
-                Name = "TestGroup - some random data"
+                Id = Guid.NewGuid(),
+                Name = "TestGroup - some random data",
+                Description = "TestGroup - description",
+                Team = teamModel
             };
 
             var returnedModel = fixture.Repository.CreateGroup(model);
