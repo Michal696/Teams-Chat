@@ -22,6 +22,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teams.BL.Tests", "Teams.BL.
 		{70607F0D-EFD8-4E71-AAB6-1D9BEB205984} = {70607F0D-EFD8-4E71-AAB6-1D9BEB205984}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mockup", "Mockup", "{969CF014-CBCA-44DD-9B16-E9E2A750B9AC}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\default_view.jpg = ..\..\default_view.jpg
+		..\..\group_selection_group_chat.jpg = ..\..\group_selection_group_chat.jpg
+		..\..\pop_up_window.jpg = ..\..\pop_up_window.jpg
+		..\..\Private_message_conversation.jpg = ..\..\Private_message_conversation.jpg
+		..\..\private_message_default.jpg = ..\..\private_message_default.jpg
+		..\..\Settings.jpg = ..\..\Settings.jpg
+		..\..\Task_detail.jpg = ..\..\Task_detail.jpg
+		..\..\team_selection.jpg = ..\..\team_selection.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
