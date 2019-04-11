@@ -23,27 +23,20 @@ namespace Teams.BL.Tests
         [Fact]
         public void CreateGroupGroup()
         {
-            var teamModel = new TeamModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "TestTeamModel"
-            };
-            var teamRepository = new TeamsRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
-            teamModel = teamRepository.Create(teamModel);
-
-            Assert.NotNull(teamModel);
-
             var model = new GroupModel
             {
                 Id = Guid.NewGuid(),
                 Name = "TestGroup - some random data",
                 Description = "TestGroup - description",
-                Team = teamModel
+                Team = fixture.teamModel
             };
-
             var returnedModel = fixture.Repository.CreateGroup(model);
-            // New Test
+            
             Assert.NotNull(returnedModel);
+            Assert.Equal(model.Id, returnedModel.Id);
+            Assert.Equal(model.Name, returnedModel.Name);
+            Assert.Equal(model.Description, returnedModel.Description);
+
             fixture.Repository.DeleteGroup(returnedModel.Id);
         }
         [Fact]
@@ -51,14 +44,17 @@ namespace Teams.BL.Tests
         {
             var model = new GroupModel
             {
-                Name = "TestGroup - some random data"
+                Id = Guid.NewGuid(),
+                Name = "TestGroup - some random data",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
             };
-
             var returnedModel = fixture.Repository.CreateGroup(model);
 
             Assert.NotNull(returnedModel);
+
             fixture.Repository.DeleteGroup(returnedModel.Id);
-            // New Test
+            returnedModel = fixture.Repository.GetByIdGroup(returnedModel.Id);
             Assert.Null(returnedModel);
         }
 
@@ -68,20 +64,16 @@ namespace Teams.BL.Tests
             var model = new GroupModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestGroup - some random data"
+                Name = "TestGroup - some random data",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
             };
-
             var returnedModel = fixture.Repository.CreateGroup(model);
+
             Assert.NotNull(returnedModel);
 
-            var foundModel = fixture.Repository.GetByIdGroup(model.Id);
-            // New Test
+            var foundModel = fixture.Repository.GetByIdGroup(returnedModel.Id);
             Assert.NotNull(foundModel);
-
-            fixture.Repository.DeleteGroup(returnedModel.Id);
-            Assert.Null(returnedModel);
-
-
         }
 
         [Fact]
@@ -90,21 +82,18 @@ namespace Teams.BL.Tests
             var model = new GroupModel
             {
                 Id = Guid.NewGuid(),
-                Name = "TestGroup - some random data"
+                Name = "TestGroup - some random data",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
             };
-
             var returnedModel = fixture.Repository.CreateGroup(model);
             Assert.NotNull(returnedModel);
 
             var foundModel = fixture.Repository.GetByIdGroup(model.Id);
             Assert.NotNull(foundModel);
-            // New Test
+
             Assert.Equal(model.Name, foundModel.Name);
-
-            fixture.Repository.DeleteGroup(returnedModel.Id);
-            Assert.Null(returnedModel);
-
-
+            Assert.Equal(model.Description, foundModel.Description);
         }
 
         [Fact]
