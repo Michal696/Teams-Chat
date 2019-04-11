@@ -13,8 +13,7 @@ namespace Teams.BL.Tests
     public class UserRepositoryTests : IClassFixture<UserRepositoryTestsFixture>
     {
         private readonly UserRepositoryTestsFixture fixture;
-
-
+        
         public UserRepositoryTests(UserRepositoryTestsFixture fixture)
         {
             this.fixture = fixture;
@@ -25,27 +24,27 @@ namespace Teams.BL.Tests
         {
             var model = new UserModel
             {
+                Id = Guid.NewGuid(),
                 Name = "TestUser - some random data"
             };
-
             var returnedModel = fixture.Repository.Create(model);
-            // New Test
+
             Assert.NotNull(returnedModel);
-            fixture.Repository.Delete(returnedModel.Id);
         }
         [Fact]
         public void DeleteUser()
         {
             var model = new UserModel
             {
+                Id = Guid.NewGuid(),
                 Name = "TestUser - some random data"
             };
-
             var returnedModel = fixture.Repository.Create(model);
 
             Assert.NotNull(returnedModel);
+
             fixture.Repository.Delete(returnedModel.Id);
-            // New Test
+            returnedModel = fixture.Repository.GetById(returnedModel.Id);
             Assert.Null(returnedModel);
         }
 
@@ -57,18 +56,12 @@ namespace Teams.BL.Tests
                 Id = Guid.NewGuid(),
                 Name = "TestUser - some random data"
             };
-
             var returnedModel = fixture.Repository.Create(model);
+
             Assert.NotNull(returnedModel);
 
             var foundModel = fixture.Repository.GetById(model.Id);
-            // New Test
             Assert.NotNull(foundModel);
-
-            fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
-
-            
         }
 
         [Fact]
@@ -85,30 +78,14 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetById(model.Id);
             Assert.NotNull(foundModel);
-            // New Test
+
             Assert.Equal(model.Name, foundModel.Name);
-
-            fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
-
-
         }
 
         [Fact]
         public void UserGetAll_NotNull()
         {
-            var model = new UserModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "TestUser - some random data"
-            };
-
-            var returnedModel = fixture.Repository.Create(model);
-            // New Test
             Assert.NotNull(fixture.Repository.GetAll());
-
-            fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
         }
 
 
@@ -122,8 +99,8 @@ namespace Teams.BL.Tests
                 Id = testId,
                 Name = "FirstName"
             };
-
             var returnedModelCreated = fixture.Repository.Create(model);
+
             Assert.NotNull(returnedModelCreated);
 
             String secondName = "SecondName";
@@ -132,15 +109,8 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetById(model.Id);
             Assert.NotNull(foundModel);
-
-            // New Test
             Assert.NotEqual(returnedModelCreated.Name, foundModel.Name);
             Assert.Equal(foundModel.Name, secondName);
-
-            fixture.Repository.Delete(returnedModelCreated.Id);
-            Assert.Null(returnedModelCreated);
-
-
         }
     }
 }

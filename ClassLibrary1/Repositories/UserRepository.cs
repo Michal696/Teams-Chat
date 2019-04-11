@@ -62,7 +62,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Users.First(t => t.Id == Id);
-                return mapper.UserEntityToUserModel(entity);
+                return entity == null ? null : mapper.UserEntityToUserModel(entity);
             }
         }
 

@@ -7,7 +7,7 @@ namespace Teams.DAL.Entities
     {
         public Group Group { get; set; }
 
-        public User Member { get; set; }
+        public User User { get; set; }
         public Permission Permit { get; set; }
     }
 }

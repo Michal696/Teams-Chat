@@ -38,6 +38,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.GroupModelToGroupEntity(Group);
+                dbContext.Team.Attach(entity.Team);
                 dbContext.Groups.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.GroupEntityToGroupModel(entity);
