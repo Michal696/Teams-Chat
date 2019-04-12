@@ -8,6 +8,7 @@ using Teams.BL.Models;
 using Teams.BL.Repositories;
 using Teams.BL.Mapper;
 using Teams.DAL.Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Teams.BL.Repositories
 {
@@ -144,6 +145,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Groups
+                    .Include(g => g.Team)
                     .FirstOrDefault(t => t.Id == Id);
                 return entity == null ? null : mapper.GroupEntityToGroupModel(entity);
             }

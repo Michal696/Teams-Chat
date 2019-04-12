@@ -11,10 +11,10 @@ namespace Teams.DAL.Entities
     {
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<TaskAssignment> TaskAssignments { get; set; }
         public TaskState State { get; set; }
-        public Group Group { get; set; }
-        public Task Task { get; set; }
+        public virtual Group Group { get; set; }
+        public virtual Task Task { get; set; }
     }
 }

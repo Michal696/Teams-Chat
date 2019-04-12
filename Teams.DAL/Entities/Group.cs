@@ -8,7 +8,7 @@ namespace Teams.DAL.Entities
         public String Name { get; set; }
         public String Description { get; set; }
         public virtual ICollection<GroupUserPermission> GroupUserPermissions { get; set; }
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
     }
 }
