@@ -24,27 +24,34 @@ namespace Teams.BL.Tests
         {
             var model = new MessageModel
             {
-                
-                Text = "TestMessage - some random data"
+                Id = Guid.NewGuid(),
+                Text = "TestMessage - some random data",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
             var returnedModel = fixture.Repository.Create(model);
-            // New Test
+
             Assert.NotNull(returnedModel);
-            fixture.Repository.Delete(returnedModel.Id);
         }
         [Fact]
         public void DeleteMessage()
         {
             var model = new MessageModel
             {
-                Text = "TestMessage - some random data"
+                Id = Guid.NewGuid(),
+                Text = "TestMessage - some random data",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
 
             var returnedModel = fixture.Repository.Create(model);
 
             Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
-            // New Test
+
+            returnedModel = fixture.Repository.GetMessageById(returnedModel.Id);
             Assert.Null(returnedModel);
         }
 
@@ -54,7 +61,10 @@ namespace Teams.BL.Tests
             var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data"
+                Text = "TestMessage - some random data",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -76,7 +86,10 @@ namespace Teams.BL.Tests
             var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data"
+                Text = "TestMessage - some random data",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -99,7 +112,10 @@ namespace Teams.BL.Tests
             var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data"
+                Text = "TestMessage - some random data",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
 
             var returnedModel = fixture.Repository.Create(model);
@@ -118,8 +134,11 @@ namespace Teams.BL.Tests
             Guid testId = Guid.NewGuid();
             var model = new MessageModel
             {
-                Id = testId,
-                Text = "FirstName"
+                Id = Guid.NewGuid(),
+                Text = "FirstName",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
             };
 
             var returnedModelCreated = fixture.Repository.Create(model);

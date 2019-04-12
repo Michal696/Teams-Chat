@@ -5,7 +5,7 @@ namespace Teams.DAL.Entities
 {
     public class TeamMember : EntityBase
     {
-        public User User { get; set; }
-        public Team Team { get; set; }
+        public virtual User User { get; set; }
+        public virtual Team Team { get; set; }
     }
 }
