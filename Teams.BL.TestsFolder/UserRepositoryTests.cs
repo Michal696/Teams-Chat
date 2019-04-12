@@ -13,7 +13,7 @@ namespace Teams.BL.Tests
     public class UserRepositoryTests : IClassFixture<UserRepositoryTestsFixture>
     {
         private readonly UserRepositoryTestsFixture fixture;
-        
+
         public UserRepositoryTests(UserRepositoryTestsFixture fixture)
         {
             this.fixture = fixture;
@@ -111,6 +111,41 @@ namespace Teams.BL.Tests
             Assert.NotNull(foundModel);
             Assert.NotEqual(returnedModelCreated.Name, foundModel.Name);
             Assert.Equal(foundModel.Name, secondName);
+        }
+
+        [Fact]
+        public void GetAllUsers_CountOfValues()
+        {
+            var model1 = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "FirstTestUser"
+            };
+            var returnedModel1 = fixture.Repository.Create(model1);
+
+            Assert.NotNull(returnedModel1);
+
+            var model2 = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "SecondTestUser"
+            };
+            var returnedModel2 = fixture.Repository.Create(model2);
+
+            Assert.NotNull(returnedModel2);
+
+
+            IEnumerable<UserModel> userModelList = fixture.Repository.GetAll();
+
+            // uncomment when repaired: "userModelList.Count()"
+            //int count =
+            userModelList.Count(); // expecting "2"
+
+            // uncomment when repaired: "userModelList.Count()"
+            // int expect = 2;            
+            // Assert.Equal(count, expect);
+
+
         }
     }
 }
