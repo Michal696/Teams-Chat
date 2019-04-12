@@ -33,28 +33,13 @@ namespace Teams.BL.Tests
             var returnedModel = fixture.Repository.Create(model);
 
             Assert.NotNull(returnedModel);
-        }
-        [Fact]
-        public void DeleteMessage()
-        {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
-
-            var returnedModel = fixture.Repository.Create(model);
-
-            Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
 
             returnedModel = fixture.Repository.GetMessageById(returnedModel.Id);
             Assert.Null(returnedModel);
+            Assert.Empty(fixture.Repository.GetAll());
         }
-
+       
         [Fact]
         public void FindMessageById_NotNull()
         {
@@ -78,7 +63,7 @@ namespace Teams.BL.Tests
 
             foundModel = fixture.Repository.GetMessageById(returnedModel.Id);
             Assert.Null(foundModel);
-
+            Assert.Empty(fixture.Repository.GetAll());
 
         }
 
@@ -106,7 +91,7 @@ namespace Teams.BL.Tests
             foundModel = fixture.Repository.GetMessageById(model.Id);
 
             Assert.Null(foundModel);
-        
+            Assert.Empty(fixture.Repository.GetAll());
 
         }
 
@@ -128,8 +113,11 @@ namespace Teams.BL.Tests
 
             fixture.Repository.Delete(returnedModel.Id);
 
+            //     Assert.Equal(fixture.Repository.GetAll().First().Id, returnedModel.Id);
             Assert.Empty(fixture.Repository.GetAll());
-         //   Assert.Equal(fixture.Repository.GetAll().First().Id, returnedModel.Id);
+
+
+
 
         }
 
