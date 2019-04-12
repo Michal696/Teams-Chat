@@ -9,9 +9,9 @@ namespace Teams.DAL.Entities
         public String Title { get; set; }
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
-        public User User { get; set; }
-        public Message Parent { get; set; }
-        public Group Group { get; set; }
+        public virtual User User { get; set; }
+        public virtual Message Parent { get; set; }
+        public virtual Group Group { get; set; }
 
         // for tests 
         private sealed class DescriptionNameIdEqualityComparer : IEqualityComparer<Message>
