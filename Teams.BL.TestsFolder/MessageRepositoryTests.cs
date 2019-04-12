@@ -75,7 +75,9 @@ namespace Teams.BL.Tests
             Assert.NotNull(foundModel);
 
             fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
+
+            foundModel = fixture.Repository.GetMessageById(returnedModel.Id);
+            Assert.Null(foundModel);
 
 
         }
@@ -101,8 +103,10 @@ namespace Teams.BL.Tests
             Assert.Equal(model.Text, foundModel.Text);
 
             fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
+            foundModel = fixture.Repository.GetMessageById(model.Id);
 
+            Assert.Null(foundModel);
+        
 
         }
 
@@ -120,10 +124,13 @@ namespace Teams.BL.Tests
 
             var returnedModel = fixture.Repository.Create(model);
             // New Test
-            Assert.NotNull(fixture.Repository.GetAll());
+            Assert.NotEmpty(fixture.Repository.GetAll());
 
             fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
+
+            Assert.Empty(fixture.Repository.GetAll());
+         //   Assert.Equal(fixture.Repository.GetAll().First().Id, returnedModel.Id);
+
         }
 
 
@@ -156,16 +163,9 @@ namespace Teams.BL.Tests
             Assert.Equal(foundModel.Text, secondName);
 
             fixture.Repository.Delete(returnedModelCreated.Id);
-            Assert.Null(returnedModelCreated);
-
+      
 
         }
-
-
-
-
-
-
 
     }
 }

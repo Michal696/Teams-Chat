@@ -10,16 +10,10 @@ using Teams.BL;
 
 namespace Teams.BL.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase, IUserRepository
     {
-
-        private readonly IDbContextFactory dbContextFactory;
-        private readonly IMapper mapper;
-
-        public UserRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public UserRepository(IDbContextFactory dbContextFactory, IMapper mapper) : base(dbContextFactory, mapper)
         {
-            this.dbContextFactory = dbContextFactory;
-            this.mapper = mapper;
         }
 
         public UserModel Create(UserModel model)
