@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Teams.BL.Models;
 using Teams.BL.Repositories;
 using Teams.BL.Tests;
+using Teams.DAL.Entities.Enums;
 using Xunit;
 
 namespace Teams.BL.Tests
@@ -99,18 +100,7 @@ namespace Teams.BL.Tests
         [Fact]
         public void GroupGetAll_NotNull()
         {
-            var model = new GroupModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "TestGroup - some random data"
-            };
-
-            var returnedModel = fixture.Repository.CreateGroup(model);
-            // New Test
             Assert.NotNull(fixture.Repository.GetAllGroups());
-
-            fixture.Repository.DeleteGroup(returnedModel.Id);
-            Assert.Null(returnedModel);
         }
 
 
@@ -121,11 +111,13 @@ namespace Teams.BL.Tests
             Guid testId = Guid.NewGuid();
             var model = new GroupModel
             {
-                Id = testId,
-                Name = "FirstName"
+                Id = Guid.NewGuid(),
+                Name = "Firstname",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
             };
-
             var returnedModelCreateGroupd = fixture.Repository.CreateGroup(model);
+
             Assert.NotNull(returnedModelCreateGroupd);
 
             String secondName = "SecondName";
@@ -134,39 +126,24 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetByIdGroup(model.Id);
             Assert.NotNull(foundModel);
-
-            // New Test
+            
             Assert.NotEqual(returnedModelCreateGroupd.Name, foundModel.Name);
             Assert.Equal(foundModel.Name, secondName);
-
-            fixture.Repository.DeleteGroup(returnedModelCreateGroupd.Id);
-            Assert.Null(returnedModelCreateGroupd);
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         [Fact]
         public void CreateTaskTask()
         {
             var model = new TaskModel
             {
-                Text = "TestTask - some random data"
+                Id = Guid.NewGuid(),
+                Text = "Random task test",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = fixture.groupModel
             };
-
             var returnedModel = fixture.Repository.CreateTask(model);
-            // New Test
+
             Assert.NotNull(returnedModel);
             fixture.Repository.DeleteTask(returnedModel.Id);
         }
@@ -175,14 +152,19 @@ namespace Teams.BL.Tests
         {
             var model = new TaskModel
             {
-                Text = "TestTask - some random data"
+                Id = Guid.NewGuid(),
+                Text = "Random task test",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = fixture.groupModel
             };
-
             var returnedModel = fixture.Repository.CreateTask(model);
 
             Assert.NotNull(returnedModel);
+
             fixture.Repository.DeleteTask(returnedModel.Id);
-            // New Test
+
+            returnedModel = fixture.Repository.GetByIdTask(returnedModel.Id);
             Assert.Null(returnedModel);
         }
 
@@ -192,20 +174,17 @@ namespace Teams.BL.Tests
             var model = new TaskModel
             {
                 Id = Guid.NewGuid(),
-                Text = "TestTask - some random data"
+                Text = "Random task test",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = fixture.groupModel
             };
-
             var returnedModel = fixture.Repository.CreateTask(model);
+
             Assert.NotNull(returnedModel);
 
             var foundModel = fixture.Repository.GetByIdTask(model.Id);
-            // New Test
             Assert.NotNull(foundModel);
-
-            fixture.Repository.DeleteTask(returnedModel.Id);
-            Assert.Null(returnedModel);
-
-
         }
 
         [Fact]
@@ -214,7 +193,10 @@ namespace Teams.BL.Tests
             var model = new TaskModel
             {
                 Id = Guid.NewGuid(),
-                Text = "TestTask - some random data"
+                Text = "Random task test",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = fixture.groupModel
             };
 
             var returnedModel = fixture.Repository.CreateTask(model);
@@ -222,13 +204,9 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetByIdTask(model.Id);
             Assert.NotNull(foundModel);
-            // New Test
+
             Assert.Equal(model.Text, foundModel.Text);
-
-            fixture.Repository.DeleteTask(returnedModel.Id);
-            Assert.Null(returnedModel);
-
-
+            Assert.Equal(model.State, foundModel.State);
         }
 
         
@@ -241,7 +219,10 @@ namespace Teams.BL.Tests
             var model = new TaskModel
             {
                 Id = testId,
-                Text = "FirstText"
+                Text = "Random task test",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = fixture.groupModel
             };
 
             var returnedModelCreateTaskd = fixture.Repository.CreateTask(model);
@@ -254,14 +235,8 @@ namespace Teams.BL.Tests
             var foundModel = fixture.Repository.GetByIdTask(model.Id);
             Assert.NotNull(foundModel);
 
-            // New Test
             Assert.NotEqual(returnedModelCreateTaskd.Text, foundModel.Text);
             Assert.Equal(foundModel.Text, secondText);
-
-            fixture.Repository.DeleteTask(returnedModelCreateTaskd.Id);
-            Assert.Null(returnedModelCreateTaskd);
-
-
         }
     }
 }

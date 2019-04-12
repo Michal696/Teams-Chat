@@ -160,7 +160,7 @@ namespace Teams.BL.Mapper
                 TimeStamp = model.TimeStamp,
                 Text = model.Text,
                 User = UserModelToUserEntity(model.User),
-                Parent = MessageModelToMessageEntity(model.Parent),
+                Parent = model.Parent == null ? null : MessageModelToMessageEntity(model.Parent),
                 Group = GroupModelToGroupEntity(model.Group)
             };
         }

@@ -17,7 +17,7 @@ namespace Teams.BL.Tests
         public MessageRepositoryTestsFixture()
         {
             repository = new MessageRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
-            /*
+            
             var teamModel = new TeamModel
             {
                 Id = Guid.NewGuid(),
@@ -44,7 +44,7 @@ namespace Teams.BL.Tests
             var userRepository = new UserRepository(new InMemoryDbContextFactory(), new Mapper.Mapper());
             userModel = userRepository.Create(userModel);
 
-            var messageModel = new MessageModel
+            /*var messageModel = new MessageModel
             {
                 Id = Guid.NewGuid(),
                 Text = "Test Message text",

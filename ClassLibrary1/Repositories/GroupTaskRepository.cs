@@ -51,6 +51,8 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.TaskModelToTaskEntity(Task);
+                dbContext.Users.Attach(entity.User);
+                dbContext.Groups.Attach(entity.Group);
                 dbContext.Tasks.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TaskEntityToTaskModel(entity);
@@ -75,8 +77,12 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = dbContext.Tasks.First(t => t.Id == Id);
-                dbContext.Remove(entity);
+                var task = new Task
+                {
+                    Id = Id
+                };
+                dbContext.Tasks.Attach(task);
+                dbContext.Tasks.Remove(task);
                 dbContext.SaveChanges();
             }
         }
@@ -86,6 +92,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Groups
+                    .Include(g => g.Team)
                     .Select(mapper.GroupEntityToGroupModel);
             }
         }
@@ -156,6 +163,9 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Tasks
+                    .Include(t => t.Group)
+                    .Include(t => t.User)
+                    .Include(t => t.Group.Team)
                     .FirstOrDefault(t => t.Id == Id);
                 return entity == null ? null : mapper.TaskEntityToTaskModel(entity);
             }
