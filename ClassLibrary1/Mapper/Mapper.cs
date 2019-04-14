@@ -15,6 +15,11 @@ namespace Teams.BL.Mapper
 
         public GroupModel GroupEntityToGroupModel (Group entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new GroupModel
             {
                 Id = entity.Id,
@@ -26,6 +31,11 @@ namespace Teams.BL.Mapper
 
         public GroupUserPermissionModel GroupUserPermissionsEntityToGroupUserPermissionsModel(GroupUserPermission entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new GroupUserPermissionModel
             {
                 Id = entity.Id,
@@ -37,6 +47,11 @@ namespace Teams.BL.Mapper
 
         public MessageModel MessageEntityToMessageModel(Message entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new MessageModel
             {
                 Id = entity.Id,
@@ -51,6 +66,11 @@ namespace Teams.BL.Mapper
 
         public TaskAssignmentModel TaskAssignmentEntityToTaskAssignmentModel(TaskAssignment entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new TaskAssignmentModel
             {
                 Id = entity.Id,
@@ -61,6 +81,11 @@ namespace Teams.BL.Mapper
 
         public TaskModel TaskEntityToTaskModel(Task entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new TaskModel
             {
                 Id = entity.Id,
@@ -88,6 +113,11 @@ namespace Teams.BL.Mapper
 
         public TeamMemberModel TeamMemberEntityToTeamMemberModel(TeamMember entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new TeamMemberModel
             {
                 Id = entity.Id,
@@ -98,6 +128,11 @@ namespace Teams.BL.Mapper
 
         public TeamModel TeamEntityToTeamModel(Team entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             var teamModel = new TeamModel
             {
                 Id = entity.Id,
@@ -108,6 +143,11 @@ namespace Teams.BL.Mapper
 
         public UserModel UserEntityToUserModel(User entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new UserModel
             {
                 Id = entity.Id,
@@ -121,6 +161,11 @@ namespace Teams.BL.Mapper
 
         public MediaModel MediaEntityToMediaModel(Media entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new MediaModel
             {
                 Id = entity.Id,

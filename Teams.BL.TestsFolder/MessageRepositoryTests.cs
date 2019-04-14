@@ -33,28 +33,13 @@ namespace Teams.BL.Tests
             var returnedModel = fixture.Repository.Create(model);
 
             Assert.NotNull(returnedModel);
-        }
-        [Fact]
-        public void DeleteMessage()
-        {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
-
-            var returnedModel = fixture.Repository.Create(model);
-
-            Assert.NotNull(returnedModel);
             fixture.Repository.Delete(returnedModel.Id);
 
             returnedModel = fixture.Repository.GetMessageById(returnedModel.Id);
             Assert.Null(returnedModel);
+            Assert.Empty(fixture.Repository.GetAll());
         }
-
+       
         [Fact]
         public void FindMessageById_NotNull()
         {
@@ -75,8 +60,10 @@ namespace Teams.BL.Tests
             Assert.NotNull(foundModel);
 
             fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
 
+            foundModel = fixture.Repository.GetMessageById(returnedModel.Id);
+            Assert.Null(foundModel);
+            Assert.Empty(fixture.Repository.GetAll());
 
         }
 
@@ -101,8 +88,10 @@ namespace Teams.BL.Tests
             Assert.Equal(model.Text, foundModel.Text);
 
             fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
+            foundModel = fixture.Repository.GetMessageById(model.Id);
 
+            Assert.Null(foundModel);
+            Assert.Empty(fixture.Repository.GetAll());
 
         }
 
@@ -120,10 +109,16 @@ namespace Teams.BL.Tests
 
             var returnedModel = fixture.Repository.Create(model);
             // New Test
-            Assert.NotNull(fixture.Repository.GetAll());
+            Assert.NotEmpty(fixture.Repository.GetAll());
 
             fixture.Repository.Delete(returnedModel.Id);
-            Assert.Null(returnedModel);
+
+            //     Assert.Equal(fixture.Repository.GetAll().First().Id, returnedModel.Id);
+            Assert.Empty(fixture.Repository.GetAll());
+
+
+
+
         }
 
 
@@ -156,16 +151,9 @@ namespace Teams.BL.Tests
             Assert.Equal(foundModel.Text, secondName);
 
             fixture.Repository.Delete(returnedModelCreated.Id);
-            Assert.Null(returnedModelCreated);
-
+      
 
         }
-
-
-
-
-
-
 
     }
 }
