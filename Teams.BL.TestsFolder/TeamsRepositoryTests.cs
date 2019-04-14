@@ -159,7 +159,7 @@ namespace Teams.BL.Tests
 
 
             // clean
-            fixture.Repository.Delete(teamMemberModel.Id);
+            fixture.Repository.Delete(returnedTeamMemberModel.Id);
             fixture.Repository.Delete(returnedTeamModel.Id);
                      
 

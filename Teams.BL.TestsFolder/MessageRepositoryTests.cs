@@ -32,6 +32,8 @@ namespace Teams.BL.Tests
             };
             var returnedModel = fixture.Repository.Create(model);
             Assert.NotNull(returnedModel);
+
+            // clean
             fixture.Repository.Delete(returnedModel.Id);
 
         }
@@ -129,21 +131,23 @@ namespace Teams.BL.Tests
             Assert.NotEmpty(fixture.Repository.GetAll());
 
             fixture.Repository.Delete(returnedModel.Id);
-
-            //     Assert.Equal(fixture.Repository.GetAll().First().Id, returnedModel.Id);
+            
             Assert.Empty(fixture.Repository.GetAll());
 
+        }
 
 
-
+        [Fact]
+        public void MessageGetAll_NotNullWithNoModel()
+        {
+            Assert.NotNull(fixture.Repository.GetAll());
+            Assert.Empty(fixture.Repository.GetAll());
         }
 
 
         [Fact]
         public void UpdateWithModel()
         {
-
-            Guid testId = Guid.NewGuid();
             var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
@@ -168,8 +172,43 @@ namespace Teams.BL.Tests
             Assert.Equal(foundModel.Text, secondName);
 
             fixture.Repository.Delete(returnedModelCreated.Id);
-      
 
+            Assert.Empty(fixture.Repository.GetAll());
+        }
+
+        [Fact]
+        public void GetGroupMessagesById_values()
+        {
+ 
+
+            var messageModel1 = new MessageModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "FirstText",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
+            };
+
+            var messageModel2 = new MessageModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "SecondText",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
+            };
+            
+
+            var returnedMessageModel1 = fixture.Repository.Create(messageModel1);
+            var returnedMessageModel2 = fixture.Repository.Create(messageModel2);
+
+            fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
+
+
+            // clean
+            fixture.Repository.Delete(returnedMessageModel1.Id);
+            fixture.Repository.Delete(returnedMessageModel2.Id);
         }
 
     }
