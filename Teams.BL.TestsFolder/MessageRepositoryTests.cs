@@ -178,9 +178,7 @@ namespace Teams.BL.Tests
 
         [Fact]
         public void GetGroupMessagesById_values()
-        {
- 
-
+        { 
             var messageModel1 = new MessageModel
             {
                 Id = Guid.NewGuid(),
@@ -203,7 +201,54 @@ namespace Teams.BL.Tests
             var returnedMessageModel1 = fixture.Repository.Create(messageModel1);
             var returnedMessageModel2 = fixture.Repository.Create(messageModel2);
 
-            fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
+            IEnumerable<MessageModel> messageModels = fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
+
+            var singleReturnMessageModel1 = messageModels.Single(m => m.Id == messageModel1.Id);
+            Assert.Equal(messageModel1.Id, singleReturnMessageModel1.Id);
+            Assert.Equal(messageModel1.Text, singleReturnMessageModel1.Text);
+
+            var singleReturnMessageModel2 = messageModels.Single(m => m.Id == messageModel2.Id);
+            Assert.Equal(messageModel2.Id, singleReturnMessageModel2.Id);
+            Assert.Equal(messageModel2.Text, singleReturnMessageModel2.Text);
+
+
+            // clean
+            fixture.Repository.Delete(returnedMessageModel1.Id);
+            fixture.Repository.Delete(returnedMessageModel2.Id);
+        }
+
+
+        [Fact]
+        public void GetGroupMessagesById_count()
+        {
+
+
+            var messageModel1 = new MessageModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "FirstText",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
+            };
+
+            var messageModel2 = new MessageModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "SecondText",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
+            };
+
+
+            var returnedMessageModel1 = fixture.Repository.Create(messageModel1);
+            var returnedMessageModel2 = fixture.Repository.Create(messageModel2);
+
+            IEnumerable<MessageModel> messageModels = fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
+            int expected = 2;
+            Assert.Equal(expected, messageModels.Count());
+
 
 
             // clean
