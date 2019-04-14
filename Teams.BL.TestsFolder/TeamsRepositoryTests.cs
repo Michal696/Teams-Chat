@@ -117,14 +117,14 @@ namespace Teams.BL.Tests
         [Fact]
         public void AddUserToTeam_value()
         {
-            var model = new TeamModel
+            var modelTeam = new TeamModel
             {
                 Id = Guid.NewGuid(),
                 Name = "TestTeamModel"
             };
-            var returnedModel = fixture.Repository.Create(model);
+            var returnedTeamModel = fixture.Repository.Create(modelTeam);
 
-            Assert.NotNull(returnedModel);
+            Assert.NotNull(returnedTeamModel);
 
             UserModel userModel = new UserModel()
             {
@@ -156,6 +156,14 @@ namespace Teams.BL.Tests
 
             Assert.Equal(teamMemberModel.User.Id, returnedTeamMemberModel.User.Id);
             Assert.Equal(teamMemberModel.User.Name, returnedTeamMemberModel.User.Name);
+
+
+            // clean
+            fixture.Repository.Delete(teamMemberModel.Id);
+            fixture.Repository.Delete(returnedTeamModel.Id);
+                     
+
+            Assert.Empty(fixture.Repository.GetAll());
         }
 
 
@@ -233,6 +241,15 @@ namespace Teams.BL.Tests
             var returnedTeamModel3 = teamModels.Single(m => m.Id == returnedModel3.Id);
             Assert.Null(returnedTeamModel1);
 
+            // clean
+            fixture.Repository.Delete(returnedModel1.Id);
+            fixture.Repository.Delete(returnedModel2.Id);
+            fixture.Repository.Delete(returnedModel3.Id);
+
+            fixture.Repository.Delete(returnedTeamMemberModel1.Id);
+            fixture.Repository.Delete(returnedTeamMemberModel2.Id);
+
+            Assert.Empty(fixture.Repository.GetAll());
 
         }
 
@@ -296,7 +313,17 @@ namespace Teams.BL.Tests
 
             int countOfTeamModels = 2;
             Assert.Equal(fixture.Repository.GetByUser(userModel.Id).Count(), countOfTeamModels);
-            
+
+            // clean
+            fixture.Repository.Delete(returnedModel1.Id);
+            fixture.Repository.Delete(returnedModel2.Id);
+            fixture.Repository.Delete(returnedModel3.Id);
+
+            fixture.Repository.Delete(returnedTeamMemberModel1.Id);
+            fixture.Repository.Delete(returnedTeamMemberModel2.Id);
+
+            Assert.Empty(fixture.Repository.GetAll());
+
         }
 
         [Fact]
@@ -375,7 +402,15 @@ namespace Teams.BL.Tests
             Assert.Equal(returnedTeamModel3.Id, teamModel3.Id);
             Assert.Equal(returnedTeamModel3.Name, teamModel3.Name);
 
+            // clean
+            fixture.Repository.Delete(returnedModel1.Id);
+            fixture.Repository.Delete(returnedModel2.Id);
+            fixture.Repository.Delete(returnedModel3.Id);
+            
+            fixture.Repository.Delete(returnedTeamMemberModel1.Id);
+            fixture.Repository.Delete(returnedTeamMemberModel2.Id);
 
+            Assert.Empty(fixture.Repository.GetAll());
         }
 
         [Fact]
@@ -437,7 +472,16 @@ namespace Teams.BL.Tests
 
             int countOfTeamModels = 3;
             Assert.Equal(fixture.Repository.GetAll().Count(), countOfTeamModels);
-            
+
+            // clean
+            fixture.Repository.Delete(returnedModel1.Id);
+            fixture.Repository.Delete(returnedModel2.Id);
+            fixture.Repository.Delete(returnedModel3.Id);
+
+            fixture.Repository.Delete(returnedTeamMemberModel1.Id);
+            fixture.Repository.Delete(returnedTeamMemberModel2.Id);
+
+            Assert.Empty(fixture.Repository.GetAll());
         }
     }
 }
