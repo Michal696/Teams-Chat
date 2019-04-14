@@ -220,9 +220,7 @@ namespace Teams.BL.Tests
 
         [Fact]
         public void GetGroupMessagesById_count()
-        {
-
-
+        {            
             var messageModel1 = new MessageModel
             {
                 Id = Guid.NewGuid(),
@@ -248,7 +246,6 @@ namespace Teams.BL.Tests
             IEnumerable<MessageModel> messageModels = fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
             int expected = 2;
             Assert.Equal(expected, messageModels.Count());
-
 
 
             // clean

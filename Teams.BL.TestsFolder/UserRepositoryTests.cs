@@ -145,7 +145,8 @@ namespace Teams.BL.Tests
             // int expect = 2;            
             // Assert.Equal(count, expect);
 
-
+            // delete this assert when repaired: "userModelList.Count()"
+            Assert.False(true);
         }
 
 
