@@ -30,6 +30,8 @@ namespace Teams.BL.Tests
             var returnedModel = fixture.Repository.Create(model);
 
             Assert.NotNull(returnedModel);
+            // clean 
+            fixture.Repository.Delete(model.Id);
         }
         [Fact]
         public void DeleteUser()
@@ -62,6 +64,8 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetById(model.Id);
             Assert.NotNull(foundModel);
+            // clean 
+            fixture.Repository.Delete(model.Id);
         }
 
         [Fact]
@@ -80,6 +84,9 @@ namespace Teams.BL.Tests
             Assert.NotNull(foundModel);
 
             Assert.Equal(model.Name, foundModel.Name);
+
+            // clean 
+            fixture.Repository.Delete(model.Id);
         }
 
         [Fact]
@@ -111,6 +118,9 @@ namespace Teams.BL.Tests
             Assert.NotNull(foundModel);
             Assert.NotEqual(returnedModelCreated.Name, foundModel.Name);
             Assert.Equal(foundModel.Name, secondName);
+
+            // clean 
+            fixture.Repository.Delete(model.Id);
         }
 
         [Fact]
@@ -137,16 +147,16 @@ namespace Teams.BL.Tests
 
             IEnumerable<UserModel> userModelList = fixture.Repository.GetAll();
 
-            // uncomment when repaired: "userModelList.Count()"
-            //int count =
-            userModelList.Count(); // expecting "2"
+            int actual = userModelList.Count(); // expecting "2"
 
-            // uncomment when repaired: "userModelList.Count()"
-            // int expect = 2;            
-            // Assert.Equal(count, expect);
 
-            // delete this assert when repaired: "userModelList.Count()"
-            Assert.False(true);
+            int expected = 2;
+            Assert.Equal(expected, actual);
+
+            // clean 
+            fixture.Repository.Delete(model1.Id);
+            fixture.Repository.Delete(model2.Id);
+
         }
 
 
@@ -180,6 +190,10 @@ namespace Teams.BL.Tests
             returnedModel = userModelList.Single(m => m.Name == "SecondTestUser");
             Assert.Equal(returnedModel2.Id, returnedModel.Id);
             Assert.Equal(returnedModel2.Name, returnedModel.Name);
+
+            // clean 
+            fixture.Repository.Delete(model1.Id);
+            fixture.Repository.Delete(model2.Id);
         }
 
         [Fact]
@@ -212,6 +226,10 @@ namespace Teams.BL.Tests
             returnedModel = userModelList.Single(m => m.Id == returnedModel2.Id);
             Assert.Equal(returnedModel2.Id, returnedModel.Id);
             Assert.Equal(returnedModel2.Name, returnedModel.Name);
+
+            // clean 
+            fixture.Repository.Delete(model1.Id);
+            fixture.Repository.Delete(model2.Id);
         }
     }
 }
