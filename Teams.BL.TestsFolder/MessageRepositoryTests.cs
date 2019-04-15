@@ -253,5 +253,183 @@ namespace Teams.BL.Tests
             fixture.Repository.Delete(returnedMessageModel2.Id);
         }
 
+        [Fact]
+        public void AddMediaTest()
+        {
+            Guid id = Guid.NewGuid();
+
+            MessageModel messageModel = new MessageModel()
+            {
+                Id = Guid.NewGuid(),
+                Title = "Message Title"
+            };
+        
+
+            MediaModel mediaModel = new MediaModel()
+            {
+                Parent = messageModel,
+                Data = "TestData"
+            };
+
+            MediaModel returnedMediaModel = fixture.Repository.AddMedia(id, mediaModel);
+            Assert.NotNull(returnedMediaModel);
+
+            //clean
+            fixture.Repository.DeleteMedia(returnedMediaModel.Id);
+
+        }
+
+        [Fact]
+        public void DeleteMediaTest()
+        {
+            Guid id = Guid.NewGuid();
+
+            MessageModel messageModel = new MessageModel()
+            {
+                Id = Guid.NewGuid(),
+                Title = "Message Title"
+            };
+
+
+            MediaModel mediaModel = new MediaModel()
+            {
+                Parent = messageModel,
+                Data = "TestData"
+            };
+
+            MediaModel returnedMediaModel = fixture.Repository.AddMedia(id, mediaModel);
+            Assert.NotNull(returnedMediaModel);
+
+            fixture.Repository.DeleteMedia(returnedMediaModel.Id);
+            Assert.Null(returnedMediaModel);
+        }
+
+        [Fact]
+        public void GetGroupMediaById_values()
+        {
+            var mediaModel1 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data"                
+            };
+
+            var mediaModel2 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data2",
+                Parent = null
+            };
+
+
+            var returnedMediaModel1 = fixture.Repository.AddMedia(mediaModel1.Id, mediaModel1);
+            var returnedMediaModel2 = fixture.Repository.AddMedia(mediaModel2.Id, mediaModel2);
+
+            IEnumerable<MediaModel> mediaModels = fixture.Repository.GetGroupMedia(fixture.groupModel.Id);
+
+            var singleReturnMediaModel1 = mediaModels.Single(m => m.Id == mediaModel1.Id);
+            Assert.Equal(mediaModel1.Id, singleReturnMediaModel1.Id);
+            Assert.Equal(mediaModel1.Data, singleReturnMediaModel1.Data);
+
+            var singleReturnMediaModel2 = mediaModels.Single(m => m.Id == mediaModel2.Id);
+            Assert.Equal(mediaModel2.Id, singleReturnMediaModel2.Id);
+            Assert.Equal(mediaModel2.Data, singleReturnMediaModel2.Data);
+
+
+            // clean
+            fixture.Repository.DeleteMedia(returnedMediaModel1.Id);
+            fixture.Repository.DeleteMedia(returnedMediaModel2.Id);
+        }
+
+
+        [Fact]
+        public void GetGroupMediaById_Count()
+        {
+            var mediaModel1 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data"
+            };
+
+            var mediaModel2 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data2",
+                Parent = null
+            };
+
+
+            var returnedMediaModel1 = fixture.Repository.AddMedia(mediaModel1.Id, mediaModel1);
+            var returnedMediaModel2 = fixture.Repository.AddMedia(mediaModel2.Id, mediaModel2);
+
+            IEnumerable<MediaModel> mediaModels = fixture.Repository.GetGroupMedia(fixture.groupModel.Id);
+            int expected = 2;
+            Assert.Equal(expected, mediaModels.Count());
+
+
+            // clean
+            fixture.Repository.DeleteMedia(returnedMediaModel1.Id);
+            fixture.Repository.DeleteMedia(returnedMediaModel2.Id);
+        }
+
+        [Fact]
+        public void CheckMessageMedie_ById()
+        {
+            Guid id = Guid.NewGuid();
+            bool check = fixture.Repository.CheckMessageMedia(id);
+            Assert.False(check);
+
+            var mediaModel1 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data"
+            };
+
+            var returnedMediaModel1 = fixture.Repository.AddMedia(mediaModel1.Id, mediaModel1);
+
+            check = fixture.Repository.CheckMessageMedia(returnedMediaModel1.Id);
+            Assert.True(check);
+
+            // clean
+            fixture.Repository.DeleteMedia(returnedMediaModel1.Id);
+        }
+
+        [Fact]
+        public void GetMessageMedias_ByMessageId()
+        {
+
+            var mediaModel1 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data"
+            };
+
+            var mediaModel2 = new MediaModel
+            {
+                Id = Guid.NewGuid(),
+                Data = "random data2",
+                Parent = null
+            };
+
+            var messageModel = new MessageModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "FirstName",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
+            };
+
+
+            var returnedMediaModel1 = fixture.Repository.AddMedia(mediaModel1.Id, mediaModel1);
+            var returnedMediaModel2 = fixture.Repository.AddMedia(mediaModel2.Id, mediaModel2);
+            Assert.NotNull(returnedMediaModel1);
+            Assert.NotNull(returnedMediaModel2);
+
+            var returnedMessageModelCreated = fixture.Repository.Create(messageModel);
+            Assert.NotNull(returnedMessageModelCreated);
+
+
+
+        }
     }
 }
