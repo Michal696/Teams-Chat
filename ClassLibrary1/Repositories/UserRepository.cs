@@ -43,12 +43,8 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<UserModel> GetAll()
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Users
-                    .Select(mapper.UserEntityToUserModel);
-            }
-
+            return dbContext.Users
+                .Select(mapper.UserEntityToUserModel);
         }
 
         public UserModel GetById(Guid Id)

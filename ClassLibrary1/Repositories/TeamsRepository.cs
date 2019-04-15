@@ -55,11 +55,7 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TeamModel> GetAll()
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Teams
-                    .Select(mapper.TeamEntityToTeamModel);
-            }
+            return dbContext.Teams.Select(mapper.TeamEntityToTeamModel);
         }
 
         public TeamModel GetById(Guid Id)
