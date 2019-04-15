@@ -151,12 +151,12 @@ namespace Teams.BL.Tests
 
 
             int expected = 2;
+            // probably problem from other tests (databe is not empty at the beggining)
             Assert.Equal(expected, actual);
 
             // clean 
-            fixture.Repository.Delete(model1.Id);
-            fixture.Repository.Delete(model2.Id);
-
+            fixture.Repository.Delete(returnedModel1.Id);
+            fixture.Repository.Delete(returnedModel2.Id);
         }
 
 
@@ -166,7 +166,7 @@ namespace Teams.BL.Tests
             var model1 = new UserModel
             {
                 Id = Guid.NewGuid(),
-                Name = "FirstTestUser"
+                Name = "FirstTestUserT"
             };
             var returnedModel1 = fixture.Repository.Create(model1);
 
@@ -175,7 +175,7 @@ namespace Teams.BL.Tests
             var model2 = new UserModel
             {
                 Id = Guid.NewGuid(),
-                Name = "SecondTestUser"
+                Name = "SecondTestUserT"
             };
             var returnedModel2 = fixture.Repository.Create(model2);
 
@@ -183,11 +183,11 @@ namespace Teams.BL.Tests
 
             IEnumerable<UserModel> userModelList = fixture.Repository.GetAll();
 
-            var returnedModel = userModelList.Single(m => m.Name == "FirstTestUser");
+            var returnedModel = userModelList.Single(m => m.Name == model1.Name);
             Assert.Equal(returnedModel1.Id, returnedModel.Id);
             Assert.Equal(returnedModel1.Name, returnedModel.Name);
 
-            returnedModel = userModelList.Single(m => m.Name == "SecondTestUser");
+            returnedModel = userModelList.Single(m => m.Name == model2.Name);
             Assert.Equal(returnedModel2.Id, returnedModel.Id);
             Assert.Equal(returnedModel2.Name, returnedModel.Name);
 
