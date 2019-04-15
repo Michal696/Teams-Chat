@@ -84,12 +84,9 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<GroupModel> GetAllGroups()
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Groups
-                    .Include(g => g.Team)
-                    .Select(mapper.GroupEntityToGroupModel);
-            }
+            return dbContext.Groups
+                .Include(g => g.Team)
+                .Select(mapper.GroupEntityToGroupModel);
         }
 
         public IEnumerable<TaskModel> GetGroupTasks(Guid Id)
