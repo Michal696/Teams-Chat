@@ -68,8 +68,7 @@ namespace Teams.BL.Tests
         {
             var teamModel = fixture.teamModel;
             var returnedTeamModel = fixture.Repository.GetTeamsGroups(teamModel.Id);
-            Assert.NotNull(returnedTeamModel);
-            
+            Assert.NotNull(returnedTeamModel);            
         }
 
         [Fact]
@@ -116,6 +115,64 @@ namespace Teams.BL.Tests
             // clean
             fixture.Repository.DeleteGroup(groupModel.Id);
 
+        }
+
+        [Fact]
+        public void GetGroupTasksTest_notNull()
+        {
+            var groupModel = fixture.groupModel;
+            var returnedTeamModel = fixture.Repository.GetTeamsGroups(groupModel.Id);
+            Assert.NotNull(returnedTeamModel);
+        }
+        [Fact]
+        public void GetGroupTasksTest_count()
+        {
+            int expected = 2; // values from beginning
+            var groupModel = fixture.groupModel;
+
+
+            int actual = fixture.Repository.GetGroupTasks(groupModel.Id).Count();
+            Assert.Equal(expected, actual);
+
+            var taskModel = new TaskModel()
+            {
+                Id = Guid.NewGuid(),
+                Text = "Task",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = groupModel
+
+            };
+            var returnedTaskModel = fixture.Repository.CreateTask(taskModel);
+            expected++;
+
+            Assert.Equal(expected, fixture.Repository.GetGroupTasks(groupModel.Id).Count());
+
+            // clean
+            fixture.Repository.DeleteTask(taskModel.Id);
+        }
+
+        [Fact]
+        public void GetGroupTasksTest_values()
+        {
+            var taskModel = new TaskModel()
+            {
+                Id = Guid.NewGuid(),
+                Text = "Task",
+                User = fixture.userModel,
+                State = TaskState.NEW,
+                Group = fixture.groupModel
+            };
+            var returnedTaskModel = fixture.Repository.CreateTask(taskModel);
+
+            IEnumerable<TaskModel>taskModels = fixture.Repository.GetGroupTasks(fixture.groupModel.Id);
+            var singleTaskModel = taskModels.Single(m => m.Id == taskModel.Id);
+            Assert.Equal(taskModel.Id, singleTaskModel.Id);
+            Assert.Equal(taskModel.Text, singleTaskModel.Text);
+            Assert.Equal(taskModel.State, singleTaskModel.State);
+
+            // clean
+            fixture.Repository.DeleteTask(taskModel.Id);
         }
 
         [Fact]
