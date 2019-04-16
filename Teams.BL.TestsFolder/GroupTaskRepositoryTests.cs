@@ -21,6 +21,103 @@ namespace Teams.BL.Tests
             this.fixture = fixture;
         }
 
+
+        [Fact]
+        public void GroupGetAll_Count()
+        {
+            int expected = 2; // values from beginning, //TODO!!!
+            Assert.Equal(expected, fixture.Repository.GetAllGroups().Count());
+
+            var groupModel = new GroupModel()
+            {
+                Id = Guid.NewGuid(),
+                Name = "NameOfGroupModel",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
+            };
+            var returnedGroupModel = fixture.Repository.CreateGroup(groupModel);
+            expected++;
+
+            Assert.Equal(expected, fixture.Repository.GetAllGroups().Count());
+        }
+
+        [Fact]
+        public void GroupGetAll_Values()
+        {
+            var groupModel = new GroupModel()
+            {
+                Id = Guid.NewGuid(),
+                Name = "NameOfGroupModel",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
+            };
+            var returnedGroupModel = fixture.Repository.CreateGroup(groupModel);
+
+            IEnumerable<GroupModel> groupModels = fixture.Repository.GetAllGroups();
+            var singleGroupModel = groupModels.Single(m => m.Id == groupModel.Id);
+            Assert.Equal(groupModel.Id, singleGroupModel.Id);
+            Assert.Equal(groupModel.Name, singleGroupModel.Name);
+            Assert.Equal(groupModel.Description, singleGroupModel.Description);
+
+            // clean
+            fixture.Repository.DeleteGroup(groupModel.Id);
+        }
+
+        [Fact]
+        public void GetTeamsGroupsTest_notNull()
+        {
+            var teamModel = fixture.teamModel;
+            var returnedTeamModel = fixture.Repository.GetTeamsGroups(teamModel.Id);
+            Assert.NotNull(returnedTeamModel);
+            
+        }
+
+        [Fact]
+        public void GetTeamsGroupsTest_count()
+        {
+            int expected = 2; // values from beginning
+            TeamModel teamModel = fixture.teamModel;
+            int actual = fixture.Repository.GetTeamsGroups(teamModel.Id).Count();
+            Assert.Equal(expected, actual);
+
+            var groupModel = new GroupModel()
+            {
+                Id = Guid.NewGuid(),
+                Name = "NameOfGroupModel",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
+            };
+            var returnedGroupModel = fixture.Repository.CreateGroup(groupModel);
+            expected++;
+
+            Assert.Equal(expected, fixture.Repository.GetTeamsGroups(teamModel.Id).Count());
+
+            // clean
+            fixture.Repository.DeleteGroup(groupModel.Id);
+        }
+        [Fact]
+        public void GetTeamsGroupsTest_values()
+        {
+            var groupModel = new GroupModel()
+            {
+                Id = Guid.NewGuid(),
+                Name = "NameOfGroupModel",
+                Description = "TestGroup - description",
+                Team = fixture.teamModel
+            };
+            var returnedGroupModel = fixture.Repository.CreateGroup(groupModel);
+
+            IEnumerable<GroupModel> groupModels = fixture.Repository.GetTeamsGroups(fixture.teamModel.Id);
+            var singleGroupModel = groupModels.Single(m => m.Id == groupModel.Id);
+            Assert.Equal(groupModel.Id, singleGroupModel.Id);
+            Assert.Equal(groupModel.Name, singleGroupModel.Name);
+            Assert.Equal(groupModel.Description, singleGroupModel.Description);
+
+            // clean
+            fixture.Repository.DeleteGroup(groupModel.Id);
+
+        }
+
         [Fact]
         public void CreateGroupGroup()
         {
@@ -38,6 +135,7 @@ namespace Teams.BL.Tests
             Assert.Equal(model.Name, returnedModel.Name);
             Assert.Equal(model.Description, returnedModel.Description);
 
+            // clean
             fixture.Repository.DeleteGroup(returnedModel.Id);
         }
         [Fact]
@@ -75,6 +173,9 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetByIdGroup(returnedModel.Id);
             Assert.NotNull(foundModel);
+
+            // clean
+            fixture.Repository.DeleteGroup(returnedModel.Id);
         }
 
         [Fact]
@@ -95,6 +196,9 @@ namespace Teams.BL.Tests
 
             Assert.Equal(model.Name, foundModel.Name);
             Assert.Equal(model.Description, foundModel.Description);
+
+            // clean
+            fixture.Repository.DeleteGroup(returnedModel.Id);
         }
 
         [Fact]
@@ -102,6 +206,7 @@ namespace Teams.BL.Tests
         {
             Assert.NotNull(fixture.Repository.GetAllGroups());
         }
+
 
 
         [Fact]
@@ -129,6 +234,9 @@ namespace Teams.BL.Tests
             
             Assert.NotEqual(returnedModelCreateGroupd.Name, foundModel.Name);
             Assert.Equal(foundModel.Name, secondName);
+
+            // clean
+            fixture.Repository.DeleteGroup(returnedModelCreateGroupd.Id);
         }
         
         [Fact]
@@ -145,6 +253,8 @@ namespace Teams.BL.Tests
             var returnedModel = fixture.Repository.CreateTask(model);
 
             Assert.NotNull(returnedModel);
+
+            // clean
             fixture.Repository.DeleteTask(returnedModel.Id);
         }
         [Fact]
@@ -185,6 +295,9 @@ namespace Teams.BL.Tests
 
             var foundModel = fixture.Repository.GetByIdTask(model.Id);
             Assert.NotNull(foundModel);
+
+            // clean
+            fixture.Repository.DeleteTask(returnedModel.Id);
         }
 
         [Fact]
@@ -207,6 +320,9 @@ namespace Teams.BL.Tests
 
             Assert.Equal(model.Text, foundModel.Text);
             Assert.Equal(model.State, foundModel.State);
+
+            // clean
+            fixture.Repository.DeleteTask(returnedModel.Id);
         }
 
         
@@ -237,6 +353,9 @@ namespace Teams.BL.Tests
 
             Assert.NotEqual(returnedModelCreateTaskd.Text, foundModel.Text);
             Assert.Equal(foundModel.Text, secondText);
+
+            // clean
+            fixture.Repository.DeleteTask(returnedModelCreateTaskd.Id);
         }
     }
 }
