@@ -372,7 +372,7 @@ namespace Teams.BL.Tests
         }
 
         [Fact]
-        public void CheckMessageMedie_ById()
+        public void CheckMessageMedia_ById()
         {
             Guid id = Guid.NewGuid();
             bool check = fixture.Repository.CheckMessageMedia(id);
