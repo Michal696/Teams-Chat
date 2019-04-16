@@ -174,6 +174,40 @@ namespace Teams.BL.Tests
             // clean
             fixture.Repository.DeleteTask(taskModel.Id);
         }
+        [Fact]
+        public void AddUserToGroupTest_NotNull()
+        {
+
+
+            var groupUserPermissionModel = new GroupUserPermissionModel()
+            {
+                Group = fixture.groupModel,
+                User = fixture.userModel,
+                Permit = Permission.MANAGE
+            };
+            var returnedGroupUserPermissionModel = fixture.Repository.AddUserToGroup(groupUserPermissionModel);
+            Assert.NotNull(returnedGroupUserPermissionModel);
+        }
+
+
+        [Fact]
+        public void GetTaskChangesTest_Notnull()
+        {
+            Assert.NotNull(fixture.Repository.GetTaskChanges(Guid.NewGuid()));          
+        }
+
+        [Fact]
+        public void GetTaskChangesTest_Count()
+        {
+            Assert.False(true);
+        }
+
+        [Fact]
+        public void GetTaskChangesTest_Values()
+        {
+            Assert.False(true);
+        }
+
 
         [Fact]
         public void CreateGroupGroup()
