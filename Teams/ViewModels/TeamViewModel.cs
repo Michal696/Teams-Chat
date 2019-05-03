@@ -23,6 +23,7 @@ namespace Teams.ViewModels
         public TeamModel Model { get; set; }
 
         public ICommand AddNewTeamCommand { get; set; }
+        public ICommand TeamSelectedCommand { get; set; }
 
         public TeamViewModel(ITeamsRepository teamsRepository, IMediator mediator)
         {
@@ -30,9 +31,22 @@ namespace Teams.ViewModels
             this.mediator = mediator;
 
             AddNewTeamCommand = new RelayCommand(CreateNewTeam);
+            TeamSelectedCommand = new RelayCommand<TeamModel>(TeamSelect);
 
             mediator.Register<TeamNewMessage>(TeamNewAdded);
+            mediator.Register<TeamSelectMessage>(IngredientSelected);
         }
+
+        private void TeamSelect(TeamModel team)
+        {
+            mediator.Send(new TeamSelectMessage { Id = team.Id });
+        }
+
+        private void IngredientSelected(TeamSelectMessage teamSelectMessage)
+        {
+            Model = teamsRepository.GetById(teamSelectMessage.Id);
+        }
+
         private void CreateNewTeam()
         {
             mediator.Send(new TeamNewMessage());
