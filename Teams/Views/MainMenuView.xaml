@@ -16,10 +16,10 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="Add new team" Command="{Binding AddNewTeamCommand}"/>
-        <ListBox Grid.Row="1">
-            <ListBox.ItemTemplate>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Teams}">
+            <ListBox.ItemTemplate >
                 <DataTemplate>
-                    <Label Content="{Binding Model}"/>
+                    <Label Content="{Binding Model.Name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
