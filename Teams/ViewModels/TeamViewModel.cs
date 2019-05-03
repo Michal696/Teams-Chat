@@ -53,10 +53,10 @@ namespace Teams.ViewModels
 
         private void TeamNewAdded(TeamNewMessage teamNewMessage)
         {
-            Model = new TeamModel();
-            Model.Name = Model.Id + " team";
-            teamsRepository.Create(Model);
-            Load();
+            Model = new TeamModel
+            {
+                Name = Model.Id + " team"
+            };
         }
 
         private void TeamSelect(TeamModel team)
