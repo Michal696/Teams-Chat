@@ -30,9 +30,10 @@ namespace Teams.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        public TeamViewModel(ITeamsRepository teamsRepository, IMediator mediator)
+        public TeamViewModel(ITeamsRepository teamsRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.teamsRepository = teamsRepository;
+            this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
             AddNewTeamCommand = new RelayCommand(CreateNewTeam);
@@ -53,10 +54,11 @@ namespace Teams.ViewModels
 
         private void TeamNewAdded(TeamNewMessage teamNewMessage)
         {
-            Model = new TeamModel
-            {
-                Name = Model.Id + " team"
-            };
+            Model = new TeamModel();
+            Model.Id = Guid.NewGuid();
+            Model.Name = Model.Id +" Team";
+            teamsRepository.Create(Model);
+            Load();
         }
 
         private void TeamSelect(TeamModel team)
