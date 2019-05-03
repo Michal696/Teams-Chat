@@ -10,6 +10,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="Add new team"/>
+        <ListBox Grid.Row="1">
+            <Label Content="sedfrsdgd"/>
+            <Label Content="sedfrsdgd"/>
+            <Label Content="sedfrsdgd"/>
+            <Label Content="sedfrsdgd"/>
+            <Label Content="sedfrsdgd"/>
+            <Label Content="sedfrsdgd"/>
+        </ListBox>
+        <Button Grid.Row="2" Content="but pm"/>
+        <Button Grid.Row="3" Content="but settings"/>
     </Grid>
 </UserControl>
