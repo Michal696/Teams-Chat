@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Teams.DAL;
 
-namespace Teams.DAL
+namespace Teams.BL.Factories
 {
     public class DesignDbContextFactory : IDbContextFactory
     {
