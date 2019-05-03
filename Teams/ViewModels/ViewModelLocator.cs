@@ -18,8 +18,10 @@ namespace Teams.ViewModels
         private readonly ITeamsRepository teamsRepository;
         private readonly IMessageBoxService messageBoxService;
         private readonly IMapper mapper;
+        private readonly IUserRepository userRepository;
 
         public TeamViewModel TeamViewModel => new TeamViewModel(teamsRepository, messageBoxService, mediator);
+        public UserViewModel UserViewModel => new UserViewModel(userRepository, messageBoxService, mediator);
 
         public ViewModelLocator()
         {
@@ -27,6 +29,7 @@ namespace Teams.ViewModels
             dbContextFactory = new DesignDbContextFactory();
             mapper = new Mapper();
             teamsRepository = new TeamsRepository(dbContextFactory, mapper);
+            userRepository = new UserRepository(dbContextFactory, mapper);
             messageBoxService = new MessageBoxService();
         }
     }

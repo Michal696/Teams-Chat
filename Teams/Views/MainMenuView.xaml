@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800"
-             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=TeamViewModel}">
+             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=UserViewModel}">
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -15,8 +15,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="Add new team" Command="{Binding AddNewTeamCommand}"/>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Teams}">
+        <Button Grid.Row="0" Content="Add new team" Command="{Binding AddNewUserCommand}"/>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Users}">
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <Label Content="{Binding Model.Name}"/>
