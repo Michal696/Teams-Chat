@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Teams.ViewModels
 {
-    class TeamViewModel : ViewModelBase
+    public class TeamViewModel : ViewModelBase
     {
         private readonly ITeamsRepository teamsRepository;
         private IMediator mediator;
