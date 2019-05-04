@@ -126,17 +126,7 @@ namespace Teams.BL.Tests
         [Fact]
         public void GetAllUsers_CountOfValues()
         {
-            // cleanUp
-            IEnumerable<UserModel> userModelListToBeDeleted = fixture.Repository.GetAll();
-
-            // to be changed based on undeleted items prior to this test
-            int undeletedCount = 3;
-            for(int i = 0; i < undeletedCount; i++)
-            {
-                fixture.Repository.Delete(userModelListToBeDeleted.First().Id);
-            }
-
-
+            
             var model1 = new UserModel
             {
                 Id = Guid.NewGuid(),
