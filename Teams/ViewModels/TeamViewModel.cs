@@ -49,15 +49,15 @@ namespace Teams.ViewModels
 
         private void CreateNewTeam()
         {
+            Model = new TeamModel();
+            Model.Id = Guid.NewGuid();
+            Model.Name = "Team " + Model.Id;
+            teamsRepository.Create(Model);
             mediator.Send(new TeamNewMessage());
         }
 
         private void TeamNewAdded(TeamNewMessage teamNewMessage)
         {
-            Model = new TeamModel();
-            Model.Id = Guid.NewGuid();
-            Model.Name = "Team " + Model.Id;
-            teamsRepository.Create(Model);
             Load();
         }
 

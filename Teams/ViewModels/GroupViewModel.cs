@@ -16,7 +16,7 @@ using System.Windows;
 
 namespace Teams.ViewModels
 {
-    class GroupViewModel : ViewModelBase
+    public class GroupViewModel : ViewModelBase
     {
         private readonly IGroupTaskRepository groupTaskRepository;
         private readonly ITeamsRepository teamsRepository;
@@ -47,12 +47,13 @@ namespace Teams.ViewModels
             Model.Id = Guid.NewGuid();
             Model.Description = "Put some description here.";
             Model.Name = "Group " + Model.Id;
+            groupTaskRepository.CreateGroup(Model);
             mediator.Send(new GroupNewMessage());
         }
 
         private void GroupNewAdded(GroupNewMessage groupNewMessage)
         {
-            throw new NotImplementedException();
+            Load();
         }
 
         private void TeamSelected(TeamSelectMessage teamSelectMessage)

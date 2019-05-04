@@ -16,12 +16,14 @@ namespace Teams.ViewModels
         private readonly IMediator mediator;
         private readonly IDbContextFactory dbContextFactory;
         private readonly ITeamsRepository teamsRepository;
+        private readonly IGroupTaskRepository groupTaskRepository;
         private readonly IMessageBoxService messageBoxService;
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
 
         public TeamViewModel TeamViewModel => new TeamViewModel(teamsRepository, messageBoxService, mediator);
         public UserViewModel UserViewModel => new UserViewModel(userRepository, messageBoxService, mediator);
+        public GroupViewModel GroupViewModel => new GroupViewModel(groupTaskRepository , teamsRepository, messageBoxService, mediator);
 
         public ViewModelLocator()
         {
@@ -30,6 +32,7 @@ namespace Teams.ViewModels
             mapper = new Mapper();
             teamsRepository = new TeamsRepository(dbContextFactory, mapper);
             userRepository = new UserRepository(dbContextFactory, mapper);
+            groupTaskRepository = new GroupTaskRepository(dbContextFactory, mapper);
             messageBoxService = new MessageBoxService();
         }
     }
