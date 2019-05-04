@@ -90,7 +90,8 @@ namespace Teams.ViewModels
             }
             catch
             {
-                messageBoxService.Show($"Deleting of {Model?.Name} failed!", "Deleting failed", MessageBoxButton.OK);
+                messageBoxService.Show($"Deleting of '{Model?.Name}' failed!", "Deleting failed", MessageBoxButton.OK);
+                return;
             }
 
             mediator.Send(new TeamDeleteMessage { Id = Model.Id });
