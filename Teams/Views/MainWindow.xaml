@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <views:MainMenuView Grid.Column="0"/>
         <views:TwoColumnWrapView Grid.Column="1"/>
