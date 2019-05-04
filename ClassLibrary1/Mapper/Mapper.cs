@@ -133,12 +133,11 @@ namespace Teams.BL.Mapper
                 return null;
             }
 
-            var teamModel = new TeamModel
+            return new TeamModel
             {
                 Id = entity.Id,
                 Name = entity.Name,
             };
-            return teamModel;
         }
 
         public UserModel UserEntityToUserModel(User entity)

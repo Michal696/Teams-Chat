@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Teams.DAL;
 
 namespace Teams.DAL.Migrations
 {
     [DbContext(typeof(TeamsDbContext))]
-    partial class TeamsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190503235311_renameTeamsToTeam")]
+    partial class renameTeamsToTeam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

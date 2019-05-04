@@ -48,6 +48,7 @@ namespace Teams.ViewModels
             Model = new UserModel();
             Model.Id = Guid.NewGuid();
             Model.Name = "User name " + Model.Id;
+            userRepository.Create(Model);
             Load();
         }
 

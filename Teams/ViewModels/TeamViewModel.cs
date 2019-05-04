@@ -42,22 +42,22 @@ namespace Teams.ViewModels
             DeleteCommand = new RelayCommand(TeamDelete);
 
             mediator.Register<TeamNewMessage>(TeamNewAdded);
-            mediator.Register<TeamSelectMessage>(IngredientSelected);
+            mediator.Register<TeamSelectMessage>(TeamSelected);
             mediator.Register<TeamUpdateMessage>(TeamUpdated);
             mediator.Register<TeamDeleteMessage>(TeamDeleted);
         }
 
         private void CreateNewTeam()
         {
+            Model = new TeamModel();
+            Model.Id = Guid.NewGuid();
+            Model.Name = "Team " + Model.Id;
+            teamsRepository.Create(Model);
             mediator.Send(new TeamNewMessage());
         }
 
         private void TeamNewAdded(TeamNewMessage teamNewMessage)
         {
-            Model = new TeamModel();
-            Model.Id = Guid.NewGuid();
-            Model.Name = Model.Id +" Team";
-            teamsRepository.Create(Model);
             Load();
         }
 
@@ -66,7 +66,7 @@ namespace Teams.ViewModels
             mediator.Send(new TeamSelectMessage { Id = team.Id });
         }
 
-        private void IngredientSelected(TeamSelectMessage teamSelectMessage)
+        private void TeamSelected(TeamSelectMessage teamSelectMessage)
         {
             Model = teamsRepository.GetById(teamSelectMessage.Id);
         }
@@ -90,7 +90,8 @@ namespace Teams.ViewModels
             }
             catch
             {
-                messageBoxService.Show($"Deleting of {Model?.Name} failed!", "Deleting failed", MessageBoxButton.OK);
+                messageBoxService.Show($"Deleting of '{Model?.Name}' failed!", "Deleting failed", MessageBoxButton.OK);
+                return;
             }
 
             mediator.Send(new TeamDeleteMessage { Id = Model.Id });
