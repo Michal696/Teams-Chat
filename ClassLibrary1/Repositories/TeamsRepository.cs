@@ -11,15 +11,10 @@ using Teams.BL;
 
 namespace Teams.BL.Repositories
 {
-    public class TeamsRepository : ITeamsRepository
+    public class TeamsRepository : RepositoryBase,  ITeamsRepository
     {
-        private readonly IDbContextFactory dbContextFactory;
-        private readonly IMapper mapper;
-
-        public TeamsRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public TeamsRepository(IDbContextFactory dbContextFactory, IMapper mapper) : base(dbContextFactory, mapper)
         {
-            this.dbContextFactory = dbContextFactory;
-            this.mapper = mapper;
         }
 
         public TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember)
@@ -27,7 +22,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.TeamMemberModelToTeamMemberEntity(TeamMember);
-                dbContext.TeamMember.Add(entity);
+                dbContext.TeamMembers.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TeamMemberEntityToTeamMemberModel(entity);
             }
@@ -38,7 +33,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.TeamModelToTeamEntity(Team);
-                dbContext.Team.Add(entity);
+                dbContext.Teams.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TeamEntityToTeamModel(entity);
             }
@@ -52,26 +47,22 @@ namespace Teams.BL.Repositories
                 {
                     Id = Id
                 };
-                dbContext.Team.Attach(team);
-                dbContext.Team.Remove(team);
+                dbContext.Teams.Attach(team);
+                dbContext.Teams.Remove(team);
                 dbContext.SaveChanges();
             }
         }
 
         public IEnumerable<TeamModel> GetAll()
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Team
-                    .Select(mapper.TeamEntityToTeamModel);
-            }
+            return dbContext.Teams.Select(mapper.TeamEntityToTeamModel);
         }
 
         public TeamModel GetById(Guid Id)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = dbContext.Team.FirstOrDefault(t => t.Id == Id);
+                var entity = dbContext.Teams.FirstOrDefault(t => t.Id == Id);
                 return entity == null ? null : mapper.TeamEntityToTeamModel(entity);
             }
         }
@@ -80,14 +71,14 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var teamMemberEntity = dbContext.TeamMember
+                var teamMemberEntity = dbContext.TeamMembers
                     .Select(mapper.TeamMemberEntityToTeamMemberModel)
                     .Where(t => t.User.Id == Id);
 
                 List<TeamModel> teamEntity = null;
                 foreach(TeamMemberModel entity in teamMemberEntity.ToList())
                 {
-                    teamEntity.Concat(dbContext.Team
+                    teamEntity.Concat(dbContext.Teams
                         .Select(mapper.TeamEntityToTeamModel)
                         .Where(t => t.Id == entity.Team.Id));
                 }
@@ -101,7 +92,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.TeamModelToTeamEntity(Team);
-                dbContext.Team.Update(entity);
+                dbContext.Teams.Update(entity);
                 dbContext.SaveChanges();
             }
         }

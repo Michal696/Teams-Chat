@@ -6,10 +6,10 @@ namespace Teams.DAL.Entities
     public class GroupUserPermission : EntityBase
     {
 	[Required]
-        public Group Group { get; set; }
+        public virtual Group Group { get; set; }
 
 	[Required]
-        public User Member { get; set; }
+        public virtual User User { get; set; }
         
         public Permission Permit { get; set; }
     }

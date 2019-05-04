@@ -82,6 +82,7 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
@@ -124,8 +125,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Mapper\IMapper.cs" />
     <Compile Include="Mapper\Mapper.cs" />
+    <Compile Include="Messages\GroupDeleteMessage.cs" />
+    <Compile Include="Messages\GroupNewMessage.cs" />
+    <Compile Include="Messages\GroupSelectMessage.cs" />
+    <Compile Include="Messages\GroupUpdateMessage.cs" />
+    <Compile Include="Messages\IMessage.cs" />
+    <Compile Include="Messages\MessageDeleteMessage.cs" />
+    <Compile Include="Messages\MessageNewMessage.cs" />
+    <Compile Include="Messages\MessageSelectMessage.cs" />
+    <Compile Include="Messages\MessageUpdateMessage.cs" />
+    <Compile Include="Messages\TaskDeleteMessage.cs" />
+    <Compile Include="Messages\TaskNewMessage.cs" />
+    <Compile Include="Messages\TaskSelectMessage.cs" />
+    <Compile Include="Messages\TaskUpdateMessage.cs" />
+    <Compile Include="Messages\TeamDeleteMessage.cs" />
+    <Compile Include="Messages\TeamNewMessage.cs" />
+    <Compile Include="Messages\TeamSelectMessage.cs" />
+    <Compile Include="Messages\TeamUpdateMessage.cs" />
+    <Compile Include="Messages\UserDeleteMessage.cs" />
+    <Compile Include="Messages\UserNewMessage.cs" />
+    <Compile Include="Messages\UserSelectMessage.cs" />
+    <Compile Include="Messages\UserUpdateMessage.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Factory\DbContextFactory.cs" />
     <Compile Include="Factory\IDbContextFactory.cs" />
@@ -144,11 +167,15 @@
     <Compile Include="Repositories\GroupTaskRepository.cs" />
     <Compile Include="Repositories\IGroupTaskRepository.cs" />
     <Compile Include="Repositories\IMessageRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\ITeamsRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\MessageRepository.cs" />
     <Compile Include="Repositories\TeamsRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Services\IMediator.cs" />
+    <Compile Include="Services\Mediator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

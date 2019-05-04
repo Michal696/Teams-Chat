@@ -8,26 +8,23 @@ using Teams.BL.Factories;
 using Teams.BL.Models;
 using Teams.BL.Mapper;
 using Teams.BL.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Teams.BL.Repositories
 {
-    public class MessageRepository : IMessageRepository
+    public class MessageRepository : RepositoryBase, IMessageRepository
     {
-        private readonly IDbContextFactory dbContextFactory;
-        private readonly IMapper mapper;
-
-        public MessageRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public MessageRepository(IDbContextFactory dbContextFactory, IMapper mapper) : base(dbContextFactory, mapper)
         {
-            this.dbContextFactory = dbContextFactory;
-            this.mapper = mapper;
         }
-        
+
         public MediaModel AddMedia(Guid Id, MediaModel Media)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 Media.Id = Id;
                 var entity = mapper.MediaModelToMediaEntity(Media);
+                dbContext.Messages.Attach(entity.Parent);
                 dbContext.Media.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.MediaEntityToMediaModel(entity);
@@ -45,11 +42,38 @@ namespace Teams.BL.Repositories
             }
         }
 
+        protected void AttachEntity(String type, EntityBase entity)
+        {
+            if (entity == null)
+            {
+                return;
+            }
+            
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+            
+                switch (type)
+                {
+                    case "Users": dbContext.Users.Attach((User) entity); break;
+                    case "Messages": dbContext.Messages.Attach((Message) entity); break;
+                    case "Groups": dbContext.Groups.Attach((Group) entity); break;
+                    case "Media": dbContext.Media.Attach((Media) entity); break;
+                    case "Teams": dbContext.Teams.Attach((Team) entity); break;
+                    case "Tasks": dbContext.Tasks.Attach((DAL.Entities.Task) entity); break;
+
+                }
+            }
+        }
+
         public MessageModel Create(MessageModel message)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.MessageModelToMessageEntity(message);
+               
+                dbContext.Users.Attach(entity.User);
+                if (entity.Parent != null) dbContext.Messages.Attach(entity.Parent);
+                dbContext.Groups.Attach(entity.Group);
                 dbContext.Messages.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.MessageEntityToMessageModel(entity);
@@ -60,8 +84,12 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = dbContext.Users.First(t => t.Id == Id);
-                dbContext.Remove(entity);
+                var entity = new Message
+                {
+                    Id = Id
+                };
+                dbContext.Messages.Attach(entity);
+                dbContext.Messages.Remove(entity);
                 dbContext.SaveChanges();
             }
         }
@@ -82,18 +110,18 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<MessageModel> GetAll()
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Messages
-                    .Select(mapper.MessageEntityToMessageModel);
-            }
+            return dbContext.Messages
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .Select(mapper.MessageEntityToMessageModel);   
         }
 
         public IEnumerable<MediaModel> GetGroupMedia(Guid Id)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                return dbContext.Media
+                return dbContext.Media  /* TODO include */
                     .Select(mapper.MediaEntityToMediaModel)
                     .Where(t => t.Parent.Group.Id == Id);
             }
@@ -104,6 +132,9 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Messages
+                    .Include(t => t.Group)
+                    .Include(t => t.User)
+                    .Include(t => t.Group.Team)
                     .Select(mapper.MessageEntityToMessageModel)
                     .Where(t => t.Group.Id == Id);
             }
@@ -114,6 +145,10 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Media
+                    .Include(t => t.Parent)
+                    .Include(t => t.Parent.Group)
+                    .Include(t => t.Parent.User)
+                    .Include(t => t.Parent.Group.Team)
                     .Select(mapper.MediaEntityToMediaModel)
                     .Where(t => t.Parent.Id == Id);
             }
@@ -134,6 +169,10 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Messages
+                    .Include(t => t.Group)
+                    .Include(t => t.User)
+                    .Include(t => t.Group.Team)
+                    .Include(t => t.Parent)
                     .FirstOrDefault(t => t.Id == Id);
                 return entity == null ? null : mapper.MessageEntityToMessageModel(entity);
             }

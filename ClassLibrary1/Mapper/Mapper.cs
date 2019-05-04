@@ -15,6 +15,11 @@ namespace Teams.BL.Mapper
 
         public GroupModel GroupEntityToGroupModel (Group entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new GroupModel
             {
                 Id = entity.Id,
@@ -26,17 +31,27 @@ namespace Teams.BL.Mapper
 
         public GroupUserPermissionModel GroupUserPermissionsEntityToGroupUserPermissionsModel(GroupUserPermission entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new GroupUserPermissionModel
             {
                 Id = entity.Id,
                 Group = GroupEntityToGroupModel(entity.Group),
-                User = UserEntityToUserModel(entity.Member),
+                User = UserEntityToUserModel(entity.User),
                 Permit = entity.Permit
             };
         }
 
         public MessageModel MessageEntityToMessageModel(Message entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new MessageModel
             {
                 Id = entity.Id,
@@ -51,6 +66,11 @@ namespace Teams.BL.Mapper
 
         public TaskAssignmentModel TaskAssignmentEntityToTaskAssignmentModel(TaskAssignment entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new TaskAssignmentModel
             {
                 Id = entity.Id,
@@ -61,6 +81,11 @@ namespace Teams.BL.Mapper
 
         public TaskModel TaskEntityToTaskModel(Task entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new TaskModel
             {
                 Id = entity.Id,
@@ -88,6 +113,11 @@ namespace Teams.BL.Mapper
 
         public TeamMemberModel TeamMemberEntityToTeamMemberModel(TeamMember entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new TeamMemberModel
             {
                 Id = entity.Id,
@@ -98,15 +128,26 @@ namespace Teams.BL.Mapper
 
         public TeamModel TeamEntityToTeamModel(Team entity)
         {
-            return new TeamModel
+            if (entity == null)
+            {
+                return null;
+            }
+
+            var teamModel = new TeamModel
             {
                 Id = entity.Id,
                 Name = entity.Name,
-           };
+            };
+            return teamModel;
         }
 
         public UserModel UserEntityToUserModel(User entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new UserModel
             {
                 Id = entity.Id,
@@ -120,6 +161,11 @@ namespace Teams.BL.Mapper
 
         public MediaModel MediaEntityToMediaModel(Media entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             return new MediaModel
             {
                 Id = entity.Id,
@@ -135,6 +181,7 @@ namespace Teams.BL.Mapper
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
+                Team = TeamModelToTeamEntity(model.Team)
             };
         }
 
@@ -143,6 +190,8 @@ namespace Teams.BL.Mapper
             return new GroupUserPermission
             {
                 Id = model.Id,
+                Group = GroupModelToGroupEntity(model.Group),
+                User = UserModelToUserEntity(model.User),
                 Permit = model.Permit
             };
         }
@@ -156,7 +205,7 @@ namespace Teams.BL.Mapper
                 TimeStamp = model.TimeStamp,
                 Text = model.Text,
                 User = UserModelToUserEntity(model.User),
-                Parent = MessageModelToMessageEntity(model.Parent),
+                Parent = model.Parent == null ? null : MessageModelToMessageEntity(model.Parent),
                 Group = GroupModelToGroupEntity(model.Group)
             };
         }

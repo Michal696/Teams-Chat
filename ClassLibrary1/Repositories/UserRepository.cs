@@ -10,16 +10,10 @@ using Teams.BL;
 
 namespace Teams.BL.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase, IUserRepository
     {
-
-        private readonly IDbContextFactory dbContextFactory;
-        private readonly IMapper mapper;
-
-        public UserRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public UserRepository(IDbContextFactory dbContextFactory, IMapper mapper) : base(dbContextFactory, mapper)
         {
-            this.dbContextFactory = dbContextFactory;
-            this.mapper = mapper;
         }
 
         public UserModel Create(UserModel model)
@@ -49,20 +43,16 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<UserModel> GetAll()
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Users
-                    .Select(mapper.UserEntityToUserModel);
-            }
-
+            return dbContext.Users
+                .Select(mapper.UserEntityToUserModel);
         }
 
         public UserModel GetById(Guid Id)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = dbContext.Users.First(t => t.Id == Id);
-                return mapper.UserEntityToUserModel(entity);
+                var entity = dbContext.Users.FirstOrDefault(t => t.Id == Id);
+                return entity == null ? null : mapper.UserEntityToUserModel(entity);
             }
         }
 

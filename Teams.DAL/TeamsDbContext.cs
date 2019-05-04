@@ -21,10 +21,10 @@ namespace Teams.DAL
         public DbSet<GroupUserPermission> GroupsUserPermissions { get; set; }
         public DbSet<Media> Media { get; set; }
         public DbSet<Task>  Tasks { get; set; }
-        public DbSet<TaskStateChange> TaskStateChange { get; set; }
+        public DbSet<TaskStateChange> TaskStateChanges { get; set; }
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
-        public DbSet<Team> Team { get; set; }
-        public DbSet<TeamMember> TeamMember { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamMember> TeamMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
