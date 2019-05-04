@@ -72,7 +72,9 @@ namespace Teams.ViewModels
 
         private void TeamSelected(TeamSelectMessage teamSelectMessage)
         {
-            Load();
+            Groups.Clear();
+            var groups = groupTaskRepository.GetTeamsGroups(teamSelectMessage.Id);
+            Groups.AddRange(groups);
         }
 
         private void TeamUpdate()
@@ -113,10 +115,6 @@ namespace Teams.ViewModels
             Teams.Clear();
             var teams = teamsRepository.GetAll();
             Teams.AddRange(teams);
-
-            Groups.Clear();
-            var groups = groupTaskRepository.GetTeamsGroups(Model.Id);
-            Groups.AddRange(groups);
         }
     }
 }
