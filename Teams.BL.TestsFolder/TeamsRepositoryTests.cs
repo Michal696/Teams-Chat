@@ -63,6 +63,8 @@ namespace Teams.BL.Tests
             
             var foundModel = fixture.Repository.GetById(model.Id);
             Assert.NotNull(foundModel);
+            
+            fixture.Repository.Delete(model.Id);
         }
 
         [Fact]
@@ -80,7 +82,8 @@ namespace Teams.BL.Tests
             var foundModel = fixture.Repository.GetById(model.Id);
             Assert.NotNull(foundModel);
             Assert.Equal(model.Name, foundModel.Name);
-            
+            fixture.Repository.Delete(model.Id);
+
         }
 
         [Fact]
@@ -112,6 +115,8 @@ namespace Teams.BL.Tests
             
             Assert.NotEqual(returnedModelCreated.Name, foundModel.Name);
             Assert.Equal(foundModel.Name, secondName);
+            fixture.Repository.Delete(foundModel.Id);
+
         }
 
         [Fact]
@@ -159,6 +164,7 @@ namespace Teams.BL.Tests
 
 
             // clean
+            
             fixture.Repository.Delete(returnedTeamMemberModel.Id);
             fixture.Repository.Delete(returnedTeamModel.Id);
                      
@@ -196,6 +202,10 @@ namespace Teams.BL.Tests
             Assert.NotNull(returnedModel1);
             Assert.NotNull(returnedModel2);
             Assert.NotNull(returnedModel3);
+            
+            //fixture.Repository.Delete(teamModel1.id);
+            //fixture.Repository.Delete(teamModel2.id);
+            //fixture.Repository.Delete(teamModel3.id);
 
             UserModel userModel = new UserModel()
             {
@@ -208,7 +218,7 @@ namespace Teams.BL.Tests
             {
                 Id = Guid.NewGuid(),
                 User = userModel,
-                Team = teamModel1
+                Team = returnedModel1
 
             };
 
@@ -218,7 +228,7 @@ namespace Teams.BL.Tests
             {
                 Id = Guid.NewGuid(),
                 User = userModel,
-                Team = teamModel2
+                Team = returnedModel2
 
             };
 
@@ -295,7 +305,7 @@ namespace Teams.BL.Tests
             {
                 Id = Guid.NewGuid(),
                 User = userModel,
-                Team = teamModel1
+                Team = returnedModel1
 
             };
 
@@ -305,7 +315,7 @@ namespace Teams.BL.Tests
             {
                 Id = Guid.NewGuid(),
                 User = userModel,
-                Team = teamModel2
+                Team = returnedModel2
 
             };
 

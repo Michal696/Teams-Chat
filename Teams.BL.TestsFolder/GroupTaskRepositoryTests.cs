@@ -127,7 +127,7 @@ namespace Teams.BL.Tests
         [Fact]
         public void GetGroupTasksTest_count()
         {
-            int expected = 2; // values from beginning
+            int expected = 0; // values from beginning
             var groupModel = fixture.groupModel;
 
 
