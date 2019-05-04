@@ -18,15 +18,12 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="Add new team" Command="{Binding AddNewTeamCommand}"/>
         <ListBox x:Name="TeamListBox" Grid.Row="1" ItemsSource="{Binding Teams}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="ItemDelete">
-                    <i:InvokeCommandAction Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-                <ListBox.ItemTemplate >
+            <ListBox.ItemTemplate >
                 <DataTemplate>
-
-                    <Label Content="{Binding Name}"/>
+                    <StackPanel>
+                        <Label Content="{Binding Name}"/>
+                        <Button Content="Delete" Command="{Binding DeleteCommand}"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
