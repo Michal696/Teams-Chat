@@ -9,8 +9,11 @@ namespace Teams.DAL.Entities
         public String Title { get; set; }
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
+        [Required]
         public User User { get; set; }
+        
         public Message Parent { get; set; }
+        [Required]
         public Group Group { get; set; }
 
         // for tests 

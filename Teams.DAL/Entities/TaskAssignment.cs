@@ -8,7 +8,9 @@ namespace Teams.DAL.Entities
 {
     public class TaskAssignment : EntityBase
     {
+        [Required]
         public User User { get; set; }
+        [Required]
         public Task Task { get; set; }
     }
 }
