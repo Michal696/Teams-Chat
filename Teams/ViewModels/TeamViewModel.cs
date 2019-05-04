@@ -19,12 +19,10 @@ namespace Teams.ViewModels
     public class TeamViewModel : ViewModelBase
     {
         private readonly ITeamsRepository teamsRepository;
-        private readonly IGroupTaskRepository groupTaskRepository;
         private readonly IMessageBoxService messageBoxService;
         private readonly IMediator mediator;
 
         public ObservableCollection<TeamModel> Teams { get; set; } = new ObservableCollection<TeamModel>();
-        public ObservableCollection<GroupModel> Groups { get; set; } = new ObservableCollection<GroupModel>();
         public TeamModel Model { get; set; }
 
         public ICommand AddNewTeamCommand { get; set; }
@@ -32,10 +30,9 @@ namespace Teams.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        public TeamViewModel(ITeamsRepository teamsRepository,IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
+        public TeamViewModel(ITeamsRepository teamsRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.teamsRepository = teamsRepository;
-            this.groupTaskRepository = groupTaskRepository;
             this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
@@ -72,9 +69,6 @@ namespace Teams.ViewModels
 
         private void TeamSelected(TeamSelectMessage teamSelectMessage)
         {
-            Groups.Clear();
-            var groups = groupTaskRepository.GetTeamsGroups(teamSelectMessage.Id);
-            Groups.AddRange(groups);
         }
 
         private void TeamUpdate()

@@ -21,7 +21,7 @@ namespace Teams.ViewModels
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
 
-        public TeamViewModel TeamViewModel => new TeamViewModel(teamsRepository, groupTaskRepository, messageBoxService, mediator);
+        public TeamViewModel TeamViewModel => new TeamViewModel(teamsRepository, messageBoxService, mediator);
         public UserViewModel UserViewModel => new UserViewModel(userRepository, messageBoxService, mediator);
         public GroupViewModel GroupViewModel => new GroupViewModel(groupTaskRepository , teamsRepository, messageBoxService, mediator);
         

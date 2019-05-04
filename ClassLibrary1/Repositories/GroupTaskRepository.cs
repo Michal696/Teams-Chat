@@ -114,6 +114,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Groups
+                    .Include(g => g.Team)
                     .Select(mapper.GroupEntityToGroupModel)
                     .Where(t => t.Team.Id == Id);
             }
