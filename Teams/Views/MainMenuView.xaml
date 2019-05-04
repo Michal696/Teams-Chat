@@ -33,6 +33,9 @@
                 <DataTemplate>
                     <StackPanel>
                         <Label Content="{Binding Name}"/>
+                        <ListBox ItemsSource="{Binding Groups}">
+                            <Label Content="{Binding Name}"      />
+                        </ListBox>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
