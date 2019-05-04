@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Teams.DAL.Entities
 {
@@ -10,7 +11,7 @@ namespace Teams.DAL.Entities
         public virtual ICollection<GroupUserPermission> GroupUserPermissions { get; set; }
 
         [Required]
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
     }
 }
