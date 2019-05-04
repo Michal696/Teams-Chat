@@ -19,7 +19,7 @@
         <ListBox Grid.Row="1" ItemsSource="{Binding Teams}">
             <ListBox.ItemTemplate >
                 <DataTemplate>
-                    <Label Content="{Binding Model.Id}"/>
+                    <Label Content="{Binding Name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
