@@ -91,32 +91,29 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TaskModel> GetGroupTasks(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Tasks
-                    .Select(mapper.TaskEntityToTaskModel)
-                    .Where(t => t.Group.Id == Id);
-            }
+    
+            return dbContext.Tasks
+                .Select(mapper.TaskEntityToTaskModel)
+                .Where(t => t.Group.Id == Id);
+        
         }
 
         public IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.TaskStateChanges
-                    .Select(mapper.TaskStateChangeEntityToTaskStateChangeModel)
-                    .Where(t => t.Task.Id == Id);
-            }
+    
+            return dbContext.TaskStateChanges
+                .Select(mapper.TaskStateChangeEntityToTaskStateChangeModel)
+                .Where(t => t.Task.Id == Id);
+            
         }
 
         public IEnumerable<GroupModel> GetTeamsGroups(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Groups
-                    .Select(mapper.GroupEntityToGroupModel)
-                    .Where(t => t.Team.Id == Id);
-            }
+           
+            return dbContext.Groups
+                .Select(mapper.GroupEntityToGroupModel)
+                .Where(t => t.Team.Id == Id);
+            
         }
 
         public void UpdateGroup(GroupModel Group)
@@ -141,26 +138,21 @@ namespace Teams.BL.Repositories
 
         public GroupModel GetByIdGroup(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                var entity = dbContext.Groups
-                    .Include(g => g.Team)
-                    .FirstOrDefault(t => t.Id == Id);
-                return entity == null ? null : mapper.GroupEntityToGroupModel(entity);
-            }
+            var entity = dbContext.Groups
+                .Include(g => g.Team)
+                .FirstOrDefault(t => t.Id == Id);
+            return entity == null ? null : mapper.GroupEntityToGroupModel(entity);
         }
 
         public TaskModel GetByIdTask(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                var entity = dbContext.Tasks
-                    .Include(t => t.Group)
-                    .Include(t => t.User)
-                    .Include(t => t.Group.Team)
-                    .FirstOrDefault(t => t.Id == Id);
-                return entity == null ? null : mapper.TaskEntityToTaskModel(entity);
-            }
+            var entity = dbContext.Tasks
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .FirstOrDefault(t => t.Id == Id);
+            return entity == null ? null : mapper.TaskEntityToTaskModel(entity);
+        
         }
     }
 }
