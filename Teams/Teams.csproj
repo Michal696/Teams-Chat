@@ -164,6 +164,9 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\GroupListVIew.xaml.cs">
+      <DependentUpon>GroupListVIew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupTasksListView.xaml.cs">
       <DependentUpon>GroupTasksListView.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
     </Compile>
     <Compile Include="Views\UserControlBase.cs" />
     <Page Include="Views\GroupChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupListVIew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
