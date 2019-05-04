@@ -56,7 +56,7 @@ namespace Teams.ViewModels
         {
             Model = new TeamModel();
             Model.Id = Guid.NewGuid();
-            Model.Name = Model.Id +" Team";
+            Model.Name = "Team " + Model.Id;
             teamsRepository.Create(Model);
             Load();
         }

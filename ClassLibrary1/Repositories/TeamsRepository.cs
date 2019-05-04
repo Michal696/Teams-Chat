@@ -28,12 +28,12 @@ namespace Teams.BL.Repositories
             }
         }
 
-        public  TeamModel Create(TeamModel Team)
+        public  TeamModel Create(TeamModel model)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = mapper.TeamModelToTeamEntity(Team);
-                dbContext.Teams.Add(entity);
+                var entity = mapper.TeamModelToTeamEntity(model);
+                dbContext.Team.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TeamEntityToTeamModel(entity);
             }
@@ -47,22 +47,22 @@ namespace Teams.BL.Repositories
                 {
                     Id = Id
                 };
-                dbContext.Teams.Attach(team);
-                dbContext.Teams.Remove(team);
+                dbContext.Team.Attach(team);
+                dbContext.Team.Remove(team);
                 dbContext.SaveChanges();
             }
         }
 
         public IEnumerable<TeamModel> GetAll()
         {
-            return dbContext.Teams.Select(mapper.TeamEntityToTeamModel);
+            return dbContext.Team.Select(mapper.TeamEntityToTeamModel);
         }
 
         public TeamModel GetById(Guid Id)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var entity = dbContext.Teams.FirstOrDefault(t => t.Id == Id);
+                var entity = dbContext.Team.FirstOrDefault(t => t.Id == Id);
                 return entity == null ? null : mapper.TeamEntityToTeamModel(entity);
             }
         }
@@ -78,7 +78,7 @@ namespace Teams.BL.Repositories
                 List<TeamModel> teamEntity = null;
                 foreach(TeamMemberModel entity in teamMemberEntity.ToList())
                 {
-                    teamEntity.Concat(dbContext.Teams
+                    teamEntity.Concat(dbContext.Team
                         .Select(mapper.TeamEntityToTeamModel)
                         .Where(t => t.Id == entity.Team.Id));
                 }
@@ -92,7 +92,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.TeamModelToTeamEntity(Team);
-                dbContext.Teams.Update(entity);
+                dbContext.Team.Update(entity);
                 dbContext.SaveChanges();
             }
         }

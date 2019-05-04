@@ -58,7 +58,7 @@ namespace Teams.BL.Repositories
                     case "Messages": dbContext.Messages.Attach((Message) entity); break;
                     case "Groups": dbContext.Groups.Attach((Group) entity); break;
                     case "Media": dbContext.Media.Attach((Media) entity); break;
-                    case "Teams": dbContext.Teams.Attach((Team) entity); break;
+                    case "Teams": dbContext.Team.Attach((Team) entity); break;
                     case "Tasks": dbContext.Tasks.Attach((DAL.Entities.Task) entity); break;
 
                 }
