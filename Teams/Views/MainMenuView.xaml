@@ -15,19 +15,28 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="Add new team" Command="{Binding AddNewTeamCommand}"/>
         <ListBox x:Name="TeamListBox" Grid.Row="1" ItemsSource="{Binding Teams}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding TeamSelectedCommand}"
+                                           CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <StackPanel>
                         <Label Content="{Binding Name}"/>
-                        <Button Content="Delete" Command="{Binding DeleteCommand}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Content="but pm"/>
-        <Button Grid.Row="3" Content="but settings"/>
+        <Button Grid.Row="2" Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="3" Content="but pm"/>
+        <Button Grid.Row="4" Content="but settings"/>
     </Grid>
 </local:UserControlBase>

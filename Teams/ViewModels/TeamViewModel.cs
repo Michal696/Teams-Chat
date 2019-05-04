@@ -38,7 +38,7 @@ namespace Teams.ViewModels
 
             AddNewTeamCommand = new RelayCommand(CreateNewTeam);
             TeamSelectedCommand = new RelayCommand<TeamModel>(TeamSelect);
-            UpdateCommand = new RelayCommand<TeamModel>(TeamUpdate);
+            UpdateCommand = new RelayCommand(TeamUpdate);
             DeleteCommand = new RelayCommand(TeamDelete);
 
             mediator.Register<TeamNewMessage>(TeamNewAdded);
@@ -82,20 +82,20 @@ namespace Teams.ViewModels
             Load();
         }
 
-        private void TeamDelete(TeamModel team)
+        private void TeamDelete()
         {
             try
             {
-                teamsRepository.Delete(team.Id);
+                teamsRepository.Delete(Model.Id);
             }
             catch
             {
-                messageBoxService.Show($"Deleting of {team?.Name} failed!", "Deleting failed", MessageBoxButton.OK);
+                messageBoxService.Show($"Deleting of {Model?.Name} failed!", "Deleting failed", MessageBoxButton.OK);
             }
 
-            mediator.Send(new TeamDeleteMessage { Id = team.Id });
+            mediator.Send(new TeamDeleteMessage { Id = Model.Id });
 
-            team = null;
+            Model = null;
         }
 
         private void TeamDeleted(TeamDeleteMessage team)
