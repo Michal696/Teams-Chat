@@ -115,13 +115,14 @@ namespace Teams.BL.Repositories
            
         }
 
-        /*  public IEnumerable<TeamModel> GetByUser(Guid Id)
+        public IEnumerable<TeamModel> GetByUser(Guid Id)
           {
-              using (var dbContext = dbContextFactory.CreateDbContext())
+              //using (var dbContext = dbContextFactory.CreateDbContext())
               {
 
                   var teamMemberEntity = dbContext.TeamMembers
                       .Include(t => t.Team)
+                      .Include(t => t.User)
                       .Select(mapper.TeamMemberEntityToTeamMemberModel)
                       .Where(t => t.User.Id == Id);
 
@@ -130,11 +131,9 @@ namespace Teams.BL.Repositories
                   List<TeamModel> teamEntity = new List<TeamModel>();
                   foreach (TeamMemberModel entity in teamMemberEntity.ToList())
                   {
-                      Console.WriteLine("hey");
-                      Console.WriteLine(entity.Id);
-                      teamEntity.Concat(dbContext.Team
+                      teamEntity.AddRange(dbContext.Team
                           .Select(mapper.TeamEntityToTeamModel)
-                          .Where(t => t.Id == entity.Team.Id));
+                          .Where(t => t.Id == entity.Team.Id).ToList());
                   }
 
 
@@ -142,7 +141,7 @@ namespace Teams.BL.Repositories
                   return teamEntity == null ? null : teamEntity;
               }
           }
-          */
+
         public IEnumerable<TeamMemberModel> GetMembershipsByUser(Guid Id)
         {
            

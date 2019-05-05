@@ -11,7 +11,7 @@ namespace Teams.BL.Repositories
     {
         IEnumerable<TeamModel> GetAll();
         TeamModel GetById(Guid Id);
-        //IEnumerable<TeamModel> GetByUser(Guid Id);
+        IEnumerable<TeamModel> GetByUser(Guid Id);
         IEnumerable<TeamMemberModel> GetMembershipsByUser(Guid Id);
         
         TeamModel Create(TeamModel Team);

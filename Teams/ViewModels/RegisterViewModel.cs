@@ -43,7 +43,7 @@ namespace Teams.ViewModels
 
         private void UserLogSuccess(UserLoggedMessage userLoggedMessage)
         {
-            User = TestUser;
+            User = userRepository.GetById(userLoggedMessage.Id);
         }
 
         private void UserLogged()
@@ -68,8 +68,7 @@ namespace Teams.ViewModels
                 return;
             }
 
-            TestUser = LogCheck;
-            mediator.Send(new UserLoggedMessage());
+            mediator.Send(new UserLoggedMessage { Id = LogCheck.Id});
         }
 
         private void UserCreate()

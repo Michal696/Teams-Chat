@@ -8,5 +8,6 @@ namespace Teams.BL.Messages
 {
     public class UserLoggedMessage : IMessage
     {
+        public Guid Id { get; set; }
     }
 }

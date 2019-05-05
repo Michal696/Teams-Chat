@@ -20,6 +20,7 @@ namespace Teams.ViewModels
     {
         private readonly ITeamsRepository teamsRepository;
         private readonly IGroupTaskRepository groupTaskRepository;
+        private readonly IUserRepository userRepository;
         private readonly IMessageBoxService messageBoxService;
         private readonly IMediator mediator;
 
@@ -32,10 +33,11 @@ namespace Teams.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
-        public TeamViewModel(ITeamsRepository teamsRepository, IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
+        public TeamViewModel(ITeamsRepository teamsRepository, IGroupTaskRepository groupTaskRepository, IUserRepository userRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.teamsRepository = teamsRepository;
             this.groupTaskRepository = groupTaskRepository;
+            this.userRepository = userRepository;
             this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
@@ -47,6 +49,13 @@ namespace Teams.ViewModels
             mediator.Register<TeamNewMessage>(TeamNewAdded);
             mediator.Register<TeamUpdateMessage>(TeamUpdated);
             mediator.Register<TeamDeleteMessage>(TeamDeleted);
+            mediator.Register<UserLoggedMessage>(UserLogSucces);
+        }
+
+        private void UserLogSucces(UserLoggedMessage userLoggedMessage)
+        {
+            User = userRepository.GetById(userLoggedMessage.Id);
+            Load();
         }
 
         private void CreateNewTeam()
@@ -58,6 +67,7 @@ namespace Teams.ViewModels
             teamsRepository.Create(Model);
 
             TeamMemberModel TeamMember = new TeamMemberModel();
+            TeamMember.Id = Guid.NewGuid();
             TeamMember.Team = Model;
             TeamMember.User = User;
 
