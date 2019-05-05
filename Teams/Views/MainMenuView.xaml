@@ -37,8 +37,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-        <Button Grid.Row="3" Content="Edit Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="2" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="3" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Edit Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
         <Button Grid.Row="4" Content="but pm"/>
         <Button Grid.Row="5" Content="but settings"/>
     </Grid>

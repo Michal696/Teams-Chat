@@ -20,7 +20,7 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding TeamSelectedCommand}"
+                    <i:InvokeCommandAction Command="{Binding GroupSelectedCommand}"
                                            CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -33,7 +33,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Content="Delete Group" Command="{Binding }" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}"/>
+        <Button Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="2" Content="Delete Group" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}"/>
         
     </Grid>
 </local:UserControlBase>
