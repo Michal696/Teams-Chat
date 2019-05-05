@@ -18,7 +18,7 @@ namespace Teams.Views
     /// <summary>
     /// Interaction logic for GroupTasksListView.xaml
     /// </summary>
-    public partial class GroupTasksListView : UserControl
+    public partial class GroupTasksListView
     {
         public GroupTasksListView()
         {

@@ -56,6 +56,15 @@ namespace Teams.BL.Repositories
             }
         }
 
+        public UserModel GetByEmail(String Email)
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var entity = dbContext.Users.FirstOrDefault(t => t.Email == Email);
+                return entity == null ? null : mapper.UserEntityToUserModel(entity);
+            }
+        }
+
         public void Update(UserModel model)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())

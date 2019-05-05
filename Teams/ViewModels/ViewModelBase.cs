@@ -11,7 +11,7 @@ namespace Teams.ViewModels
 {
     public abstract class ViewModelBase : IViewModel, INotifyPropertyChanged
     {
-        public UserModel ModelUser { get; set; }
+        public UserModel User { get; set; }
         public virtual void Load()
         {
         }
