@@ -19,7 +19,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding TaskSelectedCommand}"
+                        <i:InvokeCommandAction Command="{Binding TaskSelectCommand}"
                                                CommandParameter="{Binding ElementName=TaskListBox, Path=SelectedItem}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -30,6 +30,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        <Button Grid.Row="2" Height="30" Visibility="{Binding ModelTask, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Team" Command="{Binding TaskDeleteCommand}" CommandParameter="{Binding ElementName=TaskListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="2" Height="30" Visibility="{Binding ModelTask, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Task" Command="{Binding TaskDeleteCommand}" CommandParameter="{Binding ElementName=TaskListBox, Path=SelectedItem}"/>
     </Grid>
 </local:UserControlBase>
