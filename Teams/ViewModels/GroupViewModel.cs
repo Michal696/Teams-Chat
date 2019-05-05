@@ -45,6 +45,12 @@ namespace Teams.ViewModels
             mediator.Register<GroupNewMessage>(GroupNewAdded);
             mediator.Register<TeamSelectMessage>(TeamSelected);
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
+            mediator.Register<TeamDeleteMessage>(TeamDeleted);
+        }
+
+        private void TeamDeleted(TeamDeleteMessage obj)
+        {
+            ModelTeam = null;
         }
 
         private void GroupSelect(GroupModel group)
