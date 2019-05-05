@@ -19,7 +19,6 @@
                 <DataTemplate>
                     <StackPanel>
                         <Label Content="{Binding Name}"/>
-                        <local:GroupListVIew/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
