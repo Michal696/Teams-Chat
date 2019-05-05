@@ -25,6 +25,7 @@ namespace Teams.ViewModels
         public UserViewModel UserViewModel => new UserViewModel(userRepository, messageBoxService, mediator);
         public GroupViewModel GroupViewModel => new GroupViewModel(groupTaskRepository , teamsRepository, messageBoxService, mediator);
         public TaskViewModel TaskViewModel => new TaskViewModel(groupTaskRepository, messageBoxService, mediator);
+        public RegisterViewModel RegisterViewModel => new RegisterViewModel(userRepository, messageBoxService, mediator);
         public ViewModelLocator()
         {
             mediator = new Mediator();
