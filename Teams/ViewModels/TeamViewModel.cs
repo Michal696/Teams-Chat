@@ -15,7 +15,7 @@ using System.Windows.Input;
 using System.Windows;
 
 namespace Teams.ViewModels
-{
+{   
     public class TeamViewModel : ViewModelBase
     {
         private readonly ITeamsRepository teamsRepository;
@@ -60,6 +60,7 @@ namespace Teams.ViewModels
 
         private void CreateNewTeam()
         {
+           
             Model = new TeamModel();
             Model.Id = Guid.NewGuid();
             Model.Name = "Team " + Model.Id;
@@ -82,15 +83,19 @@ namespace Teams.ViewModels
         }
 
         private void TeamSelect(TeamModel team)
-        {
+        { 
+           
             Model = teamsRepository.GetById(team.Id);
+            
             mediator.Send(new TeamSelectMessage { Id = team.Id });
         }
         
         private void TeamUpdate()
         {
+            
             teamsRepository.Update(Model);
             mediator.Send(new TeamUpdateMessage { Id = Model.Id });
+            Load();
         }
 
         private void TeamUpdated(TeamUpdateMessage team)

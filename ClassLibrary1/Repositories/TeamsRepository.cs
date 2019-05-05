@@ -131,7 +131,7 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TeamModel> GetByUser(Guid Id)
           {
-              //using (var dbContext = dbContextFactory.CreateDbContext())
+              using (var dbContext = dbContextFactory.CreateDbContext())
               {
 
                   var teamMemberEntity = dbContext.TeamMembers
