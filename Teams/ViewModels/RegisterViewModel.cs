@@ -38,6 +38,12 @@ namespace Teams.ViewModels
             TestUser = new UserModel();
 
             mediator.Register<UserNewMessage>(UserCreated);
+            mediator.Register<UserLoggedMessage>(UserLogSuccess);
+        }
+
+        private void UserLogSuccess(UserLoggedMessage userLoggedMessage)
+        {
+            User = TestUser;
         }
 
         private void UserLogged()
@@ -62,7 +68,8 @@ namespace Teams.ViewModels
                 return;
             }
 
-            User = LogCheck;
+            TestUser = LogCheck;
+            mediator.Send(new UserLoggedMessage());
         }
 
         private void UserCreate()

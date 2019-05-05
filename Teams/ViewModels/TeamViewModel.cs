@@ -54,7 +54,15 @@ namespace Teams.ViewModels
             Model = new TeamModel();
             Model.Id = Guid.NewGuid();
             Model.Name = "Team " + Model.Id;
+
             teamsRepository.Create(Model);
+
+            TeamMemberModel TeamMember = new TeamMemberModel();
+            TeamMember.Team = Model;
+            TeamMember.User = User;
+
+            teamsRepository.AddUserToTeam(TeamMember);
+
             mediator.Send(new TeamNewMessage());
         }
 
@@ -104,9 +112,12 @@ namespace Teams.ViewModels
 
         public override void Load()
         {
-            Teams.Clear();
-            var teams = teamsRepository.GetAll();
-            Teams.AddRange(teams);
+            if(User != null)
+            {
+                Teams.Clear();
+                var teams = teamsRepository.GetByUser(User.Id);
+                Teams.AddRange(teams);
+            }
         }
     }
 }
