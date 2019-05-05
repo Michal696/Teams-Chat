@@ -91,29 +91,32 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TaskModel> GetGroupTasks(Guid Id)
         {
-    
-            return dbContext.Tasks
-                .Select(mapper.TaskEntityToTaskModel)
-                .Where(t => t.Group.Id == Id);
-        
+            {
+                return dbContext.Tasks
+                    .Include(t => t.Group)
+                    .Select(mapper.TaskEntityToTaskModel)
+                    .Where(t => t.Group.Id == Id);
+            }
         }
 
         public IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id)
         {
-    
-            return dbContext.TaskStateChanges
-                .Select(mapper.TaskStateChangeEntityToTaskStateChangeModel)
-                .Where(t => t.Task.Id == Id);
-            
+            {
+                return dbContext.TaskStateChanges
+                    .Include(t => t.Task)
+                    .Select(mapper.TaskStateChangeEntityToTaskStateChangeModel)
+                    .Where(t => t.Task.Id == Id);
+            }
         }
 
         public IEnumerable<GroupModel> GetTeamsGroups(Guid Id)
         {
-           
-            return dbContext.Groups
-                .Select(mapper.GroupEntityToGroupModel)
-                .Where(t => t.Team.Id == Id);
-            
+            {
+                return dbContext.Groups
+                    .Include(t => t.Team)
+                    .Select(mapper.GroupEntityToGroupModel)
+                    .Where(t => t.Team.Id == Id);
+            }
         }
 
         public void UpdateGroup(GroupModel Group)

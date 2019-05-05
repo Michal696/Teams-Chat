@@ -28,6 +28,8 @@ namespace Teams.ViewModels
         public TeamModel ModelTeam { get; set; }
 
         public ICommand AddNewGroupCommand { get; set; }
+        public ICommand DeleteGroupCommand { get; set; }
+        public ICommand GroupSelectedCommand { get; set; }
 
         public GroupViewModel(IGroupTaskRepository groupTaskRepository, ITeamsRepository teamsRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
@@ -37,16 +39,27 @@ namespace Teams.ViewModels
             this.mediator = mediator;
 
             AddNewGroupCommand = new RelayCommand(CreateNewGroup);
+            DeleteGroupCommand = new RelayCommand(DeleteGroup);
+            GroupSelectedCommand = new RelayCommand<GroupModel>(GroupSelect);
 
             mediator.Register<GroupNewMessage>(GroupNewAdded);
             mediator.Register<TeamSelectMessage>(TeamSelected);
+            mediator.Register<GroupDeleteMessage>(GroupDeleted);
         }
+
+        private void GroupSelect(GroupModel group)
+        {
+            Model = groupTaskRepository.GetByIdGroup(group.Id);
+            mediator.Send(new GroupSelectMessage { Id = group.Id });
+        }
+
         private void CreateNewGroup()
         {
             Model = new GroupModel();
             Model.Id = Guid.NewGuid();
             Model.Description = "Put some description here.";
             Model.Name = "Group " + Model.Id;
+            Model.Team = ModelTeam;
             groupTaskRepository.CreateGroup(Model);
             mediator.Send(new GroupNewMessage());
         }
@@ -59,14 +72,40 @@ namespace Teams.ViewModels
         private void TeamSelected(TeamSelectMessage teamSelectMessage)
         {
             ModelTeam = teamsRepository.GetById(teamSelectMessage.Id);
+            Model = null;
+            Load();
+        }
+
+        private void DeleteGroup()
+        {
+            try
+            {
+                groupTaskRepository.DeleteGroup(Model.Id);
+            }
+            catch
+            {
+                messageBoxService.Show($"Deleting of '{Model?.Name}' failed!", "Deleting failed", MessageBoxButton.OK);
+                return;
+            }
+
+            mediator.Send(new GroupDeleteMessage { Id = Model.Id });
+
+            Model = null;
+        }
+
+        private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
+        {
             Load();
         }
 
         public override void Load()
         {
-            Groups.Clear();
-            var groups = groupTaskRepository.GetTeamsGroups(ModelTeam.Id);
-            Groups.AddRange(groups);
+            if(ModelTeam != null)
+            {
+                Groups.Clear();
+                var groups = groupTaskRepository.GetTeamsGroups(ModelTeam.Id);
+                Groups.AddRange(groups);
+            }
         }
 
     }
