@@ -21,6 +21,8 @@ namespace Teams.ViewModels
         private readonly IUserRepository userRepository;
         private readonly IMediator mediator;
 
+        public UserModel TestUser { get; set; }
+
         public ICommand UserNewCommand { get; set; }
 
         public RegisterViewModel(IUserRepository userRepository, IMediator mediator)
@@ -35,16 +37,17 @@ namespace Teams.ViewModels
 
         private void UserCreate()
         {
-            User = new UserModel();
-            User.Id = Guid.NewGuid();
+            TestUser = new UserModel();
+            TestUser.Id = Guid.NewGuid();
 
-            userRepository.Create(User);
+            userRepository.Create(TestUser);
 
             mediator.Send(new UserNewMessage());
         }
 
-        private void UserCreated(UserNewMessage obj)
+        private void UserCreated(UserNewMessage userNewMessage)
         {
+            User = TestUser;
         }
     }
 }
