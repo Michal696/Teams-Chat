@@ -18,7 +18,7 @@ namespace Teams.Views
     /// <summary>
     /// Interaction logic for MainMenuView.xaml
     /// </summary>
-    public partial class MainMenuView 
+    public partial class MainMenuView
     {
         public MainMenuView()
         {
@@ -29,6 +29,7 @@ namespace Teams.Views
             EditTeamPopup inputDialog = new EditTeamPopup();
             if (inputDialog.ShowDialog() == true)
                 return;
+
         }
     }
 }
