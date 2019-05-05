@@ -37,9 +37,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-        <Button Grid.Row="3" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Edit Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-        <Button Grid.Row="4" Content="but pm"/>
-        <Button Grid.Row="5" Content="but settings"/>
+        <Button Grid.Row="2" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="3" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Edit Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="4" Content="but pm" Height="30"/>
+        <Button Grid.Row="5" Content="but settings" Height="30"/>
     </Grid>
 </local:UserControlBase>

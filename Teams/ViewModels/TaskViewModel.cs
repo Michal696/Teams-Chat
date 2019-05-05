@@ -26,7 +26,7 @@ namespace Teams.ViewModels
         public GroupModel ModelGroup { get; set; }
         public TaskModel ModelTask { get; set; }
 
-        ICommand TaskAddCommand { get; set; }
+        public ICommand TaskAddCommand { get; set; }
 
         public TaskViewModel(IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
