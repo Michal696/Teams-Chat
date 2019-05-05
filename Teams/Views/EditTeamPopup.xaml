@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="Enter new team name:"/>
+        <Label Grid.Row="0" Content="{Binding Model.Name}"/>
         <TextBox Grid.Row="1" MinWidth="250" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}"/>
         <WrapPanel Grid.Row="2"  HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button IsDefault="True" Command="{Binding UpdateCommand}" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
