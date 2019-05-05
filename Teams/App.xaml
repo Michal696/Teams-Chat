@@ -8,5 +8,6 @@
     <Application.Resources>
         <viewmodels:ViewModelLocator x:Key="ViewModelLocator"/>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <converters:ReverseVisibilityConverter x:Key="ReverseVisibilityConverter"/>
     </Application.Resources>
 </Application>

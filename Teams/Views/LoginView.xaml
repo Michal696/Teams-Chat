@@ -5,8 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Teams.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Visibility="Visible">
-        <Button Content="B"/>
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=RegisterViewModel}">
+    <Grid Visibility="{Binding User, Converter={StaticResource ReverseVisibilityConverter}}" ShowGridLines="True">
+        <TabControl>
+            <TabItem Header="Sign in">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="1" Content="Email"/>
+                    <TextBox Grid.Row="2" Text="{Binding TestUser.Email, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="3" Content="Password"/>
+                    <TextBox Grid.Row="4" Text="{Binding TestUser.Password, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Grid.Row="5" Command="{Binding UserLoggedCommand}" Content="Sing in"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Register">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="1" Content="Username"/>
+                    <TextBox Grid.Row="2" Text="{Binding TestUser.Name, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="3" Content="Email"/>
+                    <TextBox Grid.Row="4" Text="{Binding TestUser.Email, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="5" Content="Password"/>
+                    <TextBox Grid.Row="6" Text="{Binding TestUser.Password, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Grid.Row="7" Command="{Binding UserNewCommand}" Content="Register"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
