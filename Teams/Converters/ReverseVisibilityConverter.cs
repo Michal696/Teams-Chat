@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace Teams.Converters
 {
-    class ReverseVisibilityConverter
+    class ReverseVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -167,11 +167,17 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\ContentView.xaml.cs">
+      <DependentUpon>ContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupListVIew.xaml.cs">
       <DependentUpon>GroupListVIew.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupTasksListView.xaml.cs">
       <DependentUpon>GroupTasksListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrivateChatView.xaml.cs">
       <DependentUpon>PrivateChatView.xaml</DependentUpon>
@@ -182,10 +188,14 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TwoColumnWrapView.xaml.cs">
-      <DependentUpon>TwoColumnWrapView.xaml</DependentUpon>
+    <Compile Include="Views\ThreeColumnWrapView.xaml.cs">
+      <DependentUpon>ThreeColumnWrapView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControlBase.cs" />
+    <Page Include="Views\ContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GroupChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GroupTasksListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,7 +246,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TwoColumnWrapView.xaml">
+    <Page Include="Views\ThreeColumnWrapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
