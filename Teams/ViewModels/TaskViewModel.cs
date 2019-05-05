@@ -44,6 +44,7 @@ namespace Teams.ViewModels
         {
             ModelTask = new TaskModel();
             ModelTask.Text = "Text placeholder";
+            ModelTask.Id = Guid.NewGuid();
             ModelTask.Group = ModelGroup;
             groupTaskRepository.CreateTask(ModelTask);
             mediator.Send(new TaskNewMessage());
