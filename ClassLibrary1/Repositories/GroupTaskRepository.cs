@@ -23,7 +23,10 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.GroupUserPermissionsModelToGroupUserPermissionsEntity(groupUserPermission);
+                dbContext.Groups.Attach(entity.Group);
+                dbContext.Users.Attach(entity.User);
                 dbContext.GroupsUserPermissions.Add(entity);
+             
                 dbContext.SaveChanges();
                 return mapper.GroupUserPermissionsEntityToGroupUserPermissionsModel(entity);
             }
@@ -35,6 +38,7 @@ namespace Teams.BL.Repositories
             {
                 var entity = mapper.GroupModelToGroupEntity(Group);
                 dbContext.Team.Attach(entity.Team);
+                
                 dbContext.Groups.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.GroupEntityToGroupModel(entity);
@@ -93,7 +97,7 @@ namespace Teams.BL.Repositories
         {
             {
                 return dbContext.Tasks
-                    .Include(g => g.Group)
+                    .Include(t => t.Group)
                     .Select(mapper.TaskEntityToTaskModel)
                     .Where(t => t.Group.Id == Id);
             }
@@ -141,26 +145,21 @@ namespace Teams.BL.Repositories
 
         public GroupModel GetByIdGroup(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                var entity = dbContext.Groups
-                    .Include(g => g.Team)
-                    .FirstOrDefault(t => t.Id == Id);
-                return entity == null ? null : mapper.GroupEntityToGroupModel(entity);
-            }
+            var entity = dbContext.Groups
+                .Include(g => g.Team)
+                .FirstOrDefault(t => t.Id == Id);
+            return entity == null ? null : mapper.GroupEntityToGroupModel(entity);
         }
 
         public TaskModel GetByIdTask(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                var entity = dbContext.Tasks
-                    .Include(t => t.Group)
-                    .Include(t => t.User)
-                    .Include(t => t.Group.Team)
-                    .FirstOrDefault(t => t.Id == Id);
-                return entity == null ? null : mapper.TaskEntityToTaskModel(entity);
-            }
+            var entity = dbContext.Tasks
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .FirstOrDefault(t => t.Id == Id);
+            return entity == null ? null : mapper.TaskEntityToTaskModel(entity);
+        
         }
     }
 }

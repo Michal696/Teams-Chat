@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Teams.DAL.Entities
 {
@@ -9,8 +10,11 @@ namespace Teams.DAL.Entities
         public String Title { get; set; }
         public DateTime TimeStamp { get; set; }
         public String Text { get; set; }
+        [Required]
         public virtual User User { get; set; }
+        
         public virtual Message Parent { get; set; }
+        [Required]
         public virtual Group Group { get; set; }
 
         // for tests 
