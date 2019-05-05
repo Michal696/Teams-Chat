@@ -7,12 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid ShowGridLines="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <views:MainMenuView Grid.Column="0"/>
-        <views:ThreeColumnWrapView Grid.Column="1"/>
-        
+        <views:ContentView/>
+        <views:LoginView/>
     </Grid>
 </Window>
