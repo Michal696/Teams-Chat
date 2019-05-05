@@ -29,6 +29,7 @@ namespace Teams.ViewModels
 
         public ICommand AddNewGroupCommand { get; set; }
         public ICommand DeleteGroupCommand { get; set; }
+        public ICommand GroupSelectedCommand { get; set; }
 
         public GroupViewModel(IGroupTaskRepository groupTaskRepository, ITeamsRepository teamsRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
@@ -39,10 +40,17 @@ namespace Teams.ViewModels
 
             AddNewGroupCommand = new RelayCommand(CreateNewGroup);
             DeleteGroupCommand = new RelayCommand(DeleteGroup);
+            GroupSelectedCommand = new RelayCommand<GroupModel>(GroupSelect);
 
             mediator.Register<GroupNewMessage>(GroupNewAdded);
             mediator.Register<TeamSelectMessage>(TeamSelected);
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
+        }
+
+        private void GroupSelect(GroupModel group)
+        {
+            Model = groupTaskRepository.GetByIdGroup(group.Id);
+            mediator.Send(new GroupSelectMessage { Id = group.Id });
         }
 
         private void CreateNewGroup()
