@@ -91,9 +91,9 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TaskModel> GetGroupTasks(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Tasks
+                    .Include(g => g.Group)
                     .Select(mapper.TaskEntityToTaskModel)
                     .Where(t => t.Group.Id == Id);
             }
@@ -101,9 +101,9 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TaskStateChangeModel> GetTaskChanges(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.TaskStateChanges
+                    .Include(t => t.Task)
                     .Select(mapper.TaskStateChangeEntityToTaskStateChangeModel)
                     .Where(t => t.Task.Id == Id);
             }
@@ -111,10 +111,9 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<GroupModel> GetTeamsGroups(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 return dbContext.Groups
-                    .Include(g => g.Team)
+                    .Include(t => t.Team)
                     .Select(mapper.GroupEntityToGroupModel)
                     .Where(t => t.Team.Id == Id);
             }
