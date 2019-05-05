@@ -20,24 +20,65 @@ namespace Teams.ViewModels
     {
         private readonly IUserRepository userRepository;
         private readonly IMediator mediator;
+        private readonly IMessageBoxService messageBoxService;
 
         public UserModel TestUser { get; set; }
 
         public ICommand UserNewCommand { get; set; }
+        public ICommand UserLoggedCommand { get; set; }
 
-        public RegisterViewModel(IUserRepository userRepository, IMediator mediator)
+        public RegisterViewModel(IUserRepository userRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.userRepository = userRepository;
             this.mediator = mediator;
+            this.messageBoxService = messageBoxService;
 
             UserNewCommand = new RelayCommand(UserCreate);
+            UserLoggedCommand = new RelayCommand(UserLogged);
+            TestUser = new UserModel();
 
             mediator.Register<UserNewMessage>(UserCreated);
         }
 
+        private void UserLogged()
+        {
+            if (string.IsNullOrWhiteSpace(TestUser.Email)
+            || string.IsNullOrWhiteSpace(TestUser.Password))
+            {
+                messageBoxService.Show($"Login failed!", "Login failed", MessageBoxButton.OK);
+                return;
+            }
+            if (userRepository.GetByEmail(TestUser.Email) == null)
+            {
+                messageBoxService.Show($"User does not exist!", "Login failed", MessageBoxButton.OK);
+                return;
+            }
+
+            UserModel LogCheck = new UserModel();
+            LogCheck = userRepository.GetByEmail(TestUser.Email);
+            if(LogCheck.Password != TestUser.Password)
+            {
+                messageBoxService.Show($"Wrong password!", "Login failed", MessageBoxButton.OK);
+                return;
+            }
+
+            User = LogCheck;
+        }
+
         private void UserCreate()
         {
-            TestUser = new UserModel();
+            if (string.IsNullOrWhiteSpace(TestUser.Email)
+            || string.IsNullOrWhiteSpace(TestUser.Name)
+            || string.IsNullOrWhiteSpace(TestUser.Password))
+            {
+                messageBoxService.Show($"Registration failed!", "Register failed", MessageBoxButton.OK);
+                return;
+            }
+            if (userRepository.GetByEmail(TestUser.Email) != null)
+            {
+                messageBoxService.Show($"Email in use!", "Register failed", MessageBoxButton.OK);
+                return;
+            }
             TestUser.Id = Guid.NewGuid();
 
             userRepository.Create(TestUser);

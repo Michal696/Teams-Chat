@@ -38,7 +38,7 @@ namespace Teams.ViewModels
             mediator.Register<UserNewMessage>(UserNewAdded);
         }
 
-        private void CreateNewUser(object obj)
+        private void CreateNewUser()
         {
             mediator.Send(new UserNewMessage());
         }
