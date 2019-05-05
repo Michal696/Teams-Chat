@@ -72,6 +72,7 @@ namespace Teams.ViewModels
         private void TeamSelected(TeamSelectMessage teamSelectMessage)
         {
             ModelTeam = teamsRepository.GetById(teamSelectMessage.Id);
+            Model = null;
             Load();
         }
 
