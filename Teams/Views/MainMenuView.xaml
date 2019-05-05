@@ -33,13 +33,12 @@
                 <DataTemplate>
                     <StackPanel>
                         <Label Content="{Binding Name}"/>
-                        <local:GroupListVIew/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-        <Button Grid.Row="3" Content="Edit" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="2" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="3" Content="Edit Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
         <Button Grid.Row="4" Content="but pm"/>
         <Button Grid.Row="5" Content="but settings"/>
     </Grid>

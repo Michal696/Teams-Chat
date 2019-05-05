@@ -4,17 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Teams.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=GroupViewModel}">
-    <Grid ShowGridLines="True">
+    <Grid Visibility="{Binding ModelTeam, Converter={StaticResource NullToVisibilityConverter}}" ShowGridLines="True">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="Add group" Command="{Binding AddNewGroupCommand}"/>
+        <ListBox x:Name="GroupListBox" Grid.Row="1" ItemsSource="{Binding Groups}">
 
-        <ListBox x:Name="TeamListBox" Grid.Row="0" ItemsSource="{Binding Groups}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding TeamSelectedCommand}"
+                                           CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <StackPanel>
@@ -23,7 +33,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="1" Content="Add group"/>
+        <Button Grid.Row="2" Content="Delete Group" Command="{Binding }" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}"/>
         
     </Grid>
 </local:UserControlBase>
