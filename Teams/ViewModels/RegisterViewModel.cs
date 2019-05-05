@@ -20,24 +20,38 @@ namespace Teams.ViewModels
     {
         private readonly IUserRepository userRepository;
         private readonly IMediator mediator;
+        private readonly IMessageBoxService messageBoxService;
 
         public UserModel TestUser { get; set; }
 
         public ICommand UserNewCommand { get; set; }
 
-        public RegisterViewModel(IUserRepository userRepository, IMediator mediator)
+        public RegisterViewModel(IUserRepository userRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.userRepository = userRepository;
             this.mediator = mediator;
+            this.messageBoxService = messageBoxService;
 
             UserNewCommand = new RelayCommand(UserCreate);
+            TestUser = new UserModel();
 
             mediator.Register<UserNewMessage>(UserCreated);
         }
 
         private void UserCreate()
         {
-            TestUser = new UserModel();
+            if (userRepository.GetByEmail(TestUser.Email) != null)
+            {
+                messageBoxService.Show($"Email in use!", "Register failed", MessageBoxButton.OK);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(TestUser.Email)
+            || string.IsNullOrWhiteSpace(TestUser.Name)
+            || string.IsNullOrWhiteSpace(TestUser.Password))
+            {
+                messageBoxService.Show($"Registration failed!", "Register failed", MessageBoxButton.OK);
+                return;
+            }
             TestUser.Id = Guid.NewGuid();
 
             userRepository.Create(TestUser);
