@@ -19,6 +19,7 @@ namespace Teams.ViewModels
     public class TaskViewModel : ViewModelBase
     {
         private readonly IGroupTaskRepository groupTaskRepository;
+        private readonly IUserRepository userRepository;
         private readonly IMessageBoxService messageBoxService;
         private IMediator mediator;
 
@@ -27,17 +28,61 @@ namespace Teams.ViewModels
         public TaskModel ModelTask { get; set; }
 
         public ICommand TaskAddCommand { get; set; }
+        public ICommand TaskDeleteCommand { get; set; }
+        public ICommand TaskSelectCommand { get; set; }
 
-        public TaskViewModel(IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
+        public TaskViewModel(IGroupTaskRepository groupTaskRepository, IUserRepository userRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.groupTaskRepository = groupTaskRepository;
+            this.userRepository = userRepository;
             this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
             TaskAddCommand = new RelayCommand(TaskAdd);
+            TaskDeleteCommand = new RelayCommand(TaskDelete);
+            TaskSelectCommand = new RelayCommand<TaskModel>(TaskSelect);
 
             mediator.Register<GroupSelectMessage>(GroupSelected);
             mediator.Register<TaskNewMessage>(TaskAdded);
+            mediator.Register<TaskDeleteMessage>(TaskDeleted);
+            mediator.Register<UserLoggedMessage>(UserLogSucces);
+            mediator.Register<TaskSelectMessage>(TaskSelected);
+        }
+
+        private void TaskSelect(TaskModel task)
+        {
+            ModelTask = groupTaskRepository.GetByIdTask(task.Id);
+            mediator.Send(new TaskSelectMessage { Id = task.Id});
+        }
+
+        private void TaskSelected(TaskSelectMessage taskSelectMessage)
+        {
+        }
+
+        private void TaskDelete()
+        {
+            try
+            {
+                groupTaskRepository.DeleteTask(ModelTask.Id);
+            }
+            catch
+            {
+                messageBoxService.Show($"Deleting task failed!", "Deleting failed", MessageBoxButton.OK);
+                return;
+            }
+            ModelTask = null;
+            mediator.Send(new TaskDeleteMessage());
+        }
+
+        private void TaskDeleted(TaskDeleteMessage taskDeleteMessage)
+        {
+            Load();
+        }
+
+        private void UserLogSucces(UserLoggedMessage userLoggedMessage)
+        {
+            User = userRepository.GetById(userLoggedMessage.Id);
+            Load();
         }
 
         private void TaskAdd()
@@ -46,7 +91,10 @@ namespace Teams.ViewModels
             ModelTask.Text = "Text placeholder";
             ModelTask.Id = Guid.NewGuid();
             ModelTask.Group = ModelGroup;
+            ModelTask.User = User;
+
             groupTaskRepository.CreateTask(ModelTask);
+
             mediator.Send(new TaskNewMessage());
         }
 

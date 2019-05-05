@@ -21,13 +21,14 @@ namespace Teams.BL.Repositories
 
         public TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember)
         {
-           
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
                 var entity = mapper.TeamMemberModelToTeamMemberEntity(TeamMember);
-                if (entity.Id == null)
+                if (entity.Id == Guid.Empty)
                 {
                     entity.Id = Guid.NewGuid();
                 }
-                if (entity.Team.Id != null)
+                if (entity.Team.Id != Guid.Empty)
                 {
                     dbContext.Team.Attach(entity.Team);
                 }
@@ -37,7 +38,7 @@ namespace Teams.BL.Repositories
 
                 }
 
-                if (entity.User.Id != null)
+                if (entity.User.Id != Guid.Empty)
                 {
                     dbContext.Users.Attach(entity.User);
                 }
@@ -50,14 +51,14 @@ namespace Teams.BL.Repositories
                 dbContext.TeamMembers.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TeamMemberEntityToTeamMemberModel(entity);
-            
+            }
         }
 
         public  TeamModel Create(TeamModel model)
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                if (model.Id == null)
+                if (model.Id == Guid.Empty)
                 {
                     model.Id = Guid.NewGuid();
                 }
@@ -91,13 +92,26 @@ namespace Teams.BL.Repositories
         {
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
-                var team = new TeamMember
+
+                var teamMemberEntity = dbContext.TeamMembers
+                    .Include(t => t.Team)
+                    .Include(t => t.User)
+                    .Select(mapper.TeamMemberEntityToTeamMemberModel)
+                    .Where(t => t.Team.Id == Id);
+
+
+                foreach (TeamMemberModel model in teamMemberEntity.ToList())
                 {
-                    Id = Id
-                };
-                dbContext.TeamMembers.Attach(team);
-                dbContext.TeamMembers.Remove(team);
-                dbContext.SaveChanges();
+                    var teamMember = new TeamMember
+                    {
+                        Id = model.Id
+                    };
+                    //var entity = mapper.TeamMemberModelToTeamMemberEntity(model);
+                    var dbContext2 = dbContextFactory.CreateDbContext();
+                    dbContext2.TeamMembers.Attach(teamMember);
+                    dbContext2.TeamMembers.Remove(teamMember);
+                    dbContext2.SaveChanges();
+                }
             }
         }
 

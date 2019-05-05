@@ -102,6 +102,7 @@ namespace Teams.ViewModels
         {
             try
             {
+                teamsRepository.DeleteTeamMember(Model.Id);
                 teamsRepository.Delete(Model.Id);
             }
             catch
