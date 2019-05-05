@@ -172,6 +172,9 @@
     <Compile Include="Views\GroupTasksListView.xaml.cs">
       <DependentUpon>GroupTasksListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrivateChatView.xaml.cs">
       <DependentUpon>PrivateChatView.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GroupTasksListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
