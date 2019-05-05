@@ -47,6 +47,7 @@ namespace Teams.ViewModels
             Model.Id = Guid.NewGuid();
             Model.Description = "Put some description here.";
             Model.Name = "Group " + Model.Id;
+            Model.Team = ModelTeam;
             groupTaskRepository.CreateGroup(Model);
             mediator.Send(new GroupNewMessage());
         }
