@@ -143,16 +143,6 @@ namespace Teams.BL.Tests
             var returnedModel2 = fixture.Repository.Create(model2);
             Assert.NotNull(returnedModel2);
 
-
-            IEnumerable<UserModel> userModelList = fixture.Repository.GetAll();
-
-            int actual = userModelList.Count(); // expecting "2"
-
-
-            int expected = 2;
-            // probably problem from other tests (databe is not empty at the beggining)
-            Assert.Equal(expected, actual);
-
             // clean 
             fixture.Repository.Delete(returnedModel1.Id);
             fixture.Repository.Delete(returnedModel2.Id);

@@ -28,7 +28,7 @@ namespace Teams.DAL.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("TeamId");
+                    b.Property<Guid>("TeamId");
 
                     b.HasKey("Id");
 
@@ -42,11 +42,11 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("GroupId");
+                    b.Property<Guid>("GroupId");
 
                     b.Property<int>("Permit");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -64,7 +64,7 @@ namespace Teams.DAL.Migrations
 
                     b.Property<string>("Data");
 
-                    b.Property<Guid?>("ParentId");
+                    b.Property<Guid>("ParentId");
 
                     b.Property<Guid?>("UserId");
 
@@ -82,7 +82,7 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("GroupId");
+                    b.Property<Guid>("GroupId");
 
                     b.Property<Guid?>("ParentId");
 
@@ -92,7 +92,7 @@ namespace Teams.DAL.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -110,7 +110,7 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("GroupId");
+                    b.Property<Guid>("GroupId");
 
                     b.Property<int>("State");
 
@@ -118,7 +118,7 @@ namespace Teams.DAL.Migrations
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -134,11 +134,11 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("TaskId");
+                    b.Property<Guid>("TaskId");
 
                     b.Property<Guid?>("TaskStateChangeId");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -156,17 +156,17 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("GroupId");
+                    b.Property<Guid>("GroupId");
 
                     b.Property<int>("State");
 
-                    b.Property<Guid?>("TaskId");
+                    b.Property<Guid>("TaskId");
 
                     b.Property<string>("Text");
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -196,9 +196,9 @@ namespace Teams.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("TeamId");
+                    b.Property<Guid>("TeamId");
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -237,25 +237,29 @@ namespace Teams.DAL.Migrations
                 {
                     b.HasOne("Teams.DAL.Entities.Team", "Team")
                         .WithMany()
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.GroupUserPermission", b =>
                 {
                     b.HasOne("Teams.DAL.Entities.Group", "Group")
                         .WithMany("GroupUserPermissions")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany("GroupUserPermissions")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.Media", b =>
                 {
                     b.HasOne("Teams.DAL.Entities.Message", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.User")
                         .WithMany("MediaEntities")
@@ -266,7 +270,8 @@ namespace Teams.DAL.Migrations
                 {
                     b.HasOne("Teams.DAL.Entities.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.Message", "Parent")
                         .WithMany()
@@ -274,25 +279,29 @@ namespace Teams.DAL.Migrations
 
                     b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany("Messages")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.Task", b =>
                 {
                     b.HasOne("Teams.DAL.Entities.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.TaskAssignment", b =>
                 {
                     b.HasOne("Teams.DAL.Entities.Task", "Task")
                         .WithMany("TaskAssignments")
-                        .HasForeignKey("TaskId");
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.TaskStateChange")
                         .WithMany("TaskAssignments")
@@ -300,33 +309,39 @@ namespace Teams.DAL.Migrations
 
                     b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany("Tasks")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.TaskStateChange", b =>
                 {
                     b.HasOne("Teams.DAL.Entities.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.Task", "Task")
                         .WithMany("TaskStateChanges")
-                        .HasForeignKey("TaskId");
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.TeamMember", b =>
                 {
                     b.HasOne("Teams.DAL.Entities.Team", "Team")
                         .WithMany()
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Teams.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Teams.DAL.Entities.User", b =>

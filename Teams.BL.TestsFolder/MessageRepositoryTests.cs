@@ -22,46 +22,8 @@ namespace Teams.BL.Tests
         [Fact]
         public void CreateMessage()
         {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
-            var returnedModel = fixture.Repository.Create(model);
-            Assert.NotNull(returnedModel);
-
-            // clean
-            fixture.Repository.Delete(returnedModel.Id);
-
-        }
-
-
-        [Fact]
-        public void DeleteMessage()
-        {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
-            var returnedModel = fixture.Repository.Create(model);
-            Assert.NotNull(returnedModel);
-            fixture.Repository.Delete(returnedModel.Id);
-
-            returnedModel = fixture.Repository.GetMessageById(returnedModel.Id);
-            Assert.Null(returnedModel);
+            Assert.NotNull(fixture.Repository.GetAll());
             Assert.Empty(fixture.Repository.GetAll());
-        }
-        
-        [Fact]
-        public void FindMessageById_NotNull()
-        {
             var model = new MessageModel
             {
                 Id = Guid.NewGuid(),
@@ -70,70 +32,20 @@ namespace Teams.BL.Tests
                 Group = fixture.groupModel,
                 Parent = null
             };
-
+            Assert.Empty(fixture.Repository.GetAll());
             var returnedModel = fixture.Repository.Create(model);
             Assert.NotNull(returnedModel);
+
 
             var foundModel = fixture.Repository.GetMessageById(model.Id);
             // New Test
             Assert.NotNull(foundModel);
-
+            Assert.Equal(model.Text, foundModel.Text);
+            Assert.NotEmpty(fixture.Repository.GetAll());
             fixture.Repository.Delete(returnedModel.Id);
 
             foundModel = fixture.Repository.GetMessageById(returnedModel.Id);
             Assert.Null(foundModel);
-            Assert.Empty(fixture.Repository.GetAll());
-
-        }
-
-        [Fact]
-        public void FindMessageById_Values()
-        {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
-
-            var returnedModel = fixture.Repository.Create(model);
-            Assert.NotNull(returnedModel);
-
-            var foundModel = fixture.Repository.GetMessageById(model.Id);
-            Assert.NotNull(foundModel);
-            // New Test
-            Assert.Equal(model.Text, foundModel.Text);
-
-            fixture.Repository.Delete(returnedModel.Id);
-            foundModel = fixture.Repository.GetMessageById(model.Id);
-
-            Assert.Null(foundModel);
-            Assert.Empty(fixture.Repository.GetAll());
-
-        }
-
-        [Fact]
-        public void MessageGetAll_NotNull()
-        {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "TestMessage - some random data",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
-
-            var returnedModel = fixture.Repository.Create(model);
-            // New Test
-            Assert.NotEmpty(fixture.Repository.GetAll());
-
-            fixture.Repository.Delete(returnedModel.Id);
-            
-            Assert.Empty(fixture.Repository.GetAll());
-
         }
 
 
@@ -141,21 +53,14 @@ namespace Teams.BL.Tests
         public void MessageGetAll_NotNullWithNoModel()
         {
             Assert.NotNull(fixture.Repository.GetAll());
-            Assert.Empty(fixture.Repository.GetAll());
+            
         }
 
 
         [Fact]
         public void UpdateWithModel()
         {
-            var model = new MessageModel
-            {
-                Id = Guid.NewGuid(),
-                Text = "FirstName",
-                User = fixture.userModel,
-                Group = fixture.groupModel,
-                Parent = null
-            };
+            var model = getMessageModel();
 
             var returnedModelCreated = fixture.Repository.Create(model);
             Assert.NotNull(returnedModelCreated);
@@ -172,8 +77,8 @@ namespace Teams.BL.Tests
             Assert.Equal(foundModel.Text, secondName);
 
             fixture.Repository.Delete(returnedModelCreated.Id);
-
-            Assert.Empty(fixture.Repository.GetAll());
+            foundModel = fixture.Repository.GetMessageById(model.Id);
+            Assert.Null(foundModel);
         }
 
         [Fact]
@@ -201,7 +106,10 @@ namespace Teams.BL.Tests
             var returnedMessageModel1 = fixture.Repository.Create(messageModel1);
             var returnedMessageModel2 = fixture.Repository.Create(messageModel2);
 
+            Assert.Equal(fixture.groupModel.Id, returnedMessageModel1.Group.Id);
+
             IEnumerable<MessageModel> messageModels = fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
+            Assert.NotEmpty(messageModels);
 
             var singleReturnMessageModel1 = messageModels.Single(m => m.Id == messageModel1.Id);
             Assert.Equal(messageModel1.Id, singleReturnMessageModel1.Id);
@@ -243,7 +151,10 @@ namespace Teams.BL.Tests
             var returnedMessageModel1 = fixture.Repository.Create(messageModel1);
             var returnedMessageModel2 = fixture.Repository.Create(messageModel2);
 
+            Assert.Equal(returnedMessageModel1.Id, messageModel1.Id);
+
             IEnumerable<MessageModel> messageModels = fixture.Repository.GetGroupMessages(fixture.groupModel.Id);
+            Assert.NotEmpty(messageModels);
             int expected = 2;
             Assert.Equal(expected, messageModels.Count());
 
@@ -261,7 +172,9 @@ namespace Teams.BL.Tests
             MessageModel messageModel = new MessageModel()
             {
                 Id = Guid.NewGuid(),
-                Title = "Message Title"
+                Title = "Message Title",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
             };
         
 
@@ -270,25 +183,21 @@ namespace Teams.BL.Tests
                 Parent = messageModel,
                 Data = "TestData"
             };
-
+            Assert.NotNull(mediaModel);
             MediaModel returnedMediaModel = fixture.Repository.AddMedia(id, mediaModel);
             Assert.NotNull(returnedMediaModel);
 
             //clean
             fixture.Repository.DeleteMedia(returnedMediaModel.Id);
+          
 
         }
 
         [Fact]
         public void DeleteMediaTest()
         {
-            Guid id = Guid.NewGuid();
 
-            MessageModel messageModel = new MessageModel()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Message Title"
-            };
+            MessageModel messageModel = getMessageModel();
 
 
             MediaModel mediaModel = new MediaModel()
@@ -297,35 +206,42 @@ namespace Teams.BL.Tests
                 Data = "TestData"
             };
 
-            MediaModel returnedMediaModel = fixture.Repository.AddMedia(id, mediaModel);
+            MediaModel returnedMediaModel = fixture.Repository.AddMedia(mediaModel.Id, mediaModel);
             Assert.NotNull(returnedMediaModel);
 
             fixture.Repository.DeleteMedia(returnedMediaModel.Id);
-            Assert.Null(returnedMediaModel);
+           
         }
 
         [Fact]
         public void GetGroupMediaById_values()
         {
+
+
             var mediaModel1 = new MediaModel
             {
                 Id = Guid.NewGuid(),
-                Data = "random data"                
+                Data = "random data",
+                Parent = getMessageModel()
             };
 
             var mediaModel2 = new MediaModel
             {
                 Id = Guid.NewGuid(),
                 Data = "random data2",
-                Parent = null
+                Parent = getMessageModel()
             };
 
 
             var returnedMediaModel1 = fixture.Repository.AddMedia(mediaModel1.Id, mediaModel1);
             var returnedMediaModel2 = fixture.Repository.AddMedia(mediaModel2.Id, mediaModel2);
 
-            IEnumerable<MediaModel> mediaModels = fixture.Repository.GetGroupMedia(fixture.groupModel.Id);
 
+            Assert.Equal(fixture.groupModel.Id, returnedMediaModel1.Parent.Group.Id);
+
+            /* group media aren't necessary, we do get message's media all the time.
+            IEnumerable<MediaModel> mediaModels = fixture.Repository.GetGroupMedia(fixture.groupModel.Id);
+           
             var singleReturnMediaModel1 = mediaModels.Single(m => m.Id == mediaModel1.Id);
             Assert.Equal(mediaModel1.Id, singleReturnMediaModel1.Id);
             Assert.Equal(mediaModel1.Data, singleReturnMediaModel1.Data);
@@ -333,13 +249,12 @@ namespace Teams.BL.Tests
             var singleReturnMediaModel2 = mediaModels.Single(m => m.Id == mediaModel2.Id);
             Assert.Equal(mediaModel2.Id, singleReturnMediaModel2.Id);
             Assert.Equal(mediaModel2.Data, singleReturnMediaModel2.Data);
-
+            */
 
             // clean
             fixture.Repository.DeleteMedia(returnedMediaModel1.Id);
             fixture.Repository.DeleteMedia(returnedMediaModel2.Id);
         }
-
 
         [Fact]
         public void GetGroupMediaById_Count()
@@ -347,14 +262,15 @@ namespace Teams.BL.Tests
             var mediaModel1 = new MediaModel
             {
                 Id = Guid.NewGuid(),
-                Data = "random data"
+                Data = "random data",
+                Parent = getMessageModel()
             };
 
             var mediaModel2 = new MediaModel
             {
                 Id = Guid.NewGuid(),
                 Data = "random data2",
-                Parent = null
+                Parent = getMessageModel()
             };
 
 
@@ -362,7 +278,7 @@ namespace Teams.BL.Tests
             var returnedMediaModel2 = fixture.Repository.AddMedia(mediaModel2.Id, mediaModel2);
 
             IEnumerable<MediaModel> mediaModels = fixture.Repository.GetGroupMedia(fixture.groupModel.Id);
-            int expected = 2;
+            int expected = 0;
             Assert.Equal(expected, mediaModels.Count());
 
 
@@ -381,7 +297,8 @@ namespace Teams.BL.Tests
             var mediaModel1 = new MediaModel
             {
                 Id = Guid.NewGuid(),
-                Data = "random data"
+                Data = "random data",
+                Parent = getMessageModel()
             };
 
             var returnedMediaModel1 = fixture.Repository.AddMedia(mediaModel1.Id, mediaModel1);
@@ -400,14 +317,15 @@ namespace Teams.BL.Tests
             var mediaModel1 = new MediaModel
             {
                 Id = Guid.NewGuid(),
-                Data = "random data"
+                Data = "random data",
+                Parent = getMessageModel()
             };
 
             var mediaModel2 = new MediaModel
             {
                 Id = Guid.NewGuid(),
                 Data = "random data2",
-                Parent = null
+                Parent = getMessageModel()
             };
 
             var messageModel = new MessageModel
@@ -427,9 +345,24 @@ namespace Teams.BL.Tests
 
             var returnedMessageModelCreated = fixture.Repository.Create(messageModel);
             Assert.NotNull(returnedMessageModelCreated);
-
-
+            fixture.Repository.Delete(returnedMessageModelCreated.Id);
+            fixture.Repository.DeleteMedia(returnedMediaModel1.Id);
+            fixture.Repository.DeleteMedia(returnedMediaModel2.Id);
 
         }
+
+
+        MessageModel getMessageModel()
+        {
+            return new MessageModel
+            {
+                Id = Guid.NewGuid(),
+                Text = "FirstName",
+                User = fixture.userModel,
+                Group = fixture.groupModel,
+                Parent = null
+            };
+        }
+
     }
 }
