@@ -10,25 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Teams.Views
 {
     /// <summary>
-    /// Interaction logic for MainMenuView.xaml
+    /// Interaction logic for EditTeamPopup.xaml
     /// </summary>
-    public partial class MainMenuView 
+    public partial class EditTeamPopup : Window
     {
-        public MainMenuView()
+        public EditTeamPopup()
         {
             InitializeComponent();
         }
-        private void btnEditName_Click(object sender, RoutedEventArgs e)
+        private void btnDialogOk_Click(object sender, RoutedEventArgs e)
         {
-            EditTeamPopup inputDialog = new EditTeamPopup();
-            if (inputDialog.ShowDialog() == true)
-                return;
+            this.DialogResult = true;
         }
+
     }
 }

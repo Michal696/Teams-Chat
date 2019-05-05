@@ -170,6 +170,9 @@
     <Compile Include="Views\ContentView.xaml.cs">
       <DependentUpon>ContentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditTeamPopup.xaml.cs">
+      <DependentUpon>EditTeamPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupListVIew.xaml.cs">
       <DependentUpon>GroupListVIew.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
     </Compile>
     <Compile Include="Views\UserControlBase.cs" />
     <Page Include="Views\ContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditTeamPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
