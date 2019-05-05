@@ -21,7 +21,8 @@ namespace Teams.BL.Repositories
 
         public TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember)
         {
-           
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
                 var entity = mapper.TeamMemberModelToTeamMemberEntity(TeamMember);
                 if (entity.Id == Guid.Empty)
                 {
@@ -50,7 +51,7 @@ namespace Teams.BL.Repositories
                 dbContext.TeamMembers.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TeamMemberEntityToTeamMemberModel(entity);
-            
+            }
         }
 
         public  TeamModel Create(TeamModel model)
