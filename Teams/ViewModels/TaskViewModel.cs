@@ -106,6 +106,7 @@ namespace Teams.ViewModels
         private void GroupSelected(GroupSelectMessage groupSelectMessage)
         {
             ModelGroup = groupTaskRepository.GetByIdGroup(groupSelectMessage.Id);
+            Load();
         }
 
         public override void Load()
