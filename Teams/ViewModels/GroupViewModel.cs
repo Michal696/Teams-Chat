@@ -64,9 +64,12 @@ namespace Teams.ViewModels
 
         public override void Load()
         {
-            Groups.Clear();
-            var groups = groupTaskRepository.GetTeamsGroups(ModelTeam.Id);
-            Groups.AddRange(groups);
+            if(ModelTeam != null)
+            {
+                Groups.Clear();
+                var groups = groupTaskRepository.GetTeamsGroups(ModelTeam.Id);
+                Groups.AddRange(groups);
+            }
         }
 
     }

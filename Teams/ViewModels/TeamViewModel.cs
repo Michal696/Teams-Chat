@@ -45,7 +45,6 @@ namespace Teams.ViewModels
             DeleteCommand = new RelayCommand(TeamDelete);
 
             mediator.Register<TeamNewMessage>(TeamNewAdded);
-            mediator.Register<TeamSelectMessage>(TeamSelected);
             mediator.Register<TeamUpdateMessage>(TeamUpdated);
             mediator.Register<TeamDeleteMessage>(TeamDeleted);
         }
@@ -69,14 +68,7 @@ namespace Teams.ViewModels
             Model = teamsRepository.GetById(team.Id);
             mediator.Send(new TeamSelectMessage { Id = team.Id });
         }
-
-        private void TeamSelected(TeamSelectMessage teamSelectMessage)
-        {
-            Groups.Clear();
-            var groups = groupTaskRepository.GetTeamsGroups(teamSelectMessage.Id);
-            Groups.AddRange(groups);
-        }
-
+        
         private void TeamUpdate()
         {
             teamsRepository.Update(Model);
