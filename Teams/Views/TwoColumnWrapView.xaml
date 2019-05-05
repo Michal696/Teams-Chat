@@ -10,7 +10,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <local:GroupListVIew/>
+        <local:GroupListVIew Grid.Column="0"/>
+        <local:GroupTasksListView Grid.Column="2"/>
     </Grid>
 </UserControl>
