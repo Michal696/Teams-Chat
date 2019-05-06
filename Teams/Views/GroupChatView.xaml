@@ -30,9 +30,9 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding ParentMessage.Text}"/>
                 <Button Grid.Row="0" Grid.Column="2" Content="Close" Command="{Binding MessageColapseMessage}" HorizontalAlignment="Right"/>
-                <Label Grid.Column="0" Grid.Row="1" Content="{Binding ParentMessage.TimeStamp}"/>
-                <Label Grid.Column="1" Grid.Row="1" Content="Author:" HorizontalAlignment="Right"/>
-                <Label Grid.Column="2" Grid.Row="1" Content="{Binding ParentMessage.User.Name}"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="{Binding ParentMessage.TimeStamp}" FontSize="8"/>
+                <Label Grid.Column="1" Grid.Row="1" Content="Author:" HorizontalAlignment="Right" FontSize="8"/>
+                <Label Grid.Column="2" Grid.Row="1" Content="{Binding ParentMessage.User.Name}" FontSize="8"/>
             </Grid>
         </WrapPanel>
         <ListBox Visibility="{Binding ParentMessage, Converter={StaticResource ReverseVisibilityConverter}}" x:Name="ChatListBox" Grid.Row="2" ItemsSource="{Binding ParentMessages}">
@@ -47,21 +47,17 @@
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <StackPanel>
-                        <Label Content="{Binding Title}"/>
+                        <Label Content="{Binding Title}" FontWeight="Bold"/>
                         <Label Content="{Binding Text}"/>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding TimeStamp}"/>
-                            <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right"/>
-                            <Label Grid.Column="2" Content="{Binding User.Name}"/>
-                            <Label Grid.Column="3" Content="Replies:" HorizontalAlignment="Right"/>
-                            <Label Grid.Column="4" Content="{Binding ChildCount}"/>
+                            <Label Grid.Column="0" Content="{Binding TimeStamp}" FontSize="8"/>
+                            <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right" FontSize="8"/>
+                            <Label Grid.Column="2" Content="{Binding User.Name}" FontSize="8"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
@@ -78,9 +74,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding TimeStamp}"/>
-                            <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right"/>
-                            <Label Grid.Column="2" Content="{Binding User.Name}"/>
+                            <Label Grid.Column="0" Content="{Binding TimeStamp}" FontSize="8"/>
+                            <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right" FontSize="8"/>
+                            <Label Grid.Column="2" Content="{Binding User.Name}" FontSize="8"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
