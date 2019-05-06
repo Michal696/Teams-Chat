@@ -14,7 +14,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Add new task" Command="{Binding TaskAddCommand}"/>
+            <Button Grid.Row="0" Content="Add new task" Command="{Binding TaskAddCommand}" Padding="5"/>
             <ListBox x:Name="TaskListBox" Grid.Row="1" ItemsSource="{Binding Tasks}">
 
                 <i:Interaction.Triggers>
@@ -30,6 +30,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        <Button Grid.Row="2" Height="30" Visibility="{Binding ModelTask, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Task" Command="{Binding TaskDeleteCommand}" CommandParameter="{Binding ElementName=TaskListBox, Path=SelectedItem}"/>
+        <Button Grid.Row="2" Padding="5" Height="30" Visibility="{Binding ModelTask, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Task" Command="{Binding TaskDeleteCommand}" CommandParameter="{Binding ElementName=TaskListBox, Path=SelectedItem}"/>
     </Grid>
 </local:UserControlBase>

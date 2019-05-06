@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Teams.Views"
         mc:Ignorable="d"
-        Title="Edit Team"
+        Title="Edit Team name"
         SizeToContent="WidthAndHeight"
         DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=TeamViewModel}">
     <Grid Margin="15">
@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="{Binding Model.Name}"/>
+        <Label Grid.Row="0" Content="Edit team name:"/>
         <TextBox Grid.Row="1" MinWidth="250" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}"/>
         <WrapPanel Grid.Row="2"  HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button IsDefault="True" Command="{Binding UpdateCommand}" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
