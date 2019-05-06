@@ -160,6 +160,7 @@ namespace Teams.BL.Repositories
                 .Include(t => t.Group.Team)
                 .Select(mapper.MessageEntityToMessageModel)
                 .Where(t => t.Group.Id == GId)
+                .Where(t => t.Parent != null)
                 .Where(t => t.Parent.Id == MId)
                 .OrderBy(t => t.TimeStamp.TimeOfDay)
                                 .ThenBy(t => t.TimeStamp.Date)

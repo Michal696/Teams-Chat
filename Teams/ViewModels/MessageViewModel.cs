@@ -112,15 +112,18 @@ namespace Teams.ViewModels
 
         public override void Load()
         {
-            if (ModelGroup != null && ParentMessage != null)
+            if (ModelGroup != null)
             {
                 ParentMessages.Clear();
-                var messages = messageRepository.GetParentMessage(ModelGroup.Id);
-                ParentMessages.AddRange(messages);
+                var messages1 = messageRepository.GetParentMessage(ModelGroup.Id);
+                ParentMessages.AddRange(messages1);
+            }
+            if (ParentMessage != null)
+            {
 
                 ChildMessages.Clear();
-                messages = messageRepository.GetChildMessage(ModelGroup.Id, ParentMessage.Id);
-                ChildMessages.AddRange(messages);
+                var messages2 = messageRepository.GetChildMessage(ModelGroup.Id, ParentMessage.Id);
+                ChildMessages.AddRange(messages2);
             }
         }
     }
