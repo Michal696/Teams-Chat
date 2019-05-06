@@ -47,6 +47,12 @@ namespace Teams.ViewModels
             mediator.Register<TaskDeleteMessage>(TaskDeleted);
             mediator.Register<UserLoggedMessage>(UserLogSucces);
             mediator.Register<TaskSelectMessage>(TaskSelected);
+            mediator.Register<GroupDeleteMessage>(GroupDeleted);
+        }
+
+        private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
+        {
+            ModelGroup = null;
         }
 
         private void TaskSelect(TaskModel task)

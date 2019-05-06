@@ -135,7 +135,35 @@ namespace Teams.BL.Repositories
                 .Include(t => t.Parent.Group)
                 .Select(mapper.MediaEntityToMediaModel)
                 .Where(t => t.Parent.Group.Id == Id);
-           
+
+        }
+
+        public IEnumerable<MessageModel> GetParentMessage(Guid Id)
+        {
+            return dbContext.Messages
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .Select(mapper.MessageEntityToMessageModel)
+                .Where(t => t.Group.Id == Id)
+                .Where(t => t.Parent == null)
+                .OrderBy(t => t.TimeStamp.TimeOfDay)
+                                .ThenBy(t => t.TimeStamp.Date)
+                                .ThenBy(t => t.TimeStamp.Year);
+        }
+
+        public IEnumerable<MessageModel> GetChildMessage(Guid GId, Guid MId)
+        {
+            return dbContext.Messages
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .Select(mapper.MessageEntityToMessageModel)
+                .Where(t => t.Group.Id == GId)
+                .Where(t => t.Parent.Id == MId)
+                .OrderBy(t => t.TimeStamp.TimeOfDay)
+                                .ThenBy(t => t.TimeStamp.Date)
+                                .ThenBy(t => t.TimeStamp.Year);
         }
 
         public IEnumerable<MessageModel> GetGroupMessages(Guid Id)
