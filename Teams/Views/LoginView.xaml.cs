@@ -23,6 +23,7 @@ namespace Teams.Views
         public LoginView()
         {
             InitializeComponent();
+            
         }
     }
 }
