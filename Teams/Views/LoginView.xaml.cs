@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Teams.Views
 {
     /// <summary>
-    /// Interaction logic for MainMenuView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class MainMenuView 
+    public partial class LoginView : UserControl
     {
-        public MainMenuView()
+        public LoginView()
         {
             InitializeComponent();
         }

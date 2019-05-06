@@ -38,7 +38,7 @@ namespace Teams.BL.Repositories
                 var media = dbContext.Media
                     .Select(mapper.MediaEntityToMediaModel)
                     .Where(t => t.Id == Id);
-                return media == null ? false : true;
+                return media.Count() == 0 ? false : true;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Teams.BL.Repositories
                     case "Messages": dbContext.Messages.Attach((Message) entity); break;
                     case "Groups": dbContext.Groups.Attach((Group) entity); break;
                     case "Media": dbContext.Media.Attach((Media) entity); break;
-                    case "Teams": dbContext.Teams.Attach((Team) entity); break;
+                    case "Teams": dbContext.Team.Attach((Team) entity); break;
                     case "Tasks": dbContext.Tasks.Attach((DAL.Entities.Task) entity); break;
 
                 }
@@ -110,6 +110,7 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<MessageModel> GetAll()
         {
+            
             return dbContext.Messages
                 .Include(t => t.Group)
                 .Include(t => t.User)
@@ -119,39 +120,38 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<MediaModel> GetGroupMedia(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Media  /* TODO include */
-                    .Select(mapper.MediaEntityToMediaModel)
-                    .Where(t => t.Parent.Group.Id == Id);
-            }
+          
+            return dbContext.Media
+                .Include(t => t.Parent)
+                .Include(t => t.Parent.Group)
+                .Select(mapper.MediaEntityToMediaModel)
+                .Where(t => t.Parent.Group.Id == Id);
+           
         }
 
         public IEnumerable<MessageModel> GetGroupMessages(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Messages
-                    .Include(t => t.Group)
-                    .Include(t => t.User)
-                    .Include(t => t.Group.Team)
-                    .Select(mapper.MessageEntityToMessageModel)
-                    .Where(t => t.Group.Id == Id);
-            }
+          
+            return dbContext.Messages
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .Select(mapper.MessageEntityToMessageModel)
+                .Where(t => t.Group.Id == Id);
+          
         }
 
         public IEnumerable<MediaModel> GetMessageMedias(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                return dbContext.Media
-                    .Include(t => t.Parent)
-                    .Include(t => t.Parent.Group)
-                    .Include(t => t.Parent.User)
-                    .Include(t => t.Parent.Group.Team)
-                    .Select(mapper.MediaEntityToMediaModel)
-                    .Where(t => t.Parent.Id == Id);
-            }
+           
+            return dbContext.Media
+                .Include(t => t.Parent)
+                .Include(t => t.Parent.Group)
+                .Include(t => t.Parent.User)
+                .Include(t => t.Parent.Group.Team)
+                .Select(mapper.MediaEntityToMediaModel)
+                .Where(t => t.Parent.Id == Id);
+            
         }
 
         public void Update(MessageModel Message)
@@ -166,16 +166,15 @@ namespace Teams.BL.Repositories
 
         public MessageModel GetMessageById(Guid Id)
         {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                var entity = dbContext.Messages
-                    .Include(t => t.Group)
-                    .Include(t => t.User)
-                    .Include(t => t.Group.Team)
-                    .Include(t => t.Parent)
-                    .FirstOrDefault(t => t.Id == Id);
-                return entity == null ? null : mapper.MessageEntityToMessageModel(entity);
-            }
+          
+            var entity = dbContext.Messages
+                .Include(t => t.Group)
+                .Include(t => t.User)
+                .Include(t => t.Group.Team)
+                .Include(t => t.Parent)
+                .FirstOrDefault(t => t.Id == Id);
+            return entity == null ? null : mapper.MessageEntityToMessageModel(entity);
+           
         }
     }
 }

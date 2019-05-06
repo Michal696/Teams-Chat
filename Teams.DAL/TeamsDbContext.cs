@@ -23,7 +23,7 @@ namespace Teams.DAL
         public DbSet<Task>  Tasks { get; set; }
         public DbSet<TaskStateChange> TaskStateChanges { get; set; }
         public DbSet<TaskAssignment> TaskAssignments { get; set; }
-        public DbSet<Team> Teams { get; set; }
+        public DbSet<Team> Team { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

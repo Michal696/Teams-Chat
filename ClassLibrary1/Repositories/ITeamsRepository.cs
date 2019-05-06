@@ -12,9 +12,14 @@ namespace Teams.BL.Repositories
         IEnumerable<TeamModel> GetAll();
         TeamModel GetById(Guid Id);
         IEnumerable<TeamModel> GetByUser(Guid Id);
+        IEnumerable<TeamMemberModel> GetMembershipsByUser(Guid Id);
+        
         TeamModel Create(TeamModel Team);
+        
+        void DeleteTeamMember(Guid Id);
         void Delete(Guid Id);
         void Update(TeamModel Team);
         TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember);
+        
     }
 }

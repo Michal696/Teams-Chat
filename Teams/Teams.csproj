@@ -96,6 +96,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.0.1\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.6.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.6.1\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -152,13 +155,29 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\ReverseVisibilityConverter.cs" />
+    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
-	<Compile Include="ViewModels\TeamViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\TaskViewModel.cs" />
+    <Compile Include="ViewModels\TeamViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\ContentView.xaml.cs">
+      <DependentUpon>ContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GroupListVIew.xaml.cs">
+      <DependentUpon>GroupListVIew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupTasksListView.xaml.cs">
       <DependentUpon>GroupTasksListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrivateChatView.xaml.cs">
       <DependentUpon>PrivateChatView.xaml</DependentUpon>
@@ -169,14 +188,27 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TwoColumnWrapView.xaml.cs">
-      <DependentUpon>TwoColumnWrapView.xaml</DependentUpon>
+    <Compile Include="Views\ThreeColumnWrapView.xaml.cs">
+      <DependentUpon>ThreeColumnWrapView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControlBase.cs" />
+    <Page Include="Views\ContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GroupChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\GroupListVIew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GroupTasksListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,7 +246,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TwoColumnWrapView.xaml">
+    <Page Include="Views\ThreeColumnWrapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,6 +272,9 @@
     </EmbeddedResource>
     <None Include=".gitignore" />
     <None Include="azure-pipelines.yml" />
+    <None Include="FodyWeavers.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
