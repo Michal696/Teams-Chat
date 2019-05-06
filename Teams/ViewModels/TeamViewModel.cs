@@ -20,6 +20,7 @@ namespace Teams.ViewModels
     {
         private readonly ITeamsRepository teamsRepository;
         private readonly IGroupTaskRepository groupTaskRepository;
+        private readonly IMessageRepository messageRepository;
         private readonly IUserRepository userRepository;
         private readonly IMessageBoxService messageBoxService;
         private readonly IMediator mediator;
@@ -37,11 +38,12 @@ namespace Teams.ViewModels
         public ICommand TeamUserAddCommand { get; set; }
         public ICommand TeamUserRemoveCommand { get; set; }
 
-        public TeamViewModel(ITeamsRepository teamsRepository, IGroupTaskRepository groupTaskRepository, IUserRepository userRepository, IMessageBoxService messageBoxService, IMediator mediator)
+        public TeamViewModel(ITeamsRepository teamsRepository, IGroupTaskRepository groupTaskRepository, IUserRepository userRepository, IMessageRepository messageRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.teamsRepository = teamsRepository;
             this.groupTaskRepository = groupTaskRepository;
             this.userRepository = userRepository;
+            this.messageRepository = messageRepository;
             this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
@@ -144,6 +146,20 @@ namespace Teams.ViewModels
         {
             try
             {
+                IEnumerable<TaskModel> tasks;
+                var groups = groupTaskRepository.GetTeamsGroups(Model.Id);
+                foreach(GroupModel group in groups)
+                {
+
+                    tasks = groupTaskRepository.GetGroupTasks(group.Id);
+                    foreach (TaskModel task in tasks)
+                    {
+                        groupTaskRepository.DeleteTask(task.Id);
+                    }
+
+                    messageRepository.DeleteGroupMesages(group.Id);
+                    groupTaskRepository.DeleteGroup(group.Id);
+                }
                 teamsRepository.DeleteTeamMember(Model.Id);
                 teamsRepository.Delete(Model.Id);
             }

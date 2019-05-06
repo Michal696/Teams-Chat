@@ -90,6 +90,12 @@ namespace Teams.ViewModels
         {
             try
             {
+                var tasks = groupTaskRepository.GetGroupTasks(Model.Id);
+                foreach(TaskModel task in tasks)
+                {
+                    groupTaskRepository.DeleteTask(task.Id);
+                }
+
                 messageRepository.DeleteGroupMesages(Model.Id);
                 groupTaskRepository.DeleteGroup(Model.Id);
             }

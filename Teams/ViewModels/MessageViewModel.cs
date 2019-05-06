@@ -32,6 +32,7 @@ namespace Teams.ViewModels
 
         public ICommand MessageNewCommand { get; set; }
         public ICommand MessageSelectCommand { get; set; }
+        public ICommand MessageColapseMessage { get; set; }
 
         public MessageViewModel(IUserRepository userRepository, IMessageRepository messageRepository,IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
@@ -44,6 +45,7 @@ namespace Teams.ViewModels
             ModelMessage = new MessageModel();
 
             MessageNewCommand = new RelayCommand(MessageCreate);
+            MessageColapseMessage = new RelayCommand(MessageColapse);
             MessageSelectCommand = new RelayCommand<MessageModel>(MessageSelect);
             
             
@@ -51,6 +53,21 @@ namespace Teams.ViewModels
             mediator.Register<MessageNewMessage>(MessageCreated);
             mediator.Register<GroupSelectMessage>(GroupSelected);
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
+            mediator.Register<MessageColapseMessage>(MessageColapsed);
+            mediator.Register<TeamDeleteMessage>(TeamDeleted);
+            mediator.Register<TeamSelectMessage>(TeamSelected);
+        }
+
+        private void MessageColapsed(MessageColapseMessage messageColapseMessage)
+        {
+            Load();
+        }
+
+        private void MessageColapse()
+        {
+            ParentMessage = null;
+            ModelMessage.Parent = null;
+            mediator.Send(new MessageColapseMessage());
         }
 
         private void MessageSelect(MessageModel message)
@@ -61,6 +78,16 @@ namespace Teams.ViewModels
         }
         
         private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
+        {
+        }
+
+        private void TeamSelected(TeamSelectMessage teamSelectMessage)
+        {
+            Load();
+            ModelGroup = null;
+        }
+
+        private void TeamDeleted(TeamDeleteMessage teamDeleteMessage)
         {
             Load();
             ModelGroup = null;
@@ -88,6 +115,7 @@ namespace Teams.ViewModels
                 ModelMessage.Parent = messageRepository.GetMessageById(ParentMessage.Id);
                 ParentMessage.TimeStamp = DateTime.Now;
                 messageRepository.Update(ParentMessage);
+                ModelMessage.Parent.ChildCount = messageRepository.GetChildMessage(ModelGroup.Id, ModelMessage.Parent.Id).Count();
             }
 
             messageRepository.Create(ModelMessage);
@@ -108,15 +136,18 @@ namespace Teams.ViewModels
 
         public override void Load()
         {
-            if (ModelGroup != null && ParentMessage != null)
+            if (ModelGroup != null)
             {
                 ParentMessages.Clear();
-                var messages = messageRepository.GetParentMessage(ModelGroup.Id);
-                ParentMessages.AddRange(messages);
+                var messages1 = messageRepository.GetParentMessage(ModelGroup.Id);
+                ParentMessages.AddRange(messages1);
+            }
+            if (ParentMessage != null && ModelGroup != null)
+            {
 
                 ChildMessages.Clear();
-                messages = messageRepository.GetChildMessage(ModelGroup.Id, ParentMessage.Id);
-                ChildMessages.AddRange(messages);
+                var messages2 = messageRepository.GetChildMessage(ModelGroup.Id, ParentMessage.Id);
+                ChildMessages.AddRange(messages2);
             }
         }
     }

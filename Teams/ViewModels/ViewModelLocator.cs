@@ -28,13 +28,25 @@ namespace Teams.ViewModels
                 if (teamViewModel != null)
                     return teamViewModel;
 
-                teamViewModel = new TeamViewModel(teamsRepository, groupTaskRepository, userRepository, messageBoxService, mediator);
+                teamViewModel = new TeamViewModel(teamsRepository, groupTaskRepository, userRepository,messageRepository, messageBoxService, mediator);
                 return teamViewModel;
             }
         }
         public TeamViewModel teamViewModel;
         public UserViewModel UserViewModel => new UserViewModel(userRepository, messageBoxService, mediator);
-        public MessageViewModel MessageViewModel => new MessageViewModel(userRepository, messageRepository, groupTaskRepository, messageBoxService, mediator);
+        public MessageViewModel messageViewModel;
+        public MessageViewModel MessageViewModel
+        {
+            get
+            {
+                if (messageViewModel != null)
+                    return messageViewModel;
+
+                messageViewModel = new MessageViewModel(userRepository, messageRepository, groupTaskRepository, messageBoxService, mediator);
+                return MessageViewModel;
+            }
+            
+        }
         public GroupViewModel GroupViewModel => new GroupViewModel(groupTaskRepository, teamsRepository, messageRepository, messageBoxService, mediator);
         public TaskViewModel taskModelView;
         public TaskViewModel TaskViewModel {

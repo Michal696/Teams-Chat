@@ -71,9 +71,15 @@ namespace Teams.BL.Repositories
             {
                 var entity = mapper.MessageModelToMessageEntity(message);
                
-                dbContext.Users.Attach(entity.User);
-                if (entity.Parent != null) dbContext.Messages.Attach(entity.Parent);
-                dbContext.Groups.Attach(entity.Group);
+                if (entity.Parent != null)
+                {
+                    dbContext.Messages.Attach(entity.Parent);
+                }
+                else
+                {
+                    dbContext.Users.Attach(entity.User);
+                    dbContext.Groups.Attach(entity.Group);
+                }
                 dbContext.Messages.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.MessageEntityToMessageModel(entity);
@@ -95,10 +101,15 @@ namespace Teams.BL.Repositories
         }
         public void DeleteGroupMesages(Guid Id)
         {
-            var TeamMessages = GetGroupMessages(Id);
-
+            var TeamMessages = GetParentMessage(Id);
+            IEnumerable<MessageModel> childs;
             foreach (MessageModel message in TeamMessages)
             {
+                childs = GetChildMessage(Id, message.Id);
+                foreach(MessageModel child in childs)
+                {
+                    Delete(child.Id);
+                }
                 Delete(message.Id);
             }
         }
@@ -160,6 +171,7 @@ namespace Teams.BL.Repositories
                 .Include(t => t.Group.Team)
                 .Select(mapper.MessageEntityToMessageModel)
                 .Where(t => t.Group.Id == GId)
+                .Where(t => t.Parent != null)
                 .Where(t => t.Parent.Id == MId)
                 .OrderBy(t => t.TimeStamp.TimeOfDay)
                                 .ThenBy(t => t.TimeStamp.Date)
