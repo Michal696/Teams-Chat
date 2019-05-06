@@ -48,6 +48,18 @@ namespace Teams.ViewModels
             mediator.Register<UserLoggedMessage>(UserLogSucces);
             mediator.Register<TaskSelectMessage>(TaskSelected);
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
+            mediator.Register<TeamDeleteMessage>(TeamDeleted);
+            mediator.Register<TeamSelectMessage>(SeamSelected);
+        }
+
+        private void SeamSelected(TeamSelectMessage teamSelectMessage)
+        {
+            ModelGroup = null;
+        }
+
+        private void TeamDeleted(TeamDeleteMessage teamDeleteMessage)
+        {
+            ModelGroup = null;
         }
 
         private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
@@ -98,6 +110,7 @@ namespace Teams.ViewModels
             ModelTask.Id = Guid.NewGuid();
             ModelTask.Group = ModelGroup;
             ModelTask.User = User;
+            ModelTask.TimeStamp = DateTime.Now;
 
             groupTaskRepository.CreateTask(ModelTask);
 

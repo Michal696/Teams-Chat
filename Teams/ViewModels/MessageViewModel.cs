@@ -54,6 +54,8 @@ namespace Teams.ViewModels
             mediator.Register<GroupSelectMessage>(GroupSelected);
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
             mediator.Register<MessageColapseMessage>(MessageColapsed);
+            mediator.Register<TeamDeleteMessage>(TeamDeleted);
+            mediator.Register<TeamSelectMessage>(TeamSelected);
         }
 
         private void MessageColapsed(MessageColapseMessage messageColapseMessage)
@@ -64,6 +66,7 @@ namespace Teams.ViewModels
         private void MessageColapse()
         {
             ParentMessage = null;
+            ModelMessage.Parent = null;
             mediator.Send(new MessageColapseMessage());
         }
 
@@ -75,6 +78,16 @@ namespace Teams.ViewModels
         }
         
         private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
+        {
+        }
+
+        private void TeamSelected(TeamSelectMessage teamSelectMessage)
+        {
+            Load();
+            ModelGroup = null;
+        }
+
+        private void TeamDeleted(TeamDeleteMessage teamDeleteMessage)
         {
             Load();
             ModelGroup = null;
@@ -102,10 +115,7 @@ namespace Teams.ViewModels
                 ModelMessage.Parent = messageRepository.GetMessageById(ParentMessage.Id);
                 ParentMessage.TimeStamp = DateTime.Now;
                 messageRepository.Update(ParentMessage);
-            }
-            else
-            {
-                ModelMessage.ChildCount = messageRepository.GetChildMessage(ModelGroup.Id, ModelMessage.Id).Count();
+                ModelMessage.Parent.ChildCount = messageRepository.GetChildMessage(ModelGroup.Id, ModelMessage.Parent.Id).Count();
             }
 
             messageRepository.Create(ModelMessage);
@@ -132,7 +142,7 @@ namespace Teams.ViewModels
                 var messages1 = messageRepository.GetParentMessage(ModelGroup.Id);
                 ParentMessages.AddRange(messages1);
             }
-            if (ParentMessage != null)
+            if (ParentMessage != null && ModelGroup != null)
             {
 
                 ChildMessages.Clear();

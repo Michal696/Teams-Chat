@@ -86,6 +86,7 @@ namespace Teams.ViewModels
                 return;
             }
             TestUser.Id = Guid.NewGuid();
+            TestUser.LastLogin = DateTime.Now;
 
             userRepository.Create(TestUser);
 
