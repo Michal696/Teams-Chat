@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=RegisterViewModel}">
-    <Grid Visibility="{Binding User, Converter={StaticResource ReverseVisibilityConverter}}" ShowGridLines="True">
+    <Grid Visibility="{Binding User, Converter={StaticResource ReverseVisibilityConverter}}">
         <TabControl>
             <TabItem Header="Sign in">
                 <Grid>
