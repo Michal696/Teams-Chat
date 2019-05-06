@@ -7,7 +7,6 @@ using Teams.BL.Factories;
 using Teams.BL.Models;
 using Teams.BL.Mapper;
 using Teams.BL;
-using Teams.BL.Services;
 
 namespace Teams.BL.Repositories
 {
@@ -22,7 +21,6 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.UserModelToUserEntity(model);
-                entity.Password = SecurePasswordHasher.Hash(entity.Password);
                 dbContext.Users.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.UserEntityToUserModel(entity);
@@ -54,15 +52,6 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = dbContext.Users.FirstOrDefault(t => t.Id == Id);
-                return entity == null ? null : mapper.UserEntityToUserModel(entity);
-            }
-        }
-
-        public UserModel GetByEmail(String Email)
-        {
-            using (var dbContext = dbContextFactory.CreateDbContext())
-            {
-                var entity = dbContext.Users.FirstOrDefault(t => t.Email == Email);
                 return entity == null ? null : mapper.UserEntityToUserModel(entity);
             }
         }

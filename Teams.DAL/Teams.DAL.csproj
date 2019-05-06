@@ -131,10 +131,6 @@
     <Compile Include="Migrations\20190409225154_initialcreate.designer.cs">
       <DependentUpon>20190409225154_initialcreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190503235311_renameTeamsToTeam.cs" />
-    <Compile Include="Migrations\20190503235311_renameTeamsToTeam.designer.cs">
-      <DependentUpon>20190503235311_renameTeamsToTeam.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\TeamsDbContextModelSnapshot.cs" />
     <Compile Include="TeamsDbContext.cs" />
     <Compile Include="Entities\Enums\Permission.cs" />

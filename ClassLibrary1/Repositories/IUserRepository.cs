@@ -11,7 +11,6 @@ namespace Teams.BL.Repositories
     {
         IEnumerable<UserModel> GetAll();
         UserModel GetById(Guid Id);
-        UserModel GetByEmail(String Email);
         UserModel Create(UserModel model);
         void Update(UserModel model);
         void Delete(Guid Id);
