@@ -93,9 +93,6 @@ namespace Teams.ViewModels
             {
                 Messages.Clear();
                 var messages = messageRepository.GetGroupMessages(ModelGroup.Id);
-                messages.OrderBy(x => x.TimeStamp.TimeOfDay)
-                                .ThenBy(x => x.TimeStamp.Date)
-                                .ThenBy(x => x.TimeStamp.Year);
                 Messages.AddRange(messages);
             }
         }

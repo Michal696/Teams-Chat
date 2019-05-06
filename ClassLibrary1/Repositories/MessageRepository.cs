@@ -140,13 +140,17 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<MessageModel> GetGroupMessages(Guid Id)
         {
-          
+
             return dbContext.Messages
                 .Include(t => t.Group)
                 .Include(t => t.User)
                 .Include(t => t.Group.Team)
                 .Select(mapper.MessageEntityToMessageModel)
-                .Where(t => t.Group.Id == Id);
+                .Where(t => t.Group.Id == Id)
+                .OrderBy(t => t.TimeStamp.TimeOfDay)
+                                .ThenBy(t => t.TimeStamp.Date)
+                                .ThenBy(t => t.TimeStamp.Year);
+                                
           
         }
 
