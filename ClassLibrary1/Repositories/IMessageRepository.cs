@@ -22,6 +22,6 @@ namespace Teams.BL.Repositories
         MediaModel AddMedia(Guid Id, MediaModel Media);
         void DeleteMedia(Guid Id);
         IEnumerable<MessageModel> GetChildMessage(Guid GId, Guid MId);
-        IEnumerable<MessageModel> GetParentMessage(Guid GId, Guid MId);
+        IEnumerable<MessageModel> GetParentMessage(Guid Id);
     }
 }

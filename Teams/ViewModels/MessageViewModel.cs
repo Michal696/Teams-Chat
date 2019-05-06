@@ -111,11 +111,11 @@ namespace Teams.ViewModels
             if (ModelGroup != null && ParentMessage != null)
             {
                 ParentMessages.Clear();
-                var messages = messageRepository.GetParentMessage(ModelGroup.Id, ParentMessage.Id);
+                var messages = messageRepository.GetParentMessage(ModelGroup.Id);
                 ParentMessages.AddRange(messages);
 
                 ChildMessages.Clear();
-                messages = messageRepository.GetGroupMessages(ModelGroup.Id);
+                messages = messageRepository.GetChildMessage(ModelGroup.Id, ParentMessage.Id);
                 ChildMessages.AddRange(messages);
             }
         }
