@@ -12,8 +12,8 @@
     <Grid Visibility="{Binding ModelTeam, Converter={StaticResource NullToVisibilityConverter}}" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Content="Add group" Command="{Binding AddNewGroupCommand}"/>
         <ListBox x:Name="GroupListBox" Grid.Row="1" ItemsSource="{Binding Groups}">
@@ -33,7 +33,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="2" Content="Delete Group" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}"/>
+        <Button Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="2" Content="Delete Group" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}"/>
         
     </Grid>
 </local:UserControlBase>
