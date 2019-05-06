@@ -74,7 +74,7 @@ namespace Teams.BL.Repositories
                 if (entity.Parent != null)
                 {
                     dbContext.Messages.Attach(entity.Parent);
-                    if (entity.Parent.Id != entity.User.Id)
+                    if (entity.Parent.User.Id != entity.User.Id)
                     {
                         dbContext.Users.Attach(entity.User);
                     }

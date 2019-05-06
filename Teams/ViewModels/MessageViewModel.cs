@@ -65,6 +65,7 @@ namespace Teams.ViewModels
 
         private void MessageColapse()
         {
+            Load();
             ParentMessage = null;
             ModelMessage.Parent = null;
             mediator.Send(new MessageColapseMessage());
@@ -79,12 +80,15 @@ namespace Teams.ViewModels
         
         private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
         {
+            ModelGroup = null;
         }
 
         private void TeamSelected(TeamSelectMessage teamSelectMessage)
         {
+            ModelMessage.Parent = null;
             Load();
             ModelGroup = null;
+            ParentMessage = null;
         }
 
         private void TeamDeleted(TeamDeleteMessage teamDeleteMessage)
