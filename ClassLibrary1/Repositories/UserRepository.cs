@@ -7,6 +7,7 @@ using Teams.BL.Factories;
 using Teams.BL.Models;
 using Teams.BL.Mapper;
 using Teams.BL;
+using Teams.BL.Services;
 
 namespace Teams.BL.Repositories
 {
@@ -21,6 +22,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.UserModelToUserEntity(model);
+                entity.Password = SecurePasswordHasher.Hash(entity.Password);
                 dbContext.Users.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.UserEntityToUserModel(entity);

@@ -184,6 +184,7 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\IMediator.cs" />
     <Compile Include="Services\Mediator.cs" />
+    <Compile Include="Services\SecurePasswordHasher.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
