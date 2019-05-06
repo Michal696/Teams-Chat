@@ -9,14 +9,41 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MessageViewModel}">
-    <Grid>
+    <Grid Visibility="{Binding ModelGroup, Converter={StaticResource NullToVisibilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ModelGroup.Name}"/>
-        <ListBox Visibility="Collapsed" x:Name="ChatListBox" Grid.Row="1" ItemsSource="{Binding ParentMessages}">
+        <WrapPanel Visibility="{Binding ParentMessage, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding ParentMessage.Text}"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="Close" Command="{Binding MessageColapseMessage}" HorizontalAlignment="Right"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="{Binding ParentMessage.TimeStamp}"/>
+                <Label Grid.Column="1" Grid.Row="1" Content="Author:" HorizontalAlignment="Right"/>
+                <Label Grid.Column="2" Grid.Row="1" Content="{Binding ParentMessage.User.Name}"/>
+            </Grid>
+        </WrapPanel>
+        <ListBox Visibility="{Binding ParentMessage, Converter={StaticResource ReverseVisibilityConverter}}" x:Name="ChatListBox" Grid.Row="2" ItemsSource="{Binding ParentMessages}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding MessageSelectCommand}"
+                                           CommandParameter="{Binding ElementName=ChatListBox, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <StackPanel>
@@ -34,13 +61,32 @@
                             <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right"/>
                             <Label Grid.Column="2" Content="{Binding User.Name}"/>
                             <Label Grid.Column="3" Content="Replies:" HorizontalAlignment="Right"/>
-                            <Label Grid.Column="4" />
+                            <Label Grid.Column="4" Content="{Binding ChildCount}"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Row="2">
+        <ListBox Visibility="{Binding ParentMessage, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="2" ItemsSource="{Binding ChildMessages}">
+            <ListBox.ItemTemplate >
+                <DataTemplate>
+                    <StackPanel>
+                        <Label Content="{Binding Text}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{Binding TimeStamp}"/>
+                            <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right"/>
+                            <Label Grid.Column="2" Content="{Binding User.Name}"/>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Visibility="{Binding ParentMessage, Converter={StaticResource ReverseVisibilityConverter}}" Grid.Row="3" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition MinHeight="30"/>
@@ -56,6 +102,18 @@
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ModelMessage.Title, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ModelMessage.Text, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
-
+        <Grid Visibility="{Binding ParentMessage, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="3" >
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Reply:"/>
+            <TextBox Grid.Column="1" Text="{Binding ModelMessage.Text, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Column="2" Content="Send" Padding="5" Command="{Binding MessageNewCommand}"/>
+        </Grid>
     </Grid>
 </local:UserControlBase>
