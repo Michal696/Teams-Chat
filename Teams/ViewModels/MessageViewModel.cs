@@ -89,6 +89,10 @@ namespace Teams.ViewModels
                 ParentMessage.TimeStamp = DateTime.Now;
                 messageRepository.Update(ParentMessage);
             }
+            else
+            {
+                ModelMessage.ChildCount = messageRepository.GetChildMessage(ModelGroup.Id, ModelMessage.Id).Count();
+            }
 
             messageRepository.Create(ModelMessage);
 
