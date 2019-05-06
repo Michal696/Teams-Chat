@@ -13,5 +13,6 @@ namespace Teams.BL.Models
         public UserModel User { get; set; }
         public MessageModel Parent { get; set; }
         public GroupModel Group { get; set; }
+        public int ChildCount { get; set; }
     }
 }
