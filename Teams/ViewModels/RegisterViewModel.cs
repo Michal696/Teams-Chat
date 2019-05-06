@@ -90,6 +90,7 @@ namespace Teams.ViewModels
             userRepository.Create(TestUser);
 
             mediator.Send(new UserNewMessage());
+            mediator.Send(new UserLoggedMessage { Id = TestUser.Id });
         }
 
         private void UserCreated(UserNewMessage userNewMessage)

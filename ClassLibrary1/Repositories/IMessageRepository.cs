@@ -17,8 +17,11 @@ namespace Teams.BL.Repositories
         MessageModel GetMessageById(Guid Id);
         MessageModel Create(MessageModel message);
         void Delete(Guid Id);
+        void DeleteGroupMesages(Guid Id);
         void Update(MessageModel Message);
         MediaModel AddMedia(Guid Id, MediaModel Media);
         void DeleteMedia(Guid Id);
+        IEnumerable<MessageModel> GetChildMessage(Guid GId, Guid MId);
+        IEnumerable<MessageModel> GetParentMessage(Guid Id);
     }
 }

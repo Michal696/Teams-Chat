@@ -7,46 +7,46 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=RegisterViewModel}">
-    <Grid Visibility="{Binding User, Converter={StaticResource ReverseVisibilityConverter}}" ShowGridLines="True">
+    <Grid Visibility="{Binding User, Converter={StaticResource ReverseVisibilityConverter}}">
         <TabControl>
             <TabItem Header="Sign in">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="1" Content="Email"/>
-                    <TextBox Grid.Row="2" Text="{Binding TestUser.Email, UpdateSourceTrigger=PropertyChanged}" />
-                    <Label Grid.Row="3" Content="Password"/>
-                    <TextBox Grid.Row="4" Text="{Binding TestUser.Password, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Grid.Row="5" Command="{Binding UserLoggedCommand}" Content="Sing in"/>
+                    <Label Grid.Row="1" Margin="5" Content="Email" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="2" MinWidth="250" Height="30" Margin="5" HorizontalAlignment="Center" Text="{Binding TestUser.Email, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="3" Margin="5" Content="Password" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="4" MinWidth="250" Height="30" Margin="5" HorizontalAlignment="Center" Text="{Binding TestUser.Password, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Grid.Row="5" Width="250" Height="30" Margin="5" Command="{Binding UserLoggedCommand}" Content="Sing in"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Register">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="1" Content="Username"/>
-                    <TextBox Grid.Row="2" Text="{Binding TestUser.Name, UpdateSourceTrigger=PropertyChanged}" />
-                    <Label Grid.Row="3" Content="Email"/>
-                    <TextBox Grid.Row="4" Text="{Binding TestUser.Email, UpdateSourceTrigger=PropertyChanged}" />
-                    <Label Grid.Row="5" Content="Password"/>
-                    <TextBox Grid.Row="6" Text="{Binding TestUser.Password, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Grid.Row="7" Command="{Binding UserNewCommand}" Content="Register"/>
+                    <Label Grid.Row="1" Margin="5" HorizontalAlignment="Center" Content="Username"/>
+                    <TextBox Grid.Row="2" Height="30" MinWidth="250" Margin="5" HorizontalAlignment="Center" Text="{Binding TestUser.Name, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="3" Margin="5" HorizontalAlignment="Center" Content="Email"/>
+                    <TextBox Grid.Row="4" Height="30" MinWidth="250" Margin="5" HorizontalAlignment="Center" Text="{Binding TestUser.Email, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="5" Margin="5" HorizontalAlignment="Center" Content="Password"/>
+                    <TextBox Grid.Row="6" Height="30" MinWidth="250" Margin="5" HorizontalAlignment="Center" Text="{Binding TestUser.Password, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Grid.Row="7" Width="250" Height="30" Margin="5" Command="{Binding UserNewCommand}" Content="Register"/>
                 </Grid>
             </TabItem>
         </TabControl>

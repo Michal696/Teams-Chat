@@ -21,7 +21,8 @@ namespace Teams.BL.Repositories
 
         public TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember)
         {
-           
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
                 var entity = mapper.TeamMemberModelToTeamMemberEntity(TeamMember);
                 if (entity.Id == Guid.Empty)
                 {
@@ -50,7 +51,7 @@ namespace Teams.BL.Repositories
                 dbContext.TeamMembers.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.TeamMemberEntityToTeamMemberModel(entity);
-            
+            }
         }
 
         public  TeamModel Create(TeamModel model)
@@ -114,6 +115,27 @@ namespace Teams.BL.Repositories
             }
         }
 
+        public void DeleteUserFromTeam(Guid userId, Guid teamId)
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+                var teamMemberEntity = dbContext.TeamMembers
+                .Include(t => t.Team)
+                .Include(t => t.User)
+                .Select(mapper.TeamMemberEntityToTeamMemberModel)
+                .Where(t => t.Team.Id == teamId)
+                .FirstOrDefault(t => t.User.Id == userId);
+                var entity = new TeamMember
+                {
+                    Id = teamMemberEntity.Id
+                };
+                var dbContext2 = dbContextFactory.CreateDbContext();
+                dbContext2.TeamMembers.Attach(entity);
+                dbContext2.TeamMembers.Remove(entity);
+                dbContext2.SaveChanges();
+            }
+        }
+
         public IEnumerable<TeamModel> GetAll()
         {
             
@@ -130,7 +152,7 @@ namespace Teams.BL.Repositories
 
         public IEnumerable<TeamModel> GetByUser(Guid Id)
           {
-              //using (var dbContext = dbContextFactory.CreateDbContext())
+              using (var dbContext = dbContextFactory.CreateDbContext())
               {
 
                   var teamMemberEntity = dbContext.TeamMembers
@@ -153,7 +175,68 @@ namespace Teams.BL.Repositories
 
                   return teamEntity == null ? null : teamEntity;
               }
-          }
+        }
+
+        public IEnumerable<UserModel> GetTeamUsers(Guid Id)
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+
+                var teamMemberEntity = dbContext.TeamMembers
+                    .Include(t => t.Team)
+                    .Include(t => t.User)
+                    .Select(mapper.TeamMemberEntityToTeamMemberModel)
+                    .Where(t => t.Team.Id == Id);
+
+                List<UserModel> userEntity = new List<UserModel>();
+                foreach (TeamMemberModel entity in teamMemberEntity.ToList())
+                {
+                    userEntity.AddRange(dbContext.Users
+                        .Select(mapper.UserEntityToUserModel)
+                        .Where(t => t.Id == entity.User.Id).ToList());
+                }
+
+                return userEntity == null ? null : userEntity;
+            }
+        }
+
+        public IEnumerable<UserModel> GetTeamNotUsers(Guid Id)
+        {
+            using (var dbContext = dbContextFactory.CreateDbContext())
+            {
+
+                var teamMemberEntity = dbContext.TeamMembers
+                    .Include(t => t.Team)
+                    .Include(t => t.User)
+                    .Select(mapper.TeamMemberEntityToTeamMemberModel)
+                    .Where(t => t.Team.Id == Id);
+
+                var allUsers = dbContext.Users
+                    .Select(mapper.UserEntityToUserModel);
+
+                List<UserModel> userEntity = new List<UserModel>();
+
+                foreach (UserModel entity in allUsers.ToList())
+                {
+                    bool isIn = false;
+
+                    foreach(TeamMemberModel model in teamMemberEntity.ToList())
+                    {
+                        if(model.User.Id == entity.Id)
+                        {
+                            isIn = true;
+                        }
+                    }
+
+                    if(!isIn)
+                    {
+                        userEntity.Add(entity);
+                    }
+                }
+
+                return userEntity == null ? null : userEntity;
+            }
+        }
 
         public IEnumerable<TeamMemberModel> GetMembershipsByUser(Guid Id)
         {

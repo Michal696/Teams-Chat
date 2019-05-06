@@ -17,8 +17,11 @@ namespace Teams.BL.Repositories
         TeamModel Create(TeamModel Team);
         
         void DeleteTeamMember(Guid Id);
+        void DeleteUserFromTeam(Guid userId, Guid teamId);
         void Delete(Guid Id);
         void Update(TeamModel Team);
+        IEnumerable<UserModel> GetTeamUsers(Guid Id);
+        IEnumerable<UserModel> GetTeamNotUsers(Guid Id);
         TeamMemberModel AddUserToTeam(TeamMemberModel TeamMember);
         
     }

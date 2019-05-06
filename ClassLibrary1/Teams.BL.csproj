@@ -152,6 +152,8 @@
     <Compile Include="Messages\TeamNewMessage.cs" />
     <Compile Include="Messages\TeamSelectMessage.cs" />
     <Compile Include="Messages\TeamUpdateMessage.cs" />
+    <Compile Include="Messages\TeamUserAddMessage.cs" />
+    <Compile Include="Messages\TeamUserRemoveMessage.cs" />
     <Compile Include="Messages\UserDeleteMessage.cs" />
     <Compile Include="Messages\UserLoggedMessage.cs" />
     <Compile Include="Messages\UserNewMessage.cs" />

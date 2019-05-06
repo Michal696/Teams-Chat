@@ -20,11 +20,32 @@ namespace Teams.ViewModels
         private readonly IMessageBoxService messageBoxService;
         private readonly IMapper mapper;
         private readonly IUserRepository userRepository;
+        private readonly IMessageRepository messageRepository;
 
-        public TeamViewModel TeamViewModel => new TeamViewModel(teamsRepository, groupTaskRepository,userRepository, messageBoxService, mediator);
+        public TeamViewModel TeamViewModel {
+            get
+            {
+                if (teamViewModel != null)
+                    return teamViewModel;
+
+                teamViewModel = new TeamViewModel(teamsRepository, groupTaskRepository, userRepository, messageBoxService, mediator);
+                return teamViewModel;
+            }
+        }
+        public TeamViewModel teamViewModel;
         public UserViewModel UserViewModel => new UserViewModel(userRepository, messageBoxService, mediator);
-        public GroupViewModel GroupViewModel => new GroupViewModel(groupTaskRepository , teamsRepository, messageBoxService, mediator);
-        public TaskViewModel TaskViewModel => new TaskViewModel(groupTaskRepository, messageBoxService, mediator);
+        public MessageViewModel MessageViewModel => new MessageViewModel(userRepository, messageRepository, groupTaskRepository, messageBoxService, mediator);
+        public GroupViewModel GroupViewModel => new GroupViewModel(groupTaskRepository, teamsRepository, messageRepository, messageBoxService, mediator);
+        public TaskViewModel taskModelView;
+        public TaskViewModel TaskViewModel {
+            get {
+                if (taskModelView != null)
+                    return taskModelView;
+
+                taskModelView = new TaskViewModel(groupTaskRepository, userRepository, messageBoxService, mediator);
+                return taskModelView;
+            }
+        }
         public RegisterViewModel RegisterViewModel => new RegisterViewModel(userRepository, messageBoxService, mediator);
         public ViewModelLocator()
         {
@@ -33,6 +54,7 @@ namespace Teams.ViewModels
             mapper = new Mapper();
             teamsRepository = new TeamsRepository(dbContextFactory, mapper);
             userRepository = new UserRepository(dbContextFactory, mapper);
+            messageRepository = new MessageRepository(dbContextFactory, mapper);
             groupTaskRepository = new GroupTaskRepository(dbContextFactory, mapper);
             messageBoxService = new MessageBoxService();
         }

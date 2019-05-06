@@ -18,7 +18,7 @@ namespace Teams.Views
     /// <summary>
     /// Interaction logic for GroupChatView.xaml
     /// </summary>
-    public partial class GroupChatView : UserControl
+    public partial class GroupChatView
     {
         public GroupChatView()
         {

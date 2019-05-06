@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Teams.Views"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:Teams.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=TeamViewModel}"> 
 
-    <Grid ShowGridLines="True">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
@@ -18,8 +18,9 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="Add new team" Command="{Binding AddNewTeamCommand}"/>
+        <Button Grid.Row="0" Padding="5" Content="Add new team" Command="{Binding AddNewTeamCommand}"/>
         <ListBox x:Name="TeamListBox" Grid.Row="1" ItemsSource="{Binding Teams}">
 
             <i:Interaction.Triggers>
@@ -37,9 +38,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-        <Button Grid.Row="3" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Edit Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
-        <Button Grid.Row="4" Content="but pm" Height="30"/>
-        <Button Grid.Row="5" Content="but settings" Height="30"/>
+        <Button Padding="5" Grid.Row="2" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Delete Team" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Padding="5" Grid.Row="3" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Edit Name Team" Name="btnEditName" Click="btnEditName_Click" CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Padding="5" Grid.Row="4" Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Content="Edit Team Members"  CommandParameter="{Binding ElementName=TeamListBox, Path=SelectedItem}"/>
+        <Button Padding="5" Grid.Row="5" Content="but settings" Height="30"/>
     </Grid>
 </local:UserControlBase>
