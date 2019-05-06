@@ -140,6 +140,7 @@
     <Compile Include="Messages\GroupSelectMessage.cs" />
     <Compile Include="Messages\GroupUpdateMessage.cs" />
     <Compile Include="Messages\IMessage.cs" />
+    <Compile Include="Messages\MessageColapseMessage.cs" />
     <Compile Include="Messages\MessageDeleteMessage.cs" />
     <Compile Include="Messages\MessageNewMessage.cs" />
     <Compile Include="Messages\MessageSelectMessage.cs" />
