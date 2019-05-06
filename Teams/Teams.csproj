@@ -183,15 +183,6 @@
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PrivateChatView.xaml.cs">
-      <DependentUpon>PrivateChatView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PrivateConverstionsListView.xaml.cs">
-      <DependentUpon>PrivateConverstionsListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ThreeColumnWrapView.xaml.cs">
       <DependentUpon>ThreeColumnWrapView.xaml</DependentUpon>
     </Compile>
@@ -242,18 +233,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\PrivateChatView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PrivateConverstionsListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ThreeColumnWrapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
