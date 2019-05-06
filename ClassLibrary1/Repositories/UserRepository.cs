@@ -22,7 +22,7 @@ namespace Teams.BL.Repositories
             using (var dbContext = dbContextFactory.CreateDbContext())
             {
                 var entity = mapper.UserModelToUserEntity(model);
-                entity.Password = SecurePasswordHasher.Hash(entity.Password);
+                if (entity.Password != null) entity.Password = SecurePasswordHasher.Hash(entity.Password);
                 dbContext.Users.Add(entity);
                 dbContext.SaveChanges();
                 return mapper.UserEntityToUserModel(entity);
