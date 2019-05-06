@@ -32,6 +32,7 @@ namespace Teams.ViewModels
 
         public ICommand MessageNewCommand { get; set; }
         public ICommand MessageSelectCommand { get; set; }
+        public ICommand MessageColapseMessage { get; set; }
 
         public MessageViewModel(IUserRepository userRepository, IMessageRepository messageRepository,IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
@@ -44,6 +45,7 @@ namespace Teams.ViewModels
             ModelMessage = new MessageModel();
 
             MessageNewCommand = new RelayCommand(MessageCreate);
+            MessageColapseMessage = new RelayCommand(MessageColapse);
             MessageSelectCommand = new RelayCommand<MessageModel>(MessageSelect);
             
             
@@ -51,6 +53,18 @@ namespace Teams.ViewModels
             mediator.Register<MessageNewMessage>(MessageCreated);
             mediator.Register<GroupSelectMessage>(GroupSelected);
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
+            mediator.Register<MessageColapseMessage>(MessageColapsed);
+        }
+
+        private void MessageColapsed(MessageColapseMessage messageColapseMessage)
+        {
+            Load();
+        }
+
+        private void MessageColapse()
+        {
+            ParentMessage = null;
+            mediator.Send(new MessageColapseMessage());
         }
 
         private void MessageSelect(MessageModel message)
