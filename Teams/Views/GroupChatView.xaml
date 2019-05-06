@@ -16,7 +16,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ModelGroup.Name}"/>
-        <ListBox x:Name="ChatListBox" Grid.Row="1" ItemsSource="{Binding ParentMessages}">
+        <ListBox Visibility="Collapsed" x:Name="ChatListBox" Grid.Row="1" ItemsSource="{Binding ParentMessages}">
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <StackPanel>
@@ -34,7 +34,7 @@
                             <Label Grid.Column="1" Content="Author:" HorizontalAlignment="Right"/>
                             <Label Grid.Column="2" Content="{Binding User.Name}"/>
                             <Label Grid.Column="3" Content="Replies:" HorizontalAlignment="Right"/>
-                            <Label Grid.Column="4" Content="{Binding ChildCount}"/>
+                            <Label Grid.Column="4" />
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
