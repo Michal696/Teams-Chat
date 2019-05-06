@@ -62,7 +62,7 @@ namespace Teams.ViewModels
 
             UserModel LogCheck = new UserModel();
             LogCheck = userRepository.GetByEmail(TestUser.Email);
-            if(LogCheck.Password != TestUser.Password)
+            if (SecurePasswordHasher.Verify(LogCheck.Password, TestUser.Password))
             {
                 messageBoxService.Show($"Wrong password!", "Login failed", MessageBoxButton.OK);
                 return;
@@ -86,7 +86,7 @@ namespace Teams.ViewModels
                 return;
             }
             TestUser.Id = Guid.NewGuid();
-
+            
             userRepository.Create(TestUser);
 
             mediator.Send(new UserNewMessage());

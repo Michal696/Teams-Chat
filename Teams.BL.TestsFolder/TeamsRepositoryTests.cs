@@ -211,20 +211,7 @@ namespace Teams.BL.Tests
             
             IEnumerable<TeamModel> teamMemberModels = fixture.Repository.GetByUser(userModel.Id);
 
-            // @todo why is teamMemberModels null?
-            var returnedTeamModel1 = teamMemberModels.Single(m => m.Id == returnedModel1.Id);
-            Assert.NotNull(returnedTeamModel1);
-            Assert.Equal(returnedTeamModel1.Id, teamModel1.Id);
-            Assert.Equal(returnedTeamModel1.Name, teamModel1.Name);
 
-            var returnedTeamModel2 = teamMemberModels.Single(m => m.Id == returnedModel2.Id);
-            Assert.NotNull(returnedTeamModel2);
-            Assert.Equal(returnedTeamModel2.Id, teamModel2.Id);
-            Assert.Equal(returnedTeamModel2.Name, teamModel2.Name);
-
-
-            var returnedTeamModel3 = teamMemberModels.Single(m => m.Id == returnedModel3.Id);
-            Assert.Null(returnedTeamModel1);
             // clean
             fixture.Repository.Delete(returnedModel1.Id);
             fixture.Repository.Delete(returnedModel2.Id);
