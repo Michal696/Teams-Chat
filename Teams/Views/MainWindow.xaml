@@ -7,7 +7,7 @@
         Title="Teams"
         mc:Ignorable="d"
         Height="450" Width="1000">
-    <Grid ShowGridLines="True">
+    <Grid>
         <views:ContentView/>
         <views:LoginView/>
     </Grid>

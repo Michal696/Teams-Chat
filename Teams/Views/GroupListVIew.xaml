@@ -9,7 +9,7 @@
              d:DesignHeight="450" 
              d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=GroupViewModel}">
-    <Grid Visibility="{Binding ModelTeam, Converter={StaticResource NullToVisibilityConverter}}" ShowGridLines="True">
+    <Grid Visibility="{Binding ModelTeam, Converter={StaticResource NullToVisibilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>

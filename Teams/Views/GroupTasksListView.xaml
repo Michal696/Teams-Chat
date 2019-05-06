@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=TaskViewModel}">
-    <Grid Visibility="{Binding ModelGroup, Converter={StaticResource NullToVisibilityConverter}}" ShowGridLines="True">
+    <Grid Visibility="{Binding ModelGroup, Converter={StaticResource NullToVisibilityConverter}}">
         <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
