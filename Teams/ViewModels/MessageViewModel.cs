@@ -24,11 +24,14 @@ namespace Teams.ViewModels
         private readonly IMessageBoxService messageBoxService;
         private readonly IMediator mediator;
 
-        public ObservableCollection<MessageModel> Messages { get; set; } = new ObservableCollection<MessageModel>();
+        public ObservableCollection<MessageModel> ParentMessages { get; set; } = new ObservableCollection<MessageModel>();
+        public ObservableCollection<MessageModel> ChildMessages { get; set; } = new ObservableCollection<MessageModel>();
         public MessageModel ModelMessage { get; set; }
+        public MessageModel ParentMessage { get; set; }
         public GroupModel ModelGroup { get; set; }
 
         public ICommand MessageNewCommand { get; set; }
+        public ICommand MessageSelectCommand { get; set; }
 
         public MessageViewModel(IUserRepository userRepository, IMessageRepository messageRepository,IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
@@ -41,6 +44,8 @@ namespace Teams.ViewModels
             ModelMessage = new MessageModel();
 
             MessageNewCommand = new RelayCommand(MessageCreate);
+            MessageSelectCommand = new RelayCommand<MessageModel>(MessageSelect);
+            
             
             mediator.Register<UserLoggedMessage>(UserLogSucces);
             mediator.Register<MessageNewMessage>(MessageCreated);
@@ -48,6 +53,13 @@ namespace Teams.ViewModels
             mediator.Register<GroupDeleteMessage>(GroupDeleted);
         }
 
+        private void MessageSelect(MessageModel message)
+        {
+            ParentMessage = messageRepository.GetMessageById(message.Id);
+            mediator.Send(new MessageSelectMessage { Id = message.Id});
+            Load();
+        }
+        
         private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
         {
             Load();
@@ -71,6 +83,13 @@ namespace Teams.ViewModels
             ModelMessage.Group = ModelGroup;
             ModelMessage.TimeStamp = DateTime.Now;
 
+            if (ParentMessage != null)
+            {
+                ModelMessage.Parent = messageRepository.GetMessageById(ParentMessage.Id);
+                ParentMessage.TimeStamp = DateTime.Now;
+                messageRepository.Update(ParentMessage);
+            }
+
             messageRepository.Create(ModelMessage);
 
             mediator.Send(new MessageNewMessage());
@@ -89,14 +108,15 @@ namespace Teams.ViewModels
 
         public override void Load()
         {
-            if (ModelGroup != null)
+            if (ModelGroup != null && ParentMessage != null)
             {
-                Messages.Clear();
-                var messages = messageRepository.GetGroupMessages(ModelGroup.Id);
-                messages.OrderBy(x => x.TimeStamp.TimeOfDay)
-                                .ThenBy(x => x.TimeStamp.Date)
-                                .ThenBy(x => x.TimeStamp.Year);
-                Messages.AddRange(messages);
+                ParentMessages.Clear();
+                var messages = messageRepository.GetParentMessage(ModelGroup.Id);
+                ParentMessages.AddRange(messages);
+
+                ChildMessages.Clear();
+                messages = messageRepository.GetChildMessage(ModelGroup.Id, ParentMessage.Id);
+                ChildMessages.AddRange(messages);
             }
         }
     }

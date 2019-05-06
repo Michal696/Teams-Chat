@@ -124,6 +124,7 @@ namespace Teams.ViewModels
             Model = teamsRepository.GetById(team.Id);
             
             mediator.Send(new TeamSelectMessage { Id = team.Id });
+            Load();
         }
         
         private void TeamUpdate()
