@@ -28,7 +28,7 @@ namespace Teams.ViewModels
         public MessageModel ModelMessage { get; set; }
         public GroupModel ModelGroup { get; set; }
 
-        ICommand MessageNewCommand { get; set; }
+        public ICommand MessageNewCommand { get; set; }
 
         public MessageViewModel(IUserRepository userRepository, IMessageRepository messageRepository,IGroupTaskRepository groupTaskRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
@@ -38,25 +38,38 @@ namespace Teams.ViewModels
             this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
+            ModelMessage = new MessageModel();
+
             MessageNewCommand = new RelayCommand(MessageCreate);
             
             mediator.Register<UserLoggedMessage>(UserLogSucces);
             mediator.Register<MessageNewMessage>(MessageCreated);
             mediator.Register<GroupSelectMessage>(GroupSelected);
+            mediator.Register<GroupDeleteMessage>(GroupDeleted);
+        }
+
+        private void GroupDeleted(GroupDeleteMessage groupDeleteMessage)
+        {
+            Load();
+            ModelGroup = null;
         }
 
         private void GroupSelected(GroupSelectMessage groupSelectMessage)
         {
             ModelGroup = groupTaskRepository.GetByIdGroup(groupSelectMessage.Id);
+            Load();
         }
 
         private void MessageCreate()
         {
-            ModelMessage = new MessageModel();
-
+            if(ModelGroup == null)
+            {
+                return;
+            }
             ModelMessage.Id = Guid.NewGuid();
             ModelMessage.User = User;
             ModelMessage.Group = ModelGroup;
+            ModelMessage.TimeStamp = DateTime.Now;
 
             messageRepository.Create(ModelMessage);
 
@@ -80,6 +93,9 @@ namespace Teams.ViewModels
             {
                 Messages.Clear();
                 var messages = messageRepository.GetGroupMessages(ModelGroup.Id);
+                messages.OrderBy(x => x.TimeStamp.TimeOfDay)
+                                .ThenBy(x => x.TimeStamp.Date)
+                                .ThenBy(x => x.TimeStamp.Year);
                 Messages.AddRange(messages);
             }
         }

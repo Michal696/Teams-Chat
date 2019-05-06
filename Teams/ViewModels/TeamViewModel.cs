@@ -95,10 +95,11 @@ namespace Teams.ViewModels
 
         private void CreateNewTeam()
         {
+            var count = teamsRepository.GetAll().Count();
            
             Model = new TeamModel();
             Model.Id = Guid.NewGuid();
-            Model.Name = "Team " + Model.Id;
+            Model.Name = "Team " + count;
 
             teamsRepository.Create(Model);
 
@@ -168,7 +169,9 @@ namespace Teams.ViewModels
                 Teams.Clear();
                 var teams = teamsRepository.GetByUser(User.Id);
                 Teams.AddRange(teams);
-
+            }
+            if (Model != null)
+            {
                 AddedUsers.Clear();
                 var users = teamsRepository.GetTeamUsers(Model.Id);
                 AddedUsers.AddRange(users);
