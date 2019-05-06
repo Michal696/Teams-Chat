@@ -20,6 +20,7 @@ namespace Teams.ViewModels
     {
         private readonly IGroupTaskRepository groupTaskRepository;
         private readonly ITeamsRepository teamsRepository;
+        private readonly IMessageRepository messageRepository;
         private readonly IMessageBoxService messageBoxService;
         private IMediator mediator;
 
@@ -31,10 +32,11 @@ namespace Teams.ViewModels
         public ICommand DeleteGroupCommand { get; set; }
         public ICommand GroupSelectedCommand { get; set; }
 
-        public GroupViewModel(IGroupTaskRepository groupTaskRepository, ITeamsRepository teamsRepository, IMessageBoxService messageBoxService, IMediator mediator)
+        public GroupViewModel(IGroupTaskRepository groupTaskRepository, ITeamsRepository teamsRepository, IMessageRepository messageRepository, IMessageBoxService messageBoxService, IMediator mediator)
         {
             this.groupTaskRepository = groupTaskRepository;
             this.teamsRepository = teamsRepository;
+            this.messageRepository = messageRepository;
             this.messageBoxService = messageBoxService;
             this.mediator = mediator;
 
@@ -61,10 +63,12 @@ namespace Teams.ViewModels
 
         private void CreateNewGroup()
         {
+            var count = groupTaskRepository.GetAllGroups().Count();
+
             Model = new GroupModel();
             Model.Id = Guid.NewGuid();
             Model.Description = "Put some description here.";
-            Model.Name = "Group " + Model.Id;
+            Model.Name = "Group " + count;
             Model.Team = ModelTeam;
             groupTaskRepository.CreateGroup(Model);
             mediator.Send(new GroupNewMessage());
@@ -86,6 +90,7 @@ namespace Teams.ViewModels
         {
             try
             {
+                messageRepository.DeleteGroupMesages(Model.Id);
                 groupTaskRepository.DeleteGroup(Model.Id);
             }
             catch

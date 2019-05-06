@@ -93,6 +93,15 @@ namespace Teams.BL.Repositories
                 dbContext.SaveChanges();
             }
         }
+        public void DeleteGroupMesages(Guid Id)
+        {
+            var TeamMessages = GetGroupMessages(Id);
+
+            foreach (MessageModel message in TeamMessages)
+            {
+                Delete(message.Id);
+            }
+        }
 
         public void DeleteMedia(Guid Id)
         {
