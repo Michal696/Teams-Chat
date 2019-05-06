@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="Add group" Command="{Binding AddNewGroupCommand}"/>
+        <Button Grid.Row="0" Content="Add group" Command="{Binding AddNewGroupCommand}" Padding="5"/>
         <ListBox x:Name="GroupListBox" Grid.Row="1" ItemsSource="{Binding Groups}">
 
             <i:Interaction.Triggers>
@@ -33,7 +33,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="2" Content="Delete Group" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}"/>
+        <Button Height="30" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Grid.Row="2" Content="Delete Group" Command="{Binding DeleteGroupCommand}" CommandParameter="{Binding ElementName=GroupListBox, Path=SelectedItem}" Padding="5"/>
         
     </Grid>
 </local:UserControlBase>
