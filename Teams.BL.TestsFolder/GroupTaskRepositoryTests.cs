@@ -74,7 +74,7 @@ namespace Teams.BL.Tests
         [Fact]
         public void GetTeamsGroupsTest_count()
         {
-            int expected = 1; // values from beginning
+            int expected = 2; // values from beginning
             TeamModel teamModel = fixture.teamModel;
             int actual = fixture.Repository.GetTeamsGroups(teamModel.Id).Count();
             Assert.Equal(expected, actual);
@@ -127,7 +127,7 @@ namespace Teams.BL.Tests
         [Fact]
         public void GetGroupTasksTest_count()
         {
-            int expected = 0; // values from beginning
+            int expected = 2; // values from beginning
             var groupModel = fixture.groupModel;
 
 
@@ -178,13 +178,13 @@ namespace Teams.BL.Tests
         public void AddUserToGroupTest_NotNull()
         {
 
+
             var groupUserPermissionModel = new GroupUserPermissionModel()
             {
                 Group = fixture.groupModel,
                 User = fixture.userModel,
                 Permit = Permission.MANAGE
             };
-            
             var returnedGroupUserPermissionModel = fixture.Repository.AddUserToGroup(groupUserPermissionModel);
             Assert.NotNull(returnedGroupUserPermissionModel);
         }
@@ -199,15 +199,13 @@ namespace Teams.BL.Tests
         [Fact]
         public void GetTaskChangesTest_Count()
         {
-            // @todo
-            Assert.False(false);
+            Assert.False(true);
         }
 
         [Fact]
         public void GetTaskChangesTest_Values()
         {
-            // @todo 
-            Assert.False(false);
+            Assert.False(true);
         }
 
 
