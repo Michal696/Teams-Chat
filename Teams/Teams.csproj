@@ -161,6 +161,7 @@
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\TaskViewModel.cs" />
     <Compile Include="ViewModels\TeamViewModel.cs" />
